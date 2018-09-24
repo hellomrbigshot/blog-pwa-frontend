@@ -31,9 +31,44 @@ export const normalRouter = {
             meta: {
                 login: false,
                 title: '首页',
-                icon: 'wap-home'
+                icon: 'wap-home',
+                tab_active: 0
             }
-        }
+        },
+        {
+            name: 'tags',
+            path: '/tags',
+            component: () => import('@/views/tags.vue'),
+            meta: {
+                login: false,
+                title: '标签',
+                icon: 'records',
+                tab_active: 1
+            }
+        },
+        {
+            name: 'comments',
+            path: '/comments',
+            component: () => import('@/views/comments.vue'),
+            meta: {
+                login: true,
+                title: '消息',
+                icon: 'chat',
+                tab_active: 2
+            }
+        },
+        {
+            name: 'mine',
+            path: '/mine',
+            component: () => import('@/views/mine.vue'),
+            meta: {
+                login: false,
+                title: '消息',
+                icon: 'contact',
+                tab_active: 3
+            }
+        },
+
     ]
 
 }

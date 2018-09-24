@@ -8,13 +8,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
-import Home from './components/Home.vue'
 
 @Component({
   components: {
-    HelloWorld,
-    Home
+    Home: () => import('./views/Home.vue')
   },
 })
 export default class App extends Vue {
