@@ -1,11 +1,11 @@
-import axios from '@/libs/api.request'
-import qs from 'qs'
+import axios from '@/libs/api.request';
+import qs from 'qs';
 
-export const getPageList = ({ type, status, content, pageSize: number = 10, page, secret: boolean = false }) => {
+export const getPageList = ({ type: string, status: string, content: string = '', pageSize: number = 10, page: number = 1, secret: boolean = false }) => {
     const data = {
-        type: type || '',
+        type,
         status,
-        content: content || '',
+        content,
         pageSize: pageSize || '10',
         page: page || '',
         secret: secret || 'normal'

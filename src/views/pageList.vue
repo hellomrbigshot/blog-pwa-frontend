@@ -14,7 +14,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { getPageList } from '@/api/page'
+import { getPageList }  from '@/api/page.ts'
 @Component
 export default class pageList extends Vue {
     keywords: string = '';
