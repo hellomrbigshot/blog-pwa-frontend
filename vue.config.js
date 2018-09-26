@@ -13,5 +13,15 @@ module.exports = {
         externals: {
             
         }
+    },
+    devServer: {
+        port: '8081',
+        proxy: {
+            '/api': {
+                target: 'localhost:4500',
+                ws: true,
+                changeOrigin: true
+            }
+        }
     }
 }
