@@ -12,8 +12,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class tabBar extends Vue {
     active: number = 0;
     tabChange (active: number) {
-        console.log(active);
-        console.log(this.active);
+        
     }
 }
 </script>

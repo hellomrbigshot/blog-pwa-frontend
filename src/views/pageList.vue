@@ -14,10 +14,16 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { getPageList } from '@/api/page'
 @Component
 export default class pageList extends Vue {
     keywords: string = '';
     active: number = 0;
+    page: number = 1;
+    pageSize: number = 1;
+    mounted () {
+        getPageList({ status: 'normal', pageSize: this.pageSize, page: this.page, type: '', content: '' })
+    }
 }
 </script>
 

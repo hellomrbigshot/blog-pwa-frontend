@@ -1,7 +1,7 @@
 import axios from '@/libs/api.request'
 import qs from 'qs'
 
-export const getPageList = ({ type, status, content, pageSize, page, secret }) => {
+export const getPageList = ({ type, status, content, pageSize: number = 10, page, secret: boolean = false }) => {
     const data = {
         type: type || '',
         status,

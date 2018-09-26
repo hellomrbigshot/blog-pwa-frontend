@@ -38,7 +38,7 @@ export const normalRouter = {
         {
             name: 'tags',
             path: '/tags',
-            component: () => import('@/views/tags.vue'),
+            component: () => import('@/views/Tags.vue'),
             meta: {
                 login: false,
                 title: '标签',
@@ -49,7 +49,7 @@ export const normalRouter = {
         {
             name: 'comments',
             path: '/comments',
-            component: () => import('@/views/comments.vue'),
+            component: () => import('@/views/Comments.vue'),
             meta: {
                 login: true,
                 title: '消息',
@@ -60,7 +60,7 @@ export const normalRouter = {
         {
             name: 'mine',
             path: '/mine',
-            component: () => import('@/views/mine.vue'),
+            component: () => import('@/views/Mine.vue'),
             meta: {
                 login: false,
                 title: '消息',
