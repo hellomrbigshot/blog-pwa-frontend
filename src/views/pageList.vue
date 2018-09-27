@@ -22,7 +22,7 @@ export default class pageList extends Vue {
     page: number = 1;
     pageSize: number = 1;
     mounted () {
-        getPageList({ status: 'normal', pageSize: this.pageSize, page: this.page, type: '', content: '' })
+        getPageList({ status: 'normal', pageSize: this.pageSize, page: this.page, type: '', content: '', secret: false })
     }
 }
 </script>

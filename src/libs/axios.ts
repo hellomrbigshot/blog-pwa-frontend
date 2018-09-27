@@ -3,8 +3,8 @@ import axios from 'axios'
 class HttpRequest {
     baseUrl: string;
     queue: any;
-    constructor (baseURL: string) {
-        this.baseUrl = baseURL;
+    constructor (baseUrl: string) {
+        this.baseUrl = baseUrl;
         this.queue = {};
     }
     getInsideConfig () {
@@ -18,17 +18,13 @@ class HttpRequest {
     }
     distroy (url: string) {
         delete this.queue[url];
-        if (!Object.keys(this.queue).length) {
-
-        }
+        if (!Object.keys(this.queue).length) {}
     };
     interceptors (instance: any, url: string) {
         // 请求拦截
         instance.interceptors.request.use((config: any) => {
             // 添加全局 loading
-            if (!Object.keys(this.queue).length) {
-
-            }
+            if (!Object.keys(this.queue).length) {}
             this.queue[url] = true;
             return config;
         }, (error: any) => {
@@ -45,7 +41,7 @@ class HttpRequest {
     }
     request (options: any) {
         const instance = axios.create();
-        options = Object.assign(this.getInsideConfig, options);
+        options = Object.assign(this.getInsideConfig(), options);
         this.interceptors(instance, options.url);
         return instance(options);
     }

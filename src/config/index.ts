@@ -1,6 +1,6 @@
 export default {
     baseUrl: {
-        dev: 'localhost:4500',
+        dev: 'http://localhost:8081',
         pro: 'http://hellomrbigbigshot.xyz'
     }
 }
