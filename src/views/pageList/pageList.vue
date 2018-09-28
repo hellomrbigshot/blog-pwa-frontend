@@ -6,7 +6,7 @@
         <van-tabs v-model="active">
             <van-tab title="最热">
                 <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-                    <div>
+                    <div style="padding: 5px 15px;">
                         <Page v-for="(detail, index) in list" :key="index" :page="detail"></Page>
                     </div>
                 </van-pull-refresh>
