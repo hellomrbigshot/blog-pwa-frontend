@@ -32,7 +32,7 @@ class HttpRequest {
         });
         instance.interceptors.response.use((res: any) => {
             this.distroy(url);
-            const { code, data } = res;
+            const { code, data } = res.data;
             return { code, data };
         }, (error: any) => {
             this.distroy(url);

@@ -27,7 +27,7 @@ export const normalRouter = {
         {
             name: 'pageList',
             path: '/pagelist',
-            component: () => import('@/views/pageList.vue'),
+            component: () => import('@/views/pageList/pageList.vue'),
             meta: {
                 login: false,
                 title: '首页',

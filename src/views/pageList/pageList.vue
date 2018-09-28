@@ -6,7 +6,9 @@
         <van-tabs v-model="active">
             <van-tab title="最热">
                 <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-                    <div></div>
+                    <div>
+                        <Page v-for="(detail, index) in list" :key="index" :page="detail"></Page>
+                    </div>
                 </van-pull-refresh>
             </van-tab>
             <van-tab title="最新">最新</van-tab>
@@ -17,7 +19,11 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { getPageList }  from '@/api/page.ts'
-@Component
+@Component({
+    components: {
+        'Page': () => import('./components/Page.vue')
+    }
+})
 export default class pageList extends Vue {
     keywords: string = '';
     active: number = 0;
