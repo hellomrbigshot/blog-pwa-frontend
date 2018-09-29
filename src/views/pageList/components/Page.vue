@@ -46,6 +46,7 @@ export default class Page extends Vue {
         margin-bottom: 5px;
         .create-user {
             color: #666;
+            font-size: 13px;
         }
         .dot {
             padding: 0 5px;
