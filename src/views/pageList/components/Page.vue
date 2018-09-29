@@ -1,6 +1,6 @@
 <template>
     <div class="page" @click="">
-        <div class="page-tag">来自标签<span>{{ page.tags[0] }}</span></div>
+        <div class="page-tag">来自标签 <router-link to=""><span>{{ page.tags[0] }}</span></router-link></div>
         <div class="page-head">
             <h4>{{ page.title }}</h4>
         </div>
@@ -9,13 +9,16 @@
         <div class="page-bottom">
             <span class="create-user">{{ page.create_user }}</span>
             <span class="dot">·</span>
-            <span class="create-time">{{ page.create_date.substring(5, 10) }}</span>
+            <span class="create-time">{{ formatTime(page.create_date, '3') }}</span>
         </div>
     </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-@Component
+import mixin from '@/utils/mixin.ts'
+@Component({
+    mixins: [mixin]
+})
 export default class Page extends Vue {
     @Prop() page: any;
 }
@@ -29,6 +32,9 @@ export default class Page extends Vue {
     .page-tag, .page-content {
         font-size: 14px;
         color: #9E9E9E;
+        a {
+            color: #9E9E9E;
+        }
     }
     .page-head {
         margin: 5px 0;
