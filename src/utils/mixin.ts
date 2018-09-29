@@ -1,3 +1,17 @@
+import marked from 'marked'
+marked.setOptions({ 
+    renderer: new marked.Renderer(),
+    pedantic: false,
+    gfm: true,
+    tables: true,
+    breaks: true,
+    headerIds: true,
+    headerPrefix: 'vue-express',
+    sanitize: false,
+    smartLists: true,
+    smartypants: false,
+    xhtml: false
+})
 // 不足 10 自动补 0
 function format (num: number = 0) {
     const result: string = num < 10 ? `0${num}` : `${num}`;
@@ -33,6 +47,9 @@ export default {
                     return type3(time);
 
             }
+        },
+        marked (content: string) {
+            return marked(content);
         }
     }
 }

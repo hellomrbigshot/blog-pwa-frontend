@@ -3,7 +3,7 @@
         <div>
             <van-search placeholder="请输入搜索关键词" v-model="keywords" />
         </div>
-        <van-tabs v-model="active" style="padding-bottom: 50px;">
+        <van-tabs v-model="active" style="padding-bottom: 50px;" swipeable>
             <van-tab title="最热">
                 <van-pull-refresh v-model="pullLoading" @refresh="onRefresh">
                     <van-list
@@ -25,7 +25,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { getPageList }  from '@/api/page.ts'
-import { setTimeout } from 'timers';
+// import { setTimeout } from 'timers';
 @Component({
     components: {
         'Page': () => import('./components/Page.vue')
@@ -47,6 +47,7 @@ export default class pageList extends Vue {
             const { total, result } = res.data;
             this.list = result;
             this.total = total;
+            if (this.total <= this.pageSize) this.listFinished = true;
         })
     }
     onRefresh () {

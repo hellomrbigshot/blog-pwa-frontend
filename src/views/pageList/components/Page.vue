@@ -4,7 +4,8 @@
         <div class="page-head">
             <h4>{{ page.title }}</h4>
         </div>
-        <div class="page-content" v-html="page.content">
+        <div class="page-content">
+            {{ marked(page.content).replace(/<[^>]+>/g, '') }}
         </div>
         <div class="page-bottom">
             <span class="create-user">{{ page.create_user }}</span>
@@ -41,6 +42,12 @@ export default class Page extends Vue {
     }
     .page-content {
         margin-bottom: 15px;
+        color: #888;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        line-height: 1.5;
+        word-break: break-all;
     }
     .page-bottom {
         margin-bottom: 5px;
