@@ -7,7 +7,8 @@ module.exports = {
         resolve: {
             extensions: ['.js', '.vue', '.json', '.ts'],
             alias: {
-                '@': resolve('src')
+                '@': resolve('src'),
+                'vue$':'vue/dist/vue.js'
             }
         },
         externals: {

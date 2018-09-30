@@ -1,9 +1,11 @@
 <template>
     <div>
         <div>
-            <router-view></router-view>
+            <keep-alive :include="aliveArray">
+                <router-view></router-view>
+            </keep-alive>
         </div>
-        <tab-bar></tab-bar>
+        <tab-bar v-if="typeof $route.meta.tab_active !== 'undefined'"></tab-bar>
     </div>
 </template>
 <script lang="ts">
@@ -17,5 +19,6 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class Home extends Vue {
     @Prop() private title!: string;
     active: number = 0;
+    aliveArray: [string] = ['pageList'];
 }
 </script>

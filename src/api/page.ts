@@ -16,3 +16,10 @@ export const getPageList = ({ type, status, content, pageSize, page, secret } = 
         method: 'post'
     })
 }
+export const getPageDetail = (id: string) => {
+    return axios.request({
+        url: '/api/page/detail',
+        data: qs.stringify({ id }),
+        method: 'post'
+    })
+}

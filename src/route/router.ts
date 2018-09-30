@@ -18,22 +18,34 @@ export const page404 = {
 }
 export const normalRouter = {
     path: '/',
-    redirect: '/pagelist',
+    redirect: '/page',
     meta: {
         login: false
     },
     component: () => import('@/views/Home.vue'),
     children: [
         {
-            name: 'pageList',
-            path: '/pagelist',
-            component: () => import('@/views/pageList/pageList.vue'),
-            meta: {
-                login: false,
-                title: '首页',
-                icon: 'wap-home',
-                tab_active: 0
-            }
+            path: '/page',
+            component: { template: '<router-view></router-view>' },
+            redirect: '/page/list',
+            children: [
+                {
+                    name: 'pageList',
+                    path: 'list',
+                    component: () => import('@/views/Page/List.vue'),
+                    meta: {
+                        login: false,
+                        title: '首页',
+                        icon: 'wap-home',
+                        tab_active: 0
+                    },
+                },
+                {
+                    name: 'pageDetail',
+                    path: 'detail/:id',
+                    component: () => import('@/views/Page/Detail.vue')
+                }
+            ]
         },
         {
             name: 'tags',

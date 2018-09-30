@@ -3,7 +3,7 @@
         <div>
             <van-search placeholder="请输入搜索关键词" v-model="keywords" />
         </div>
-        <van-tabs v-model="active" style="padding-bottom: 50px;" swipeable>
+        <van-tabs v-model="active" style="padding-bottom: 50px;" swipeable :sticky="true">
             <van-tab title="最热">
                 <van-pull-refresh v-model="pullLoading" @refresh="onRefresh">
                     <van-list

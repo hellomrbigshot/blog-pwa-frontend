@@ -1,18 +1,21 @@
 <template>
-    <div class="page" @click="">
-        <div class="page-tag">来自标签 <router-link to=""><span>{{ page.tags[0] }}</span></router-link></div>
-        <div class="page-head">
-            <h4>{{ page.title }}</h4>
+    <router-link :to="{ name: 'pageDetail', params: { id: page._id } }">
+        <div class="page" @click="">
+            <div class="page-tag">来自标签 <router-link to=""><span>{{ page.tags[0] }}</span></router-link></div>
+            <div class="page-head">
+                <h4>{{ page.title }}</h4>
+            </div>
+            <div class="page-content">
+                {{ marked(page.content).replace(/<[^>]+>/g, '') }}
+            </div>
+            <div class="page-bottom">
+                <span class="create-user">{{ page.create_user }}</span>
+                <span class="dot">·</span>
+                <span class="create-time">{{ formatTime(page.create_date, '3') }}</span>
+            </div>
         </div>
-        <div class="page-content">
-            {{ marked(page.content).replace(/<[^>]+>/g, '') }}
-        </div>
-        <div class="page-bottom">
-            <span class="create-user">{{ page.create_user }}</span>
-            <span class="dot">·</span>
-            <span class="create-time">{{ formatTime(page.create_date, '3') }}</span>
-        </div>
-    </div>
+    </router-link>
+    
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
@@ -48,6 +51,7 @@ export default class Page extends Vue {
         -webkit-box-orient: vertical;
         line-height: 1.5;
         word-break: break-all;
+        overflow: hidden;
     }
     .page-bottom {
         margin-bottom: 5px;
