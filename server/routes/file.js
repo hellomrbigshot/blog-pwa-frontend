@@ -81,4 +81,73 @@ router.get('/avatar', (req, res, next) => {
     })
 	
 })
+router.get('/avatar/user', async (req, res) => {
+    const username = req.query.username
+    if (username === 'undefined' || !username) {
+        res.end()
+        return false
+    }
+    let user = await UserModel.getUserByName(username)
+    res.set('content-type', 'image/jpg')
+    let filename = user.avatar
+    if (filename) {
+        FileModel.getFilePath(filename).then(url => {
+            try {
+                if (url) {
+                    let stream = fs.createReadStream(url)
+                    let responseData = []; // 存储文件流
+                    stream.on('error', err => {
+                        res.end()
+                    })
+                    if (stream) { // 判断状态
+                        stream.on('data', chunk => {
+                            responseData.push(chunk)
+                        })
+                        stream.on('end', () => {
+                            let finalData = Buffer.concat(responseData)
+                            res.write(finalData)
+                            res.end()
+                        })
+                    }
+                } else {
+                    res.end()
+                }
+            } catch (e) {
+                res.end()
+            }
+            
+        }).catch(e => {
+            res.write()
+            res.end()
+        })
+    } else if (user.oauthinfo.length) {
+        let url = user.oauthinfo.length.find(item => item.avatar) && user.oauthinfo.length.find(item => item.avatar).avatar || ''
+        try {
+            if (url) {
+                let stream = fs.createReadStream(url)
+                let responseData = []; // 存储文件流
+                stream.on('error', err => {
+                    res.end()
+                })
+                if (stream) { // 判断状态
+                    stream.on('data', chunk => {
+                        responseData.push(chunk)
+                    })
+                    stream.on('end', () => {
+                        let finalData = Buffer.concat(responseData)
+                        res.write(finalData)
+                        res.end()
+                    })
+                }
+            } else {
+                res.end()
+            }
+        } catch (e) {
+            res.end()
+        }
+    } else {
+        res.end
+    }
+
+})
 module.exports = router

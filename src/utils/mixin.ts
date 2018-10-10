@@ -1,5 +1,6 @@
 import marked from 'marked'
 import hljs from 'highlight.js'
+import { Component, Vue } from 'vue-property-decorator';
 marked.setOptions({ 
     renderer: new marked.Renderer(),
     pedantic: false,
@@ -33,8 +34,18 @@ function type3 (t: any) {
         return `${ new Date(t).getFullYear() }-${ format(new Date(t).getMonth()+1) }-${ format(new Date(t).getDate()) }`;
     }
 }
-export default {
-    methods : {
+
+declare module 'vue/types/vue' {
+    interface Vue {
+        formatTime (time: any, type: string): void
+        marked (content: string): void
+        hljsCode (): void
+        debounce (fun: any, wait: number): void
+    }
+}
+@Component
+export default class mixin extends Vue {
+    // methods : {
         /**
          * params {string} time
          * params {string} type
@@ -58,13 +69,13 @@ export default {
                     break;
             }
             return str;
-        },
+        }
         /**
          * params {string} content
         */
         marked (content: string) { // 格式化文章
             return marked(content);
-        },
+        }
         hljsCode () { // 代码高亮
             let blocks = document.querySelectorAll('pre code');
             let dom = Array.prototype.slice.call(blocks);
@@ -72,5 +83,19 @@ export default {
                 hljs.highlightBlock(ele);
             })
         }
-    }
+        /**
+         * params {function} fun
+         * params {number} number
+        */
+        debounce (fun: any, wait: number = 100) { // 防抖
+            let time: any = null;
+            return function () {
+                let args = arguments;
+                clearTimeout(time);  // 清除上一次定时器，这里用到了闭包
+                time = setTimeout(() => {
+                    fun.apply(this, args);
+                }, wait) 
+            } 
+        }
+    // }
 }

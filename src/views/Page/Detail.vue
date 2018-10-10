@@ -1,19 +1,21 @@
 <template>
     <div>
+
         <van-nav-bar
-            title="世说新语"
-            left-text="返回"
-            left-arrow
-            @click-left="$router.go(-1)"
+                :title="title"
+                left-text="返回"
+                left-arrow
+                @click-left="$router.go(-1)"
+                :fixed="true"
         />
-        <main class="container main-container" v-if="detail.content">
+        <main class="container main-container" style="margin-top: 50px" v-if="detail.content" ref="scrollBody">
             <div class="page-detail">
                 <div>
                     <h1>{{ detail.title }}</h1>
                 </div>
                 <div class="auto-info">
                     <a class="auto-avatar inline-block">
-                        <img src="" alt="" class="inline-block ">
+                        <img :src="`/api/file/avatar/user?username=${detail.create_user}`" alt="" class="inline-block ">
                     </a>
                     <div class="auto-info-text">
                         <div class="auto-name">{{ detail.create_user }}</div>
@@ -31,11 +33,16 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { getPageDetail } from '@/api/page'
 import mixin from '@/utils/mixin.ts'
+interface WindowEventMap {
+    OnRewards: CustomEvent
+}
 @Component({
     mixins: [mixin]
 })
 export default class Detail extends Vue {
-    detail: any = {};
+    detail: any = {}
+    title: string = '世说新语'
+    box: any = {}
     get id (): string {
         return this.$route.params.id;
     }
