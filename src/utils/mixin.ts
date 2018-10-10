@@ -87,15 +87,15 @@ export default class mixin extends Vue {
          * params {function} fun
          * params {number} number
         */
-        debounce (fun: any, wait: number = 100) { // 防抖
-            let time: any = null;
-            return function () {
-                let args = arguments;
-                clearTimeout(time);  // 清除上一次定时器，这里用到了闭包
-                time = setTimeout(() => {
-                    fun.apply(this, args);
-                }, wait) 
-            } 
-        }
+        // debounce (fun: any, wait: number = 100) { // 防抖
+        //     let time: any = null;
+        //     return function () {
+        //         let args = arguments;
+        //         clearTimeout(time);  // 清除上一次定时器，这里用到了闭包
+        //         time = setTimeout(() => {
+        //             fun.apply(this, args);
+        //         }, wait) 
+        //     } 
+        // }
     // }
 }

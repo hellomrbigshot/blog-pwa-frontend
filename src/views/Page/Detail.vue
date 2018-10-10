@@ -15,7 +15,7 @@
                 </div>
                 <div class="auto-info">
                     <a class="auto-avatar inline-block">
-                        <img :src="`/api/file/avatar/user?username=${detail.create_user}`" alt="" class="inline-block ">
+                        <img :src="imgUrl" alt="头像" class="inline-block" ref="img" @error="imgError">
                     </a>
                     <div class="auto-info-text">
                         <div class="auto-name">{{ detail.create_user }}</div>
@@ -43,16 +43,22 @@ export default class Detail extends Vue {
     detail: any = {}
     title: string = '世说新语'
     box: any = {}
+    imgUrl: string = require('../../assets/img/avatar.jpg')
+    defaultImg: string = require('../../assets/img/avatar.jpg')
     get id (): string {
         return this.$route.params.id;
     }
     mounted() {
         getPageDetail(this.id).then(res => {
             this.detail = res.data;
+            this.imgUrl = `/api/file/avatar/user?username=${this.detail.create_user}`
             this.$nextTick(() => {
                 this.hljsCode();
             })
         })
+    }
+    imgError () {
+        this.imgUrl = this.defaultImg
     }
 }
 </script>
