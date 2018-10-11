@@ -13,3 +13,9 @@ h4 {
 .inline-block {
     display: inline-block;
 }
+.fix-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

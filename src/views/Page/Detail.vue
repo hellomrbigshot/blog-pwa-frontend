@@ -8,7 +8,7 @@
                 @click-left="$router.go(-1)"
                 :fixed="true"
         />
-        <main class="container main-container" style="margin-top: 50px" v-if="detail.content" ref="scrollBody">
+        <main class="container main-container" style="margin: 50px 0;" v-if="detail.content" ref="scrollBody">
             <div class="page-detail">
                 <div>
                     <h1>{{ detail.title }}</h1>
@@ -26,10 +26,12 @@
             </div>
             <div></div>    
 
-        </main> 
+        </main>
+        <set-comment></set-comment>
     </div>
 </template>
 <script lang="ts">
+import setComment from './components/setComment.vue'
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { getPageDetail } from '@/api/page'
 import mixin from '@/utils/mixin.ts'
@@ -37,7 +39,10 @@ interface WindowEventMap {
     OnRewards: CustomEvent
 }
 @Component({
-    mixins: [mixin]
+    mixins: [mixin],
+    components: {
+        setComment
+    }
 })
 export default class Detail extends Vue {
     detail: any = {}
