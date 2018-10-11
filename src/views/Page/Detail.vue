@@ -27,21 +27,17 @@
             <div></div>    
 
         </main>
-        <set-comment></set-comment>
+        <set-comment :detail="detail"></set-comment>
     </div>
 </template>
 <script lang="ts">
-import setComment from './components/setComment.vue'
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { getPageDetail } from '@/api/page'
 import mixin from '@/utils/mixin.ts'
-interface WindowEventMap {
-    OnRewards: CustomEvent
-}
 @Component({
     mixins: [mixin],
     components: {
-        setComment
+        setComment: () => import('./components/setComment.vue')
     }
 })
 export default class Detail extends Vue {

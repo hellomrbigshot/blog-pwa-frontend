@@ -1,13 +1,18 @@
 <template>
     <div>
-        <div class="fix-bottom set-comment" style="line-height: 40px" v-show="!createComment">
+        <div class="fix-bottom set-comment" style="line-height: 30px;" v-show="!createComment">
             <van-row>
                 <van-col span="8" @click.native="createComment=true">
-                    <van-icon name="edit" size="14px" /><span style="margin-left: 5px; ">写回复</span>
+                    <div class="overflow: auto;">
+                        <van-icon name="edit" size="16px" />
+                        <span style="margin-left: 6px;">写回复</span>
+                    </div>
                 </van-col>
-                <van-col span="8"></van-col>
-                <van-col span="8">
-                    
+                <van-col span="12">&nbsp;</van-col>
+                <van-col span="4">
+                    <Badge :info="detail.comments&&detail.comments.length||0">
+                        <van-icon slot="content" name="chat" size="16px" />
+                    </Badge>
                 </van-col>
             </van-row>
         </div>
@@ -28,8 +33,13 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-@Component
+@Component({
+    components: {
+        Badge: () => import('@/components/Badge.vue')
+    }
+})
 export default class setComment extends Vue {
+    @Prop(Object) detail!: object
     createComment: boolean = false
     comment: string = ''
 }
