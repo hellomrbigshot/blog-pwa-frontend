@@ -50,7 +50,7 @@ module.exports = {
         }
         return Comment
             .find(query_obj)
-            .count()
+            .countDocuments()
             .exec()
     }
 

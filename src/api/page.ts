@@ -23,3 +23,10 @@ export const getPageDetail = (id: string) => {
         method: 'post'
     })
 }
+export const searchPage = (keywords: string) => {
+    return axios.request({
+        url: '/api/page/searchpage',
+        data: qs.stringify({ keywords }),
+        method: 'post'
+    })
+}

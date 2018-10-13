@@ -35,7 +35,7 @@ module.exports = {
 	getUserNum () {
 		return User
 			.find()
-			.count()
+			.countDocuments()
 			.exec() 
 	},
 	// 编辑头像

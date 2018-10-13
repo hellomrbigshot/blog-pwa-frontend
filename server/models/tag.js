@@ -34,7 +34,7 @@ module.exports = {
     getTagNum () {
         return Tag
             .find()
-            .count()
+            .countDocuments()
             .exec()
     }
 }

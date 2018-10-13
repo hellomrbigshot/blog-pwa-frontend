@@ -89,7 +89,7 @@ module.exports = {
         // console.log(query_obj)
         return Page
             .find(query_obj)
-            .count()
+            .countDocuments()
             .exec()
     },
     searchPage(query) {
@@ -102,7 +102,8 @@ module.exports = {
                     { title: { $regex: reg }},
                     { content: { $regex: reg }}
                 ],
-                secret: false
+                secret: false,
+                status: 'normal'
             }
         }
         return Page
