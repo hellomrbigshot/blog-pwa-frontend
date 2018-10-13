@@ -95,16 +95,15 @@ module.exports = {
     searchPage(query) {
         const keywords = query.keywords
         const reg = new RegExp(keywords, 'i')
-        let query_obj = {}
+        let query_obj = {
+            secret: false,
+            status: 'normal'
+        }
         if (keywords) {
-            query_obj = {
-                $or: [ // 支持标题和正文查找
+            query_obj['$or'] = [ // 支持标题和正文查找
                     { title: { $regex: reg }},
                     { content: { $regex: reg }}
-                ],
-                secret: false,
-                status: 'normal'
-            }
+                ]   
         }
         return Page
             .find(query_obj)
