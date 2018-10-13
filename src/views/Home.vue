@@ -1,15 +1,23 @@
 <template>
     <div>
-        <div>
-            <keep-alive :include="aliveArray">
-                <router-view></router-view>
+        <van-nav-bar
+            :title="title"
+            left-arrow
+            :fixed="true"
+            @click-left="clickLeft"
+        >
+            <van-icon name="search" slot="left" v-if="showSearchIcon"/>
+        </van-nav-bar>
+        <div style="margin-top: 46px;">
+            <keep-alive>
+                <router-view />
             </keep-alive>
         </div>
-        <tab-bar v-if="typeof $route.meta.tab_active !== 'undefined'"></tab-bar>
+        <tab-bar v-if="$route.meta && typeof $route.meta.tab_active !== 'undefined'"></tab-bar>
     </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component({
     components: {
@@ -17,8 +25,31 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
     }
 })
 export default class Home extends Vue {
-    @Prop() private title!: string;
+    title: string = '世说新语';
     active: number = 0;
     aliveArray: [string] = ['pageList'];
+    showSearchIcon: boolean = true;
+    mounted () {
+        this.checkRoute(this.$route);
+    }
+    @Watch('$route')
+    routeChange (newVal: object, oldVal: object) {
+        this.checkRoute(newVal)
+    }
+    checkRoute (route: any) {
+        if (route.meta && route.meta.search) {
+            this.showSearchIcon = true;
+        } else {
+            this.showSearchIcon = false;
+        }
+    }
+    clickLeft () {
+        if (!this.showSearchIcon) {
+            this.$router.go(-1);
+            return false;
+        }
+        this.$router.push({ name: 'pageSeach' })
+
+    }
 }
 </script>

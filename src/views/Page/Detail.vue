@@ -1,13 +1,5 @@
 <template>
     <div>
-
-        <van-nav-bar
-                :title="title"
-                left-text="返回"
-                left-arrow
-                @click-left="$router.go(-1)"
-                :fixed="true"
-        />
         <main class="container main-container" style="margin: 50px 0;" v-if="detail.content" ref="scrollBody">
             <div class="page-detail">
                 <div>

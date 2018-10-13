@@ -28,22 +28,39 @@ export const normalRouter = {
             path: '/page',
             component: { template: '<router-view></router-view>' },
             redirect: '/page/list',
+            meta: {
+                login: false,
+                title: '首页',
+                icon: 'wap-home',
+                tab_active: 0,
+                search: true
+            },
             children: [
                 {
                     name: 'pageList',
                     path: 'list',
                     component: () => import('@/views/Page/List.vue'),
                     meta: {
-                        login: false,
-                        title: '首页',
-                        icon: 'wap-home',
+                        search: true,
                         tab_active: 0
-                    },
+                    }
                 },
                 {
                     name: 'pageDetail',
                     path: 'detail/:id',
-                    component: () => import('@/views/Page/Detail.vue')
+                    component: () => import('@/views/Page/Detail.vue'),
+                    meta: {
+                        search: false
+                    }
+                },
+                {
+                    name: 'pageSeach',
+                    path: 'search',
+                    component: () => import('@/views/Page/Search.vue'),
+                    meta: {
+
+                    }
+                    
                 }
             ]
         },
@@ -55,7 +72,8 @@ export const normalRouter = {
                 login: false,
                 title: '标签',
                 icon: 'records',
-                tab_active: 1
+                tab_active: 1,
+                search: true
             }
         },
         {
@@ -66,7 +84,8 @@ export const normalRouter = {
                 login: true,
                 title: '消息',
                 icon: 'chat',
-                tab_active: 2
+                tab_active: 2,
+                search: true
             }
         },
         {
@@ -77,7 +96,8 @@ export const normalRouter = {
                 login: false,
                 title: '消息',
                 icon: 'contact',
-                tab_active: 3
+                tab_active: 3,
+                search: true
             }
         },
 

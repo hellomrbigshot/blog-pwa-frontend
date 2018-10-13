@@ -1,11 +1,8 @@
 <template>
     <div>
-        <div>
-            <van-search placeholder="请输入搜索关键词" v-model="keywords" />
-        </div>
-        <van-tabs v-model="active" style="padding-bottom: 50px;" swipeable :sticky="true">
+        <van-tabs v-model="active" style="padding-bottom: 50px;" swipeable :sticky="true" :offset-top="46">
             <van-tab title="最热">
-                <van-pull-refresh v-model="pullLoading" @refresh="onRefresh">
+                <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: 90vh;">
                     <van-list
                         v-model="listLoading"
                         :finished="listFinished"
@@ -24,7 +21,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { getPageList }  from '@/api/page.ts'
+import { getPageList, searchPage }  from '@/api/page.ts'
 // import { setTimeout } from 'timers';
 @Component({
     components: {
@@ -32,7 +29,6 @@ import { getPageList }  from '@/api/page.ts'
     }
 })
 export default class pageList extends Vue {
-    keywords: string = '';
     active: number = 0;
     page: number = 1;
     pageSize: number = 10;
@@ -40,7 +36,7 @@ export default class pageList extends Vue {
     pullLoading: boolean = false;
     listLoading: boolean = false;
     listFinished: boolean = false;
-    list: any = [];
+    list: object[] = [];
     mounted () {
         this.pullLoading = true;
         getPageList({ status: 'normal', pageSize: this.pageSize, page: this.page, type: '', content: '', secret: false }).then(res => {
@@ -68,7 +64,6 @@ export default class pageList extends Vue {
             this.listLoading = false;
             this.list.push(...result);
             if (this.page * this.pageSize > this.total) this.listFinished =true;
-
         })
     }
 }
