@@ -8,11 +8,27 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+Component.registerHooks([
+  'beforeRouteEnter',
+  'beforeRouteLeave',
+  'beforeRouteUpdate'
+])
 @Component
 export default class tabBar extends Vue {
     active: number = 0;
+    tab_obj: any = ['pageList', 'tags', 'comments', 'mine'];
+    mounted () {
+        // console.log(this.$route)
+    }
+    
     tabChange (active: number) {
-        
+        this.$router.push({ name: this.tab_obj[active] })
+    }
+    beforeRouteEnter () {
+        console.log('beforeRouterEnter')
+    }
+    beforeRouteLeave () {
+        console.log('aa')
     }
 }
 </script>

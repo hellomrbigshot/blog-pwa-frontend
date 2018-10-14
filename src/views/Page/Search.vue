@@ -34,7 +34,6 @@ export default class Search extends Vue {
     onRefresh () {
         this.seachPage();
     }
-    
 }
 </script>
 
