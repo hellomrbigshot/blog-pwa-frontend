@@ -24,12 +24,6 @@ export default class tabBar extends Vue {
     tabChange (active: number) {
         this.$router.push({ name: this.tab_obj[active] })
     }
-    beforeRouteEnter () {
-        console.log('beforeRouterEnter')
-    }
-    beforeRouteLeave () {
-        console.log('aa')
-    }
 }
 </script>
 
