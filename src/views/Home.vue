@@ -9,9 +9,9 @@
             <van-icon name="search" slot="left" v-if="showSearchIcon"/>
         </van-nav-bar>
         <div style="margin-top: 46px;">
-            <keep-alive>
+            <!-- <keep-alive> -->
                 <router-view />
-            </keep-alive>
+            <!-- </keep-alive> -->
         </div>
         <tab-bar v-if="$route.meta && typeof $route.meta.tab_active !== 'undefined'"></tab-bar>
     </div>

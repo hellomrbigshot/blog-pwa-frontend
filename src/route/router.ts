@@ -67,14 +67,37 @@ export const normalRouter = {
         {
             name: 'tags',
             path: '/tags',
-            component: () => import('@/views/Tags.vue'),
+            component: { template: '<router-view></router-view>' },
+            redirect: '/tags/list',
             meta: {
                 login: false,
                 title: '标签',
                 icon: 'records',
                 tab_active: 1,
                 search: true
-            }
+            },
+            children: [
+                {
+                    name: 'tagList',
+                    path: 'list',
+                    component: () => import('@/views/Tags/List.vue'),
+                    meta: {
+                        login: false,
+                        tab_active: 1,
+                        search: true
+                    }
+                },
+                {
+                    name: 'tagDetail',
+                    path: 'detail/:name',
+                    component: () => import('@/views/Tags/Detail.vue'),
+                    meta: {
+                        login: false,
+                        tab_active: 1,
+                        search: false
+                    }
+                }
+            ]
         },
         // {
         //     name: 'comments',

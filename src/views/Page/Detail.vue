@@ -32,7 +32,7 @@ import mixin from '@/utils/mixin.ts'
         setComment: () => import('./components/setComment.vue')
     }
 })
-export default class Detail extends Vue {
+export default class pageDetail extends Vue {
     detail: any = {}
     title: string = '世说新语'
     box: any = {}
