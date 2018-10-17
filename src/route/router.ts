@@ -25,9 +25,10 @@ export const normalRouter = {
     component: () => import('@/views/Home.vue'),
     children: [
         {
-            path: '/page',
+            path: '/pages',
+            name: 'pages',
             component: { template: '<router-view></router-view>' },
-            redirect: '/page/list',
+            redirect: '/pages/list',
             meta: {
                 login: false,
                 title: '首页',

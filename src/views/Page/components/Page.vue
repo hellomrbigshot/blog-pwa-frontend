@@ -1,7 +1,11 @@
 <template>
     <router-link :to="{ name: 'pageDetail', params: { id: page._id } }">
         <div class="page" @click="">
-            <div class="page-tag">来自标签 <router-link to=""><span>{{ page.tags[0] }}</span></router-link></div>
+            <div class="page-tag">来自标签 
+                <router-link v-for="(tag, i) in page.tags" :key="i" :to="{ name: 'tagDetail', params: { name: tag }}">
+                    <span>{{ tag }}</span><span v-if="i!==page.tags.length-1">，</span>
+                </router-link>
+            </div>
             <div class="page-head">
                 <h4>{{ page.title }}</h4>
             </div>

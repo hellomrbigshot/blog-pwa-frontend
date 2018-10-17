@@ -7,16 +7,21 @@
     </van-tabbar>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-Component.registerHooks([
-  'beforeRouteEnter',
-  'beforeRouteLeave',
-  'beforeRouteUpdate'
-])
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+interface Route {
+  path: string;
+  fullPath: string;
+  name: string;
+  meta: object;
+}
 @Component
 export default class tabBar extends Vue {
     active: number = 0;
-    tab_obj: any = ['pageList', 'tags', 'comments', 'mine'];
+    tab_obj: any = ['pages', 'tags', 'comments', 'mine'];
+    @Watch('$route', { immediate: true, deep: true })
+    onRouteChanged (val: Route, oldVal: Route) {
+        this.active = this.tab_obj.findIndex((item: string) => val.fullPath.indexOf(item) > -1);
+    }
     mounted () {
         // console.log(this.$route)
     }
