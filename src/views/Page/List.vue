@@ -35,7 +35,7 @@ export default class pageList extends Vue {
     total: number = 0;
     pullLoading: boolean = false;
     listLoading: boolean = false;
-    listFinished: boolean = false;
+    listFinished: boolean = true;
     list: object[] = [];
     mounted () {
         this.pullLoading = true;
@@ -43,7 +43,11 @@ export default class pageList extends Vue {
             const { total, result } = res.data;
             this.list = result;
             this.total = total;
-            if (this.total <= this.pageSize) this.listFinished = true;
+            if (this.total <= this.pageSize) {
+                this.listFinished = true;
+            } else {
+                this.listFinished = false;
+            }
         })
     }
     onRefresh () {
