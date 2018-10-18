@@ -26,11 +26,11 @@ export default class Badge extends Vue {
     // padding: 10px;
     .badge-info {
         position: absolute;
-        top: -1px;
-        left: 12px;
-        font-size: 0.1em;
+        top: -2px;
+        left: 14px;
+        font-size: 0.2em;
         line-height: 1;
-        transform: scale(0.65);
+        transform: scale(0.75);
     }
 }
 </style>

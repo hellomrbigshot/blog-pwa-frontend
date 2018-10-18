@@ -26,6 +26,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { getPageDetail } from '@/api/page'
 import mixin from '@/utils/mixin.ts'
+import { setTimeout } from 'timers';
 @Component({
     mixins: [mixin],
     components: {
@@ -44,10 +45,10 @@ export default class pageDetail extends Vue {
     mounted() {
         getPageDetail(this.id).then(res => {
             this.detail = res.data;
-            this.imgUrl = `/api/file/avatar/user?username=${this.detail.create_user}`
-            this.$nextTick(() => {
+            this.imgUrl = `/api/file/avatar/user?username=${this.detail.create_user}`;
+            setTimeout(() => {
                 this.hljsCode();
-            })
+            }, 50);
         })
     }
     imgError () {

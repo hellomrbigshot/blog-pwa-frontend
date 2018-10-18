@@ -8,21 +8,39 @@
                 </div>
             </div>
         </div>
+        <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: 90vh;">
+            <van-list
+                v-model="listLoading"
+                :finished="listFinished"
+                @load="onLoad"
+                :offset="60"
+                >
+                <div style="padding: 5px 15px;">
+                    <Page v-for="(detail, index) in list" :key="index" :page="detail"></Page>
+                </div>
+            </van-list>
+        </van-pull-refresh>
     </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { getTagDetail } from '@/api/tag'
 import { getPageList, searchPage }  from '@/api/page'
-@Component
+@Component({
+    components: {
+        'Page': () => import('@/views/Page/components/Page.vue')
+    }
+})
 export default class tagDetail extends Vue {
     name: string = '';
     tagDetail: object = {};
     page: number = 1;
-    pageSize: number = 10;
+    pageSize: number = 5;
     total: number = 0;
     list: object[] = [];
-    listFinished: boolean = true;
+    listFinished: boolean = false;
+    listLoading: boolean = false;
+    pullLoading: boolean = false;
     mounted () {
         this.name = this.$route.params.name;
         getTagDetail(this.name).then(res => {
@@ -34,6 +52,26 @@ export default class tagDetail extends Vue {
             this.list = result;
             this.total = total;
             if (this.total <= this.pageSize) this.listFinished = true;
+        })
+    };
+    onRefresh () {
+        this.page = 1;
+        getPageList({ status: 'normal', pageSize: this.pageSize, page: this.page, type: '', content: '', secret: false }).then(res => {
+            const { total, result } = res.data;
+            this.pullLoading = false;
+            this.listFinished = false;
+            this.list = result;
+            this.total = total;
+        })
+    };
+    onLoad () {
+        this.page = this.page + 1;
+        this.listLoading = true;
+        getPageList({ status: 'normal', pageSize: this.pageSize, page: this.page, type: 'tag', content: this.name, secret: false }).then(res => {
+            const { result } = res.data;
+            this.listLoading = false;
+            this.list.push(...result);
+            if (this.page * this.pageSize > this.total) this.listFinished =true;
         })
     };
 }

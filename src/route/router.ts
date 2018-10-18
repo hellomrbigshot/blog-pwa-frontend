@@ -18,7 +18,7 @@ export const page404 = {
 }
 export const normalRouter = {
     path: '/',
-    redirect: '/page',
+    redirect: '/pages',
     meta: {
         login: false
     },
