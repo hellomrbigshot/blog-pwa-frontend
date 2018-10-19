@@ -8,6 +8,13 @@ const RouterConfig: object = {
     mode: 'history',
     routes: routers
 }
+const router = new VueRouter(RouterConfig);
 
-export default new VueRouter(RouterConfig)
+router.afterEach((to, from) => {
+    // let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    // scrollTop = 0;
+    
+})
+
+export default router
 
