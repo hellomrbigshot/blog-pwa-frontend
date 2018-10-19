@@ -1,7 +1,7 @@
 <template>
     <div class="login-main">
         <van-nav-bar
-            title="世说新语"
+            :title="title"
             left-arrow
             @click-left="$router.go(-1)"
         >
@@ -11,34 +11,20 @@
             <van-cell-group >
                 <van-field v-model="username" placeholder="请输入用户名" />
                 <van-field type="password" v-model="password" placeholder="密码" />
+                <van-field type="password" v-model="repassword" placeholder="确认密码" />
             </van-cell-group>
-            <van-button style="margin-top: 10px;" size="large" @click="submit">登录</van-button>
-            <div style="overflow: auto; margin-top: 5px;"><router-link :to="{ name: 'register' }" style="font-size: 13px; float: right; color: #000;">注册账号</router-link></div>
-            <div class="div-line">
-                <div class="line-content">其他账号登录</div>
-            </div>
-            <div>
-                <div style="margin: 40px auto; width: 120px;">  
-                    <van-icon name="github-fill" size="40px"/>
-                    <van-icon name="weibo" size="40px" style="margin-left: 40px;"/>
-                </div>
-                
-                
-                <!-- <i class="iconfont icon-google"></i> -->
-            </div>
-        </div>  
-        
-
+            <van-button style="margin-top: 10px;" size="large" @click="submit">注册</van-button>
+        </div>
     </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { loginApi, getUserInfo } from '@/api/login'
+import { Component, Vue } from 'vue-property-decorator'
 @Component
-export default class Login extends Vue {
+export default class Register extends Vue {
     title: string = '世说新语';
     username: string = '';
     password: string = '';
+    repassword: string = '';
     submit () {
         if (!this.username.trim()) {
             this.$toast('请填写用户名');
@@ -48,16 +34,17 @@ export default class Login extends Vue {
             this.$toast('请填写密码');
             return false;
         }
-        loginApi({ username: this.username, password: this.password }).then((res: any) => {
-            this.$toast('登录成功');
-            getUserInfo(this.username).then((res: any) => {
-                const { data } = res;
-                localStorage.setItem('user', JSON.stringify(this.username));
-            })
-        })
-
+        if (!this.repassword.trim()) {
+            this.$toast('请确认密码');
+            return false;
+        }
+        if (this.repassword.trim() !== this.password.trim()) {
+            this.$toast('两次密码输入不一致');
+            return false;
+        }
     }
 }
+
 </script>
 <style lang="scss" scoped>
 .login-main {
@@ -85,5 +72,4 @@ export default class Login extends Vue {
     }
 }
 </style>
-
 

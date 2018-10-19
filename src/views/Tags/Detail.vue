@@ -53,7 +53,7 @@ export default class tagDetail extends Vue {
             this.total = total;
             if (this.total <= this.pageSize) this.listFinished = true;
         })
-    };
+    }
     onRefresh () {
         this.page = 1;
         getPageList({ status: 'normal', pageSize: this.pageSize, page: this.page, type: '', content: '', secret: false }).then(res => {
@@ -63,7 +63,7 @@ export default class tagDetail extends Vue {
             this.list = result;
             this.total = total;
         })
-    };
+    }
     onLoad () {
         this.page = this.page + 1;
         this.listLoading = true;
@@ -73,7 +73,7 @@ export default class tagDetail extends Vue {
             this.list.push(...result);
             if (this.page * this.pageSize > this.total) this.listFinished =true;
         })
-    };
+    }
 }
 </script>
 <style lang="scss" scoped>

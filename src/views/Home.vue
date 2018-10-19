@@ -1,11 +1,12 @@
 <template>
     <div>
         <van-nav-bar
-            :title="title"
             left-arrow
+            :title="title"
             :fixed="true"
             @click-left="clickLeft"
         >
+            <div slot="title" @click="$router.push({ name: 'pageList' })">{{ title }}</div>
             <van-icon name="search" slot="left" v-if="showSearchIcon"/>
         </van-nav-bar>
         <div :style="{ minHeight: '100vh', boxSizing: 'border-box', paddingTop: '46px', paddingBottom: $route.meta && typeof $route.meta.tab_active !== 'undefined' && '50px' || '0' }">

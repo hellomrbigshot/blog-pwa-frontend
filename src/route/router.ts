@@ -7,6 +7,15 @@ export const loginRouter: object = {
     },
     component: () => import('@/views/Login.vue')
 }
+export const registerRouter: object = {
+    path: '/register',
+    name: 'register',
+    meta: {
+        title: '注册',
+        login: false
+    },
+    component: () => import('@/views/Register.vue')
+}
 export const page404 = {
     path: '*',
     name: 'error-404',
@@ -130,6 +139,7 @@ export const normalRouter = {
 }
 export const routers: Array<object> = [ 
     loginRouter,
+    registerRouter,
     page404,
     normalRouter
 ]
