@@ -77,7 +77,7 @@ export default class mixin extends Vue {
             return marked(content);
         }
         hljsCode () { // 代码高亮
-            let blocks = document.querySelectorAll('pre code');
+            let blocks = document.querySelectorAll('code');
             let dom = Array.prototype.slice.call(blocks);
             dom.forEach((ele: any) => {
                 hljs.highlightBlock(ele);

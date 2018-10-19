@@ -100,18 +100,18 @@ export const normalRouter = {
                 }
             ]
         },
-        // {
-        //     name: 'comments',
-        //     path: '/comments',
-        //     component: () => import('@/views/Comments.vue'),
-        //     meta: {
-        //         login: true,
-        //         title: '消息',
-        //         icon: 'chat',
-        //         tab_active: 2,
-        //         search: true
-        //     }
-        // },
+        {
+            name: 'comments',
+            path: '/comments',
+            component: () => import('@/views/Comments.vue'),
+            meta: {
+                login: true,
+                title: '消息',
+                icon: 'chat',
+                tab_active: 2,
+                search: true
+            }
+        },
         {
             name: 'mine',
             path: '/mine',

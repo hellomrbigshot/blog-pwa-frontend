@@ -19,3 +19,12 @@ h4 {
     left: 0;
     right: 0;
 }
+code {
+    display: inline !important;
+}
+pre code {
+    display: block !important;
+}
+img {
+    max-width: 100%;
+}
