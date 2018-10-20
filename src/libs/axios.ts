@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from 'axios';
+import { Toast } from 'vant';
 
 class HttpRequest {
     baseUrl: string;
@@ -33,6 +34,10 @@ class HttpRequest {
         instance.interceptors.response.use((res: any) => {
             this.distroy(url);
             const { code, data } = res.data;
+            if (code === 'ERROR') {
+                Toast.fail(data);
+                return Promise.reject(data);
+            }
             return { code, data };
         }, (error: any) => {
             this.distroy(url);

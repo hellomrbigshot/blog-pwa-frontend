@@ -1,5 +1,6 @@
 import marked from 'marked'
 import hljs from 'highlight.js'
+import Cookies from 'js-cookie'
 import { Component, Vue } from 'vue-property-decorator';
 marked.setOptions({ 
     renderer: new marked.Renderer(),
@@ -41,6 +42,7 @@ declare module 'vue/types/vue' {
         marked (content: string): void
         hljsCode (): void
         debounce (fun: any, wait: number): void
+        Cookies: any
     }
 }
 @Component

@@ -50,9 +50,12 @@ export default class Login extends Vue {
         }
         loginApi({ username: this.username, password: this.password }).then((res: any) => {
             this.$toast('登录成功');
+            this.Cookies.set('username', this.username);
             getUserInfo(this.username).then((res: any) => {
                 const { data } = res;
-                localStorage.setItem('user', JSON.stringify(this.username));
+                localStorage.setItem('user', JSON.stringify(data));
+                const url = this.$route.query.redirect && decodeURIComponent(this.$route.query.redirect) || '/pages';
+                this.$router.push(url);
             })
         })
 

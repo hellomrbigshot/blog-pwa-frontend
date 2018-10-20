@@ -13,7 +13,12 @@ const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
     if (!Cookies.get('username') && to.meta.login) {
-        router.push({ name: 'login' });
+        next({ 
+            name: 'login', 
+            query: {
+                redirect: to.fullPath
+            } 
+        });
     } else {
         next();
     }   

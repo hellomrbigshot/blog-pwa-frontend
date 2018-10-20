@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vant from 'vant'
+import Cookies from 'js-cookie'
 import 'vant/lib/vant-css/index.css'
 import 'highlight.js/styles/solarized-light.css'
 import '@/assets/css/iconfont/iconfont.css'
@@ -12,6 +13,7 @@ import store from './vuex'
 Vue.use(Vant)
 
 Vue.config.productionTip = false
+Vue.prototype.Cookies = Cookies
 
 
 new Vue({
