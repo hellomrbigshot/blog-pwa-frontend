@@ -10,7 +10,7 @@
                 </van-col>
                 <van-col span="12">&nbsp;</van-col>
                 <van-col span="4">
-                    <Badge :info="detail.comments&&detail.comments.length||0">
+                    <Badge :info="comments.length">
                         <van-icon slot="content" name="chat" size="16px" />
                     </Badge>
                 </van-col>
@@ -22,7 +22,7 @@
                     <van-field v-model="comment" type="textarea" :autosize="{ maxHeight: 100, minHeight: 30 }" placeholder="回复" />
                 </div>
                 <div style="overflow: auto;">
-                    <van-icon name="success" size="14px" style="margin: 10px 20px 10px 0; float: right;"></van-icon>
+                    <van-icon name="success" size="14px" style="margin: 10px 20px 10px 0; float: right;" @click="setComment"></van-icon>
                 </div>
                 
             </div>
@@ -33,15 +33,46 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { sendComment, getCommentListByPageId } from '@/api/page'
 @Component({
     components: {
         Badge: () => import('@/components/Badge.vue')
     }
 })
 export default class setComment extends Vue {
-    @Prop(Object) detail!: object
+    @Prop(Object) detail!: any
+    @Prop(Array) comments!: object[]
     createComment: boolean = false
     comment: string = ''
+    setComment () {
+        if (!this.Cookies.get('user')) {
+            this.$router.replace({
+                name: 'login',
+                query: {
+                    redirect: this.$route.fullPath
+                }
+            })
+            return false;
+        }
+        if (!this.comment.trim()) {
+            this.$toast('请输入评论');
+            return false;
+        }
+        const commentObject = {
+            create_user: this.Cookies.get('user'),
+            to_user: this.detail.create_user,
+            page_id: this.detail._id,
+            page_title: this.detail.title,
+            content: this.comment
+        }
+        sendComment(commentObject).then((res: object) => {
+            this.$toast('评论发送成功');
+            this.$emit('update');
+            this.comment = '';
+            this.createComment = false;
+        })
+
+    }
 }
 </script>
 <style lang="scss" scoped>

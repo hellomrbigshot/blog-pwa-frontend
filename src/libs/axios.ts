@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { Toast } from 'vant';
+import Cookies from 'js-cookie';
+import router from '@/route/index';
 
 class HttpRequest {
     baseUrl: string;
@@ -41,6 +43,19 @@ class HttpRequest {
             return { code, data };
         }, (error: any) => {
             this.distroy(url);
+            if (error.response) {
+                switch (error.response.status) {
+                    case 401:
+                        Cookies.remove('user');
+                        localStorage.removeItem('user');
+                        router.replace({
+                            name: 'login',
+                            query: { redirect: router.currentRoute.fullPath }
+                        });
+                }
+            }
+            console.log(error)
+            return Promise.reject(error.response.data)
             return Promise.reject(error);
         })
     }

@@ -12,7 +12,7 @@ const RouterConfig: object = {
 const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
-    if (!Cookies.get('username') && to.meta.login) {
+    if (!Cookies.get('user') && to.meta.login) {
         next({ 
             name: 'login', 
             query: {

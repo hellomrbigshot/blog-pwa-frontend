@@ -30,3 +30,24 @@ export const searchPage = (keywords: string) => {
         method: 'post'
     })
 }
+export const sendComment = ({ content, create_user, page_id, page_title, to_user } = { content: '', create_user: '', page_id: '', page_title: '', to_user: '' }) => {
+    const data = {
+        content,
+        create_user,
+        page_id,
+        page_title,
+        to_user
+    }
+    return axios.request({
+        url: '/api/comment/create',
+        data: qs.stringify(data),
+        method: 'post'
+    })
+}
+export const getCommentListByPageId = (page_id: string) => {
+    return axios.request({
+        url: '/api/comment/getpagecommentlist',
+        data: qs.stringify({ page_id }),
+        method: 'post'
+    })
+}

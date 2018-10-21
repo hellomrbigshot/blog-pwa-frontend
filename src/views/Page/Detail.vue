@@ -19,12 +19,12 @@
             <div></div>    
 
         </main>
-        <set-comment :detail="detail"></set-comment>
+        <set-comment :detail="detail" :comments="comments" @update="getCommentList"></set-comment>
     </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { getPageDetail } from '@/api/page'
+import { getPageDetail, getCommentListByPageId } from '@/api/page'
 import mixin from '@/utils/mixin.ts'
 import { setTimeout } from 'timers';
 @Component({
@@ -37,6 +37,7 @@ export default class pageDetail extends Vue {
     detail: any = {}
     title: string = '世说新语'
     box: any = {}
+    comments: object[] = []
     imgUrl: string = require('../../assets/img/avatar.jpg')
     defaultImg: string = require('../../assets/img/avatar.jpg')
     get id (): string {
@@ -49,10 +50,16 @@ export default class pageDetail extends Vue {
             setTimeout(() => {
                 this.hljsCode();
             }, 50);
-        })
+        });
+        this.getCommentList();
     }
     imgError () {
         this.imgUrl = this.defaultImg
+    }
+    getCommentList () {
+        getCommentListByPageId(this.id).then(res => {
+            this.comments = res.data;
+        })
     }
 }
 </script>
