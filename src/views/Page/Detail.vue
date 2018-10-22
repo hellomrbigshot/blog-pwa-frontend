@@ -1,6 +1,6 @@
 <template>
     <div>
-        <main class="container main-container" style="margin: 50px 0;" v-if="detail.content" ref="scrollBody">
+        <main class="container main-container" style="margin: 50px 0 0;" v-if="detail.content" ref="scrollBody">
             <div class="page-detail">
                 <div>
                     <h1>{{ detail.title }}</h1>
@@ -16,8 +16,17 @@
                 </div>
                 <div class="page-content" v-html="marked(detail.content)" ></div>
             </div>
+            <div style="margin: 50px 0 10px;">
+                <van-tag plain v-for="tag, i in detail.tags" @click.native="$router.push({ name: 'tagDetail', params: { name: tag }})" style="margin-right: 5px;">{{ tag }}</van-tag>
+            </div>
         </main>
-        <Comments id="comments" :comments="comments"></Comments>
+        <div style="margin-bottom: 40px;" class="comment-wrapper">
+            <div class="comment-header">评论({{ comments.length }})</div>
+            <div class="comment-list" v-if="comments.length">
+                <Comment v-for="comment, index in comments" :comment="comment" :key="index"></Comment>
+            </div>
+            <div class="comment-empty" v-else>暂时还没有评论(#^.^#)</div>
+        </div>
         <set-comment :detail="detail" :comments="comments" @update="getCommentList"></set-comment>
     </div>
 </template>
@@ -30,7 +39,7 @@ import { setTimeout } from 'timers';
     mixins: [mixin],
     components: {
         setComment: () => import('./components/setComment.vue'),
-        Comments: () => import('./components/Comments.vue')
+        Comment: () => import('./components/Comment.vue')
     }
 })
 export default class pageDetail extends Vue {
@@ -92,6 +101,18 @@ export default class pageDetail extends Vue {
         width: 100%;
         max-width: 100%;
         overflow-x: auto;
+    }
+    .comment-header {
+        color: #555;
+        font-size: 14px;
+        padding: 10px 15px;
+        border-bottom: 1px solid #ddd;
+    }
+    .comment-empty {
+        font-size: 14px;
+        color: #ddd;
+        padding: 40px 100px;
+        text-align: center;
     }
 </style>
 
