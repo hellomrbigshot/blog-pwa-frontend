@@ -14,11 +14,10 @@
                         <div class="auto-create-time">{{ formatTime(detail.create_date, '3') }}发布</div>
                     </div>
                 </div>
-                <div class="page-content" v-html="marked(detail.content)"></div>
+                <div class="page-content" v-html="marked(detail.content)" ></div>
             </div>
-            <div></div>    
-
         </main>
+        <Comments id="comments" :comments="comments"></Comments>
         <set-comment :detail="detail" :comments="comments" @update="getCommentList"></set-comment>
     </div>
 </template>
@@ -30,7 +29,8 @@ import { setTimeout } from 'timers';
 @Component({
     mixins: [mixin],
     components: {
-        setComment: () => import('./components/setComment.vue')
+        setComment: () => import('./components/setComment.vue'),
+        Comments: () => import('./components/Comments.vue')
     }
 })
 export default class pageDetail extends Vue {
@@ -40,6 +40,7 @@ export default class pageDetail extends Vue {
     comments: object[] = []
     imgUrl: string = require('../../assets/img/avatar.jpg')
     defaultImg: string = require('../../assets/img/avatar.jpg')
+    showContent: boolean = false
     get id (): string {
         return this.$route.params.id;
     }
@@ -49,7 +50,7 @@ export default class pageDetail extends Vue {
             this.imgUrl = `/api/file/avatar/user?username=${this.detail.create_user}`;
             setTimeout(() => {
                 this.hljsCode();
-            }, 50);
+            }, 500);  
         });
         this.getCommentList();
     }
@@ -86,6 +87,11 @@ export default class pageDetail extends Vue {
                 margin-top: 2px;
             }
         }
+    }
+    .page-content {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
     }
 </style>
 

@@ -41,7 +41,6 @@ declare module 'vue/types/vue' {
         formatTime (time: any, type: string): void
         marked (content: string): void
         hljsCode (): void
-        debounce (fun: any, wait: number): void
         Cookies: any
     }
 }

@@ -10,9 +10,12 @@
                 </van-col>
                 <van-col span="12">&nbsp;</van-col>
                 <van-col span="4">
-                    <Badge :info="comments.length">
-                        <van-icon slot="content" name="chat" size="16px" />
-                    </Badge>
+                    <a href="#comments" style="color: #909090;">
+                        <Badge :info="comments.length">
+                            <van-icon slot="content" name="chat" size="16px" />
+                        </Badge>
+                    </a>
+                    
                 </van-col>
             </van-row>
         </div>
