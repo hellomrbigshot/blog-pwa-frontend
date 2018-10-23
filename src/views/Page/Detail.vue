@@ -1,6 +1,6 @@
 <template>
     <div>
-        <main class="container main-container" style="margin: 50px 0 0;" v-if="detail.content" ref="scrollBody">
+        <main class="container main-container" style="margin: 10px 0 10px; background: #fff;" v-if="detail.content" ref="scrollBody">
             <div class="page-detail">
                 <div>
                     <h1>{{ detail.title }}</h1>
@@ -16,7 +16,7 @@
                 </div>
                 <div class="page-content" v-html="marked(detail.content)" ></div>
             </div>
-            <div style="margin: 50px 0 10px;">
+            <div style="margin: 30px 0 10px;">
                 <van-tag plain v-for="tag, i in detail.tags" @click.native="$router.push({ name: 'tagDetail', params: { name: tag }})" style="margin-right: 5px;">{{ tag }}</van-tag>
             </div>
         </main>
@@ -102,17 +102,21 @@ export default class pageDetail extends Vue {
         max-width: 100%;
         overflow-x: auto;
     }
-    .comment-header {
-        color: #555;
-        font-size: 14px;
-        padding: 10px 15px;
-        border-bottom: 1px solid #ddd;
+    .comment-wrapper {
+        background: #fff;
+        .comment-header {
+            color: #555;
+            font-size: 14px;
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .comment-empty {
+            font-size: 14px;
+            color: #ddd;
+            padding: 40px 100px;
+            text-align: center;
+        }
     }
-    .comment-empty {
-        font-size: 14px;
-        color: #ddd;
-        padding: 40px 100px;
-        text-align: center;
-    }
+    
 </style>
 

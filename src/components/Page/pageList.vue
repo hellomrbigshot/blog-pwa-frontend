@@ -53,13 +53,18 @@ export default class pageList extends Vue {
         getPageList(queryObject).then(res => {
             const { total, result } = res.data;
             this.pullLoading = false;
-            this.listFinished = false;
             this.list = result;
             this.total = total;
+            if (this.total <= this.pageSize * this.page) {
+                this.listFinished = true;
+            } else {
+                this.listFinished = false;
+            }
         })
     }
     onLoad () {
         this.page = this.page + 1;
+        this.listFinished = true;
         let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query);
         getPageList(queryObject).then(res => {
             const { result } = res.data;
