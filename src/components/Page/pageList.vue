@@ -1,0 +1,73 @@
+<template>
+<div>
+    <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: 90vh;">
+        <van-list
+            v-model="listLoading"
+            :finished="listFinished"
+            @load="onLoad"
+            >
+            <div>
+                <Page v-for="(detail, index) in list" :key="index" :page="detail"></Page>
+            </div>
+        </van-list>
+    </van-pull-refresh>
+</div>  
+</template>
+<script lang="ts">
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import { getPageList }  from '@/api/page.ts'
+import mixin from '@/utils/mixin'
+@Component({
+    mixins: [mixin],
+    components: {
+        'Page': () => import('./Page.vue')
+    }
+})
+export default class pageList extends Vue {
+    @Prop(Object) query!: any;
+    page: number = 1;
+    pageSize: number = 5;
+    total: number = 0;
+    pullLoading: boolean = false;
+    listLoading: boolean = false;
+    listFinished: boolean = true;
+    list: object[] = [];
+    mounted () {
+        this.pullLoading = true;
+        let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query);
+        getPageList(queryObject).then(res => {
+            const { total, result } = res.data;
+            this.list = result;
+            this.total = total;
+            this.pullLoading = false;
+            if (this.total <= this.pageSize * this.page) {
+                this.listFinished = true;
+            } else {
+                this.listFinished = false;
+            }
+        })
+    }
+    onRefresh () {
+        this.page = 1;
+        let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query);
+        getPageList(queryObject).then(res => {
+            const { total, result } = res.data;
+            this.pullLoading = false;
+            this.listFinished = false;
+            this.list = result;
+            this.total = total;
+        })
+    }
+    onLoad () {
+        this.page = this.page + 1;
+        let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query);
+        getPageList(queryObject).then(res => {
+            const { result } = res.data;
+            this.listLoading = false;
+            this.list.push(...result);
+            if (this.page * this.pageSize > this.total) this.listFinished =true;
+        })
+    }
+}
+</script>
+

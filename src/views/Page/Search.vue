@@ -17,7 +17,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import { searchPage }  from '@/api/page.ts'
 @Component({
     components: {
-        'Page': () => import('./components/Page.vue')
+        'Page': () => import('@/components/Page/Page.vue')
     }
 })
 export default class Search extends Vue {

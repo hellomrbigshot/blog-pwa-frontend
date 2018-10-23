@@ -20,7 +20,7 @@
                 <van-tag plain v-for="tag, i in detail.tags" @click.native="$router.push({ name: 'tagDetail', params: { name: tag }})" style="margin-right: 5px;">{{ tag }}</van-tag>
             </div>
         </main>
-        <div style="margin-bottom: 40px;" class="comment-wrapper">
+        <div style="margin-bottom: 40px;" class="comment-wrapper" id="comments">
             <div class="comment-header">评论({{ comments.length }})</div>
             <div class="comment-list" v-if="comments.length">
                 <Comment v-for="comment, index in comments" :comment="comment" :key="index"></Comment>

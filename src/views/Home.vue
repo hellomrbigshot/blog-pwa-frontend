@@ -9,7 +9,7 @@
             <div slot="title" @click="$router.push({ name: 'pageList' })">{{ title }}</div>
             <van-icon name="search" slot="left" v-if="showSearchIcon"/>
         </van-nav-bar>
-        <div :style="{ minHeight: '100vh', boxSizing: 'border-box', paddingTop: '46px', paddingBottom: $route.meta && typeof $route.meta.tab_active !== 'undefined' && '50px' || '0' }">
+        <div :style="{ minHeight: '100vh', boxSizing: 'border-box', paddingTop: '46px', background: '#f5f6fa', paddingBottom: $route.meta && typeof $route.meta.tab_active !== 'undefined' && '50px' || '0' }">
             <!-- <keep-alive> -->
                 <router-view />
             <!-- </keep-alive> -->

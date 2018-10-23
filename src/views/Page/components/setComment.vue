@@ -25,7 +25,7 @@
                     <van-field v-model="comment" type="textarea" :autosize="{ maxHeight: 100, minHeight: 30 }" placeholder="回复" />
                 </div>
                 <div style="overflow: auto;">
-                    <van-icon name="success" size="14px" style="margin: 10px 20px 10px 0; float: right;" @click="setComment"></van-icon>
+                    <van-icon name="passed" size="14px" style="margin: 10px 20px 10px 0; float: right;" @click="setComment"></van-icon>
                 </div>
                 
             </div>
