@@ -14,7 +14,7 @@
 </div>  
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
 import { getPageList }  from '@/api/page.ts'
 import mixin from '@/utils/mixin'
 @Component({
@@ -46,6 +46,14 @@ export default class pageList extends Vue {
                 this.listFinished = false;
             }
         })
+    }
+    @Watch('list', { deep: true })
+    pageChange (val: object[], oldVal: object[]) {
+        this.change(val);
+    }
+    @Emit()
+    change (val: object[]) {
+        return val;
     }
     onRefresh () {
         this.page = 1;

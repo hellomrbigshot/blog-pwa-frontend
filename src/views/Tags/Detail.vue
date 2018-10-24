@@ -4,15 +4,15 @@
             <div class="tag-info">
                 <div>
                     <div class="tag-title">{{ name }}</div>
-                    <!-- <div class="tag-meta">{{ total }} 篇文章</div> -->
+                    <div class="tag-meta">{{ total }} 篇文章</div>
                 </div>
             </div>
         </div>
-        <page-list :query="{status: 'normal', type: 'tag', content: this.name, secret: false}" v-if="this.name"></page-list>
+        <page-list ref="pageList" :query="{status: 'normal', type: 'tag', content: this.name, secret: false}" v-if="this.name" @change="listChange"></page-list>
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getTagDetail } from '@/api/tag'
 @Component({
     components: {
@@ -22,12 +22,16 @@ import { getTagDetail } from '@/api/tag'
 export default class tagDetail extends Vue {
     name: string = '';
     tagDetail: object = {};
+    total: number = 0;
     mounted () {
         this.name = this.$route.params.name;
         getTagDetail(this.name).then(res => {
             let { data } = res;
             this.tagDetail = data;
         })
+    }
+    listChange (val: object[], oldVal: object[]) {
+        this.total = val.length;
     }
 }
 </script>
@@ -36,7 +40,7 @@ export default class tagDetail extends Vue {
     height: 150px;
     position: relative;
     width: 100%;
-    background: #f8f9fa;
+    background: #fff;
     box-sizing: border-box;
     border-bottom: 1px solid #f1f1f1;
     color: #666;
