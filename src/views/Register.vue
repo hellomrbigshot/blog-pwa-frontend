@@ -4,6 +4,9 @@
             <van-icon name="arrow-left" color="#fff" @click="$router.go(-1)"/>
         </div>
         <div class="login-content">
+            <div>
+                <img class="logo-img" :src="logoUrl" alt="">
+            </div>
             <van-cell-group >
                 <van-field v-model="username" placeholder="请输入用户名" />
                 <van-field type="password" v-model="password" placeholder="密码" />
@@ -22,6 +25,7 @@ export default class Register extends Vue {
     username: string = '';
     password: string = '';
     repassword: string = '';
+    logoUrl: string = require('@/assets/img/logo_blue_white.png');
     submit () {
         if (!this.username.trim()) {
             this.$toast('请填写用户名');

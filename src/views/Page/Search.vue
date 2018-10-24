@@ -54,6 +54,7 @@ export default class Search extends Vue {
         background: #0080ff;
         margin-left: 10px;
         color: #fff;
+        border-radius: 5px;
     }
 }
 </style>

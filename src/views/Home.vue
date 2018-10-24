@@ -6,7 +6,9 @@
             :fixed="true"
             @click-left="clickLeft"
         >
-            <div slot="title" @click="$router.push({ name: 'pageList' })">{{ title }}</div>
+            <div slot="title" @click="$router.push({ name: 'pageList' })" style="padding: 5px 0;">
+                <img :src="logoUrl" height="36px;"/>
+            </div>
             <van-icon name="search" slot="left" v-if="showSearchIcon"/>
         </van-nav-bar>
         <div :style="{ minHeight: '100vh', boxSizing: 'border-box', paddingTop: '46px', background: '#f5f6fa', paddingBottom: $route.meta && typeof $route.meta.tab_active !== 'undefined' && '50px' || '0' }">
@@ -30,6 +32,7 @@ export default class Home extends Vue {
     active: number = 0;
     aliveArray: [string] = ['pageList'];
     showSearchIcon: boolean = true;
+    logoUrl: string = require('@/assets/img/logo_white_black.png');
     mounted () {
         this.checkRoute(this.$route);
     }

@@ -1,6 +1,7 @@
+@import './color.scss';
 .login-main {
     height: 100vh;
-    background: #0080ff;
+    background: $logBackground;
     .login-header {
         color: #fff;
         padding: 20px 0 20px 10px;
