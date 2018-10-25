@@ -12,7 +12,7 @@
                 <van-field type="password" v-model="password" placeholder="密码" />
             </van-cell-group>
             <van-button class="login-btn" style="margin-top: 10px;" size="large" @click="submit">登录</van-button>
-            <div style="overflow: auto; margin-top: 10px;"><router-link :to="{ name: 'register' }" style="font-size: 13px; float: right; color: #fff;">注册账号</router-link></div>
+            <div style="overflow: auto; margin-top: 10px;"><router-link :to="{ name: 'register', query: { redirect: this.redirect } }" style="font-size: 13px; float: right; color: #fff;">注册账号</router-link></div>
             <div class="div-line">
                 <div class="line-content">其他账号登录</div>
             </div>
@@ -36,7 +36,10 @@ export default class Login extends Vue {
     title: string = '世说新语';
     username: string = '';
     password: string = '';
-    logoUrl: string = require('@/assets/img/logo_blue_white.png');
+    logoUrl: string = require('@/assets/img/logo_white_transparent.png');
+    get redirect () {
+        return this.$route.query.redirect && decodeURIComponent(this.$route.query.redirect) || '';
+    }
     submit () {
         if (!this.username.trim()) {
             this.$toast('请填写用户名');
@@ -47,12 +50,12 @@ export default class Login extends Vue {
             return false;
         }
         loginApi({ username: this.username, password: this.password }).then((res: any) => {
-            this.$toast('登录成功');
+            this.$toast.success('登录成功');
             this.Cookies.set('user', this.username);
             getUserInfo(this.username).then((res: any) => {
                 const { data } = res;
                 localStorage.setItem('user', JSON.stringify(data));
-                const url = this.$route.query.redirect && decodeURIComponent(this.$route.query.redirect) || '/pages';
+                const url = this.redirect && this.redirect || '/pages';
                 this.$router.push(url);
             })
         })

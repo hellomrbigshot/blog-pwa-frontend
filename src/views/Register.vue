@@ -18,6 +18,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { registerApi, getUserInfo } from '@/api/login'
 import '@/assets/css/login.scss'
 @Component
 export default class Register extends Vue {
@@ -25,24 +26,40 @@ export default class Register extends Vue {
     username: string = '';
     password: string = '';
     repassword: string = '';
-    logoUrl: string = require('@/assets/img/logo_blue_white.png');
+    logoUrl: string = require('@/assets/img/logo_white_transparent.png');
+    get redirect () {
+        return this.$route.query.redirect && decodeURIComponent(this.$route.query.redirect) || '';
+    }
     submit () {
-        if (!this.username.trim()) {
-            this.$toast('请填写用户名');
-            return false;
+        try {
+            if (!this.username.trim()) {
+                throw new Error('请填写用户名');
+            }
+            if (!this.password.trim()) {
+                throw new Error('请填写密码');
+            }
+            if (!this.repassword.trim()) {
+                throw new Error('请确认密码');
+            }
+            if (this.repassword.trim() !== this.password.trim()) {
+                throw new Error('两次密码输入不一致');
+            }
+            registerApi({ username: this.username.trim(), password: this.password.trim(), repassword: this.repassword.trim() }).then(res => {
+                this.$toast.success('注册成功');
+                this.Cookies.set('user', this.username);
+                getUserInfo(this.username).then((res: any) => {
+                    const { data } = res;
+                    localStorage.setItem('user', JSON.stringify(data));
+                    const url = this.redirect && this.redirect || '/pages';
+                    this.$router.push(url);
+                })
+            }) 
+        } catch (e) {
+            this.$toast.fail(e.message);
         }
-        if (!this.password.trim()) {
-            this.$toast('请填写密码');
-            return false;
-        }
-        if (!this.repassword.trim()) {
-            this.$toast('请确认密码');
-            return false;
-        }
-        if (this.repassword.trim() !== this.password.trim()) {
-            this.$toast('两次密码输入不一致');
-            return false;
-        }
+        
+        
+
     }
 }
 

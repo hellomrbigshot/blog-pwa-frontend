@@ -1,7 +1,7 @@
 @import './color.scss';
 .login-main {
     height: 100vh;
-    background: $logBackground;
+    background: $loginBackground;
     .login-header {
         color: #fff;
         padding: 20px 0 20px 10px;
@@ -17,9 +17,9 @@
         }
     }
     .login-btn {
-        background: #006cd9;
+        background: $loginBtnColor;
         color: #fff;
-        border-color: #006cd9;
+        border-color: $loginBtnColor;
     }
     .div-line {
         position: relative;
@@ -32,10 +32,10 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            background: #fff;
             padding: 5px 10px;
             font-size: 13px;
-            background: #0080ff;
+            color: #2c3e50;
+            background: $loginBackground;
         }
     }
 }

@@ -13,7 +13,7 @@ router.post('/', checkNotLogin, async (req, res, next) => {
     let password = req.body.password
     const repassword = req.body.repassword
     const avatar = req.body.avatar
-    const gender = req.body.gender
+    const gender = req.body.gender || 'x'
     const bio = req.body.bio
     // 校验参数
     try {
@@ -37,7 +37,6 @@ router.post('/', checkNotLogin, async (req, res, next) => {
         let exist = await UserModel.getUserByName(username)
         if (exist) {
             throw new Error('该用户已注册')
-            return false
         }
         // 密码加密
         password = sha1(password)

@@ -12,10 +12,11 @@ export const loginApi = ({ username, password } = { username: '', password: '' }
         method: 'post'
     })
 }
-export const Register = ({ username, password } = { username: '', password: '' }) => {
+export const registerApi = ({ username, password, repassword } = { username: '', password: '', repassword: '' }) => {
     const data = {
         username,
-        password
+        password,
+        repassword
     };
     return axios.request({
         url: '/api/signup',

@@ -90,7 +90,7 @@ export const normalRouter = {
                 {
                     name: 'tagList',
                     path: 'list',
-                    component: () => import('@/views/Tags/List.vue'),
+                    component: () => import('@/views/Tag/List.vue'),
                     meta: {
                         login: false,
                         tab_active: 1,
@@ -100,7 +100,7 @@ export const normalRouter = {
                 {
                     name: 'tagDetail',
                     path: 'detail/:name',
-                    component: () => import('@/views/Tags/Detail.vue'),
+                    component: () => import('@/views/Tag/Detail.vue'),
                     meta: {
                         login: false,
                         tab_active: 1,
@@ -133,6 +133,17 @@ export const normalRouter = {
                 search: true
             }
         },
+        {
+            name: 'user',
+            path: '/user/:username',
+            component: () => import('@/views/User/index.vue'),
+            meta: {
+                login: false,
+                title: '个人中心',
+                search: false,
+                hide_header: true
+            }
+        }
 
     ]
 

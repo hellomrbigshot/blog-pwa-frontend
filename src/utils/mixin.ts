@@ -41,7 +41,8 @@ declare module 'vue/types/vue' {
         formatTime (time: any, type: string): void
         marked (content: string): void
         hljsCode (): void
-        Cookies: any
+        Cookies: any,
+        computed: object
     }
 }
 @Component
