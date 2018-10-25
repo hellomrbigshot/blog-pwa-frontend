@@ -24,9 +24,16 @@ export const registerApi = ({ username, password, repassword } = { username: '',
         method: 'post'
     })
 }
-export const getUserInfo = (username: string) => {
+export const getUserInfo = (username: string) => { // 需要登录
     return axios.request({
         url: '/api/signin/getUserInfo',
+        data: qs.stringify({ username }),
+        method: 'post'
+    })   
+}
+export const getUserDetail = (username: string) => { // 无需登录
+    return axios.request({
+        url: '/api/user/detail',
         data: qs.stringify({ username }),
         method: 'post'
     })   
