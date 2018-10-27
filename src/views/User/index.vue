@@ -9,10 +9,23 @@
                     <div class="user-info-bio">{{ userInfo.bio }}</div>
                     <div class="user-info-oauths">
                         <van-icon name="github-fill" size="22px" :color="oauth_accounts.github.oauth&&'#24292e'||'#fff'"/>
-                        <van-icon name="weibo" size="22px" style="margin-left: 5px;" :color="oauth_accounts.github.oauth&&'#24292e'||'#fff'"/>
+                        <van-icon name="weibo" size="22px" style="margin-left: 5px;" :color="oauth_accounts.github.oauth&&'#e6162d'||'#fff'"/>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="content">
+            <van-tabs v-model="active">
+                <van-tab title="动态()">
+                    
+                </van-tab>
+                <van-tab title="文章()">
+
+                </van-tab>
+                <van-tab title="评论()">
+                    
+                </van-tab>
+            </van-tabs>
         </div>
     </div>
 </template>
@@ -36,6 +49,7 @@ export default class userInfo extends Vue {
             oauth_user: ''
         }
     };
+    active: number = 0;
     get username () {
         return this.$route.params.username
     }
