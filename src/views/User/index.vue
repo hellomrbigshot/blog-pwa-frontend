@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="header">
-            <van-icon name="arrow-left" color="#fff" class="back-icon"></van-icon>
+            <van-icon name="arrow-left" color="#fff" class="back-icon" @click="$router.go(-1)"></van-icon>
             <div class="user-info">
                 <img :src="imgUrl" alt="" @error="imgError" class="user-avatar">
                 <div class="user-info-text">
