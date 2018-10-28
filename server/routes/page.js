@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const PageModel = require('../models/page')
+const ActivityModel = require('../models/activity')
 const checkLogin = require('../middlewares/check').checkLogin
 
 router.post('/new', checkLogin, async (req, res, next) => { // 新建文章
@@ -25,7 +26,9 @@ router.post('/new', checkLogin, async (req, res, next) => { // 新建文章
             secret,
             tags
         }
-        let result = await PageModel.create(page)
+        const result = await PageModel.create(page)
+        await ActivityModel.create({ type: 'page', id: result._id, create_time: result.create_date, update_date: result.update_date, create_user: result.create_user })
+
         const [page_num, draft_num] = await Promise.all([
             PageModel.getPageNum({ type: 'create_user', content: create_user, status: 'normal' }),
 			PageModel.getPageNum({ type: 'create_user', content: create_user, status: 'draft' }),
@@ -54,7 +57,8 @@ router.post('/edit', checkLogin, async (req, res, next) => { // 编辑文章
             secret,
             tags
         }
-        let result = await PageModel.update(id, page)
+        const result = await PageModel.update(id, page)
+        await ActivityModel.create({ type: 'page', id: result._id, create_time: result.create_date, update_date: result.update_date, create_user: result.create_user })
         const [page_num, draft_num] = await Promise.all([
             PageModel.getPageNum({ type: 'create_user', content: create_user, status: 'normal' }),
 			PageModel.getPageNum({ type: 'create_user', content: create_user, status: 'draft' }),

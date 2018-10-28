@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const CommentModel = require('../models/comment')
+const ActivityModel = require('../models/activity')
 const checkLogin = require('../middlewares/check').checkLogin
 
 // 创建评论
@@ -12,7 +13,9 @@ router.post('/create', checkLogin, async (req, res, next) => {
     const page_title = req.body.page_title
     const to_user = req.body.to_user
     try {
-        let result = await CommentModel.create({ content, create_user, page_id, page_title, to_user })
+        const result = await CommentModel.create({ content, create_user, page_id, page_title, to_user })
+        // 添加一条动态
+        await ActivityModel.create({ type: 'comment', id: result._id, create_time: result.create_time, create_user: result.create_user, update_time: result.create_time })
         res.status(200).json({ code: 'OK', data: result })
     } catch (e) {
         res.status(200).json({ code: 'ERROR', data: e.message })

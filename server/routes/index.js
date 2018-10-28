@@ -9,4 +9,5 @@ module.exports = function (app) {
 	app.use('/api/oauth', require('./oauth'))
 	app.use('/api/comment', require('./comment'))
 	app.use('/api/file', require('./file'))
+	app.use('/api/activity', require('./activity'))
 }
