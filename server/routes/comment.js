@@ -12,8 +12,9 @@ router.post('/create', checkLogin, async (req, res, next) => {
     const page_id = req.body.page_id
     const page_title = req.body.page_title
     const to_user = req.body.to_user
+    const create_time = new Date().toLocaleString()
     try {
-        const result = await CommentModel.create({ content, create_user, page_id, page_title, to_user })
+        const result = await CommentModel.create({ content, create_user, page_id, page_title, to_user, create_time })
         // 添加一条动态
         await ActivityModel.create({ type: 'comment', id: result._id, create_time: result.create_time, create_user: result.create_user, update_time: result.create_time })
         res.status(200).json({ code: 'OK', data: result })

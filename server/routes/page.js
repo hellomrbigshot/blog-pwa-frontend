@@ -7,8 +7,8 @@ const checkLogin = require('../middlewares/check').checkLogin
 
 router.post('/new', checkLogin, async (req, res, next) => { // 新建文章
     try {
-        const create_date = new Date()
-        const update_date = new Date()
+        const create_date = new Date().toLocaleString()
+        const update_date = new Date().toLocaleString()
         const title = req.body.title
         const content = req.body.content
         const create_user = req.session.user.username
