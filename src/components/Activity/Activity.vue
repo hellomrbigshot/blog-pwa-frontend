@@ -2,7 +2,7 @@
     <div class="activity-main">
         <div class="activity-header">
             <div class="avatar inline-block">
-                <img :src="imgUrl" class="inline-block" alt="">
+                <img :src="imgUrl" class="inline-block" alt="" @error="imgError">
             </div>
             <div class="activity-user-info">
                 <div class="activity-user-name">{{ activity.create_user }}</div>
@@ -12,9 +12,13 @@
                     <span style="margin-left: 10px;">{{ formatTime(activity.update_time, '3') }}</span>
                 </div>
             </div>
-            <div>
-
+        </div>
+        <div class="page">
+            <div class="page-header">
+                <h4>{{ activity.content.title }}</h4>
             </div>
+            <div class="page-content">{{ marked(activity.content.content).replace(/<[^>]+>/g, '') }}</div>
+            
         </div>
     </div>
 </template>
@@ -30,6 +34,9 @@ export default class Activity extends Vue {
     defaultImg: string = require('../../assets/img/avatar.jpg')
     mounted () {
         this.imgUrl = `/api/file/avatar/user?username=${this.activity.create_user}`;
+    }
+    imgError () {
+        this.imgUrl = this.defaultImg;
     }
 }
 </script>
@@ -61,6 +68,11 @@ export default class Activity extends Vue {
             }
         }
 
+    }
+    .page {
+        .page-header {
+            margin: 5px 0;
+        }
     }
     
 }
