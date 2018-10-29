@@ -7,7 +7,7 @@
             @load="onLoad"
             >
             <div>
-                
+                <Activity v-for="item, i in list" :activity="item" :key="i"></Activity>
             </div>
         </van-list>
     </van-pull-refresh>
@@ -20,7 +20,7 @@ import mixin from '@/utils/mixin'
 @Component({
     mixins: [mixin],
     components: {
-        
+        Activity: () => import('./Activity.vue')
     }
 })
 export default class activityList extends Vue {
