@@ -8,21 +8,21 @@
                     <div class="user-info-name">{{ username }}</div>
                     <div class="user-info-bio">{{ userInfo.bio }}</div>
                     <div class="user-info-oauths">
-                        <van-icon name="github-fill" size="22px" :color="oauth_accounts.github.oauth&&'#24292e'||'#fff'"/>
-                        <van-icon name="weibo" size="22px" style="margin-left: 5px;" :color="oauth_accounts.github.oauth&&'#e6162d'||'#fff'"/>
+                        <van-icon name="github-fill" size="22px" :color="oauthAccounts.github.oauth&&'#24292e'||'#fff'"/>
+                        <van-icon name="weibo" size="22px" style="margin-left: 5px;" :color="oauthAccounts.github.oauth&&'#e6162d'||'#fff'"/>
                     </div>
                 </div>
             </div>
         </div>
         <div class="content">
             <van-tabs v-model="active">
-                <van-tab title="动态()">
-                    
+                <van-tab :title="`动态(${activityNum})`">
+                    <activity-list :query="{ create_user: username }" ></activity-list>
                 </van-tab>
-                <van-tab title="文章()">
+                <van-tab :title="`文章(${pageNum})`">
 
                 </van-tab>
-                <van-tab title="评论()">
+                <van-tab :title="`评论(${commentNum})`">
                     
                 </van-tab>
             </van-tabs>
@@ -32,14 +32,19 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { getUserDetail } from '@/api/login'
-@Component
+import { getActivityList, getActivityNum } from '@/api/activity'
+@Component({
+    components: {
+        activityList: () => import('@/components/Activity/List.vue')
+    }
+})
 export default class userInfo extends Vue {
     imgUrl: string = '';
     defaultUrl: string = require('@/assets/img/avatar.jpg');
     userInfo: any = {
         oauthinfo: {}
     };
-    oauth_accounts: any = {
+    oauthAccounts: any = {
         github: {
             oauth: false,
             oauth_user: ''
@@ -50,6 +55,10 @@ export default class userInfo extends Vue {
         }
     };
     active: number = 0;
+    activityNum: number = 0;
+    pageNum: number = 0;
+    commentNum: number = 0;
+    
     get username () {
         return this.$route.params.username
     }
@@ -57,18 +66,29 @@ export default class userInfo extends Vue {
         this.imgUrl = `/api/file/avatar/user?username=${this.username}`;
         getUserDetail(this.username).then((res: any) => {
             this.userInfo = res.data;
-            Object.keys(this.oauth_accounts).forEach(type => {
+            Object.keys(this.oauthAccounts).forEach(type => {
                 let filter_oauth_obj = this.userInfo.oauthinfo.find((item: any) => item.type === type)
-            if (filter_oauth_obj) {
-                this.oauth_accounts[type].oauth = true
-                this.oauth_accounts[type].oauth_user =
-                filter_oauth_obj.domain || filter_oauth_obj.name
-            } else {
-                this.oauth_accounts[type].oauth = false
-                this.oauth_accounts[type].oauth_user = ''
-            }
+                if (filter_oauth_obj) {
+                    this.oauthAccounts[type].oauth = true
+                    this.oauthAccounts[type].oauth_user =
+                    filter_oauth_obj.domain || filter_oauth_obj.name
+                } else {
+                    this.oauthAccounts[type].oauth = false
+                    this.oauthAccounts[type].oauth_user = ''
+                }
             })
         })
+        getActivityNum({ create_user: this.username, type: '' }).then((res: any) => {
+            this.activityNum = res.data;
+        })
+        getActivityNum({ create_user: this.username, type: 'page' }).then((res: any) => {
+            this.pageNum = res.data;
+        })
+        getActivityNum({ create_user: this.username, type: 'comment' }).then((res: any) => {
+            this.commentNum = res.data;
+        })
+        
+
     }
     imgError () {
         this.imgUrl = this.defaultUrl;

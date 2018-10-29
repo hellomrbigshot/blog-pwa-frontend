@@ -18,7 +18,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { getPageList, searchPage }  from '@/api/page.ts';
 @Component({
     components: {
-        pageList: () => import('@/components/Page/pageList.vue')
+        pageList: () => import('@/components/Page/List.vue')
     }
 })
 export default class Home extends Vue {

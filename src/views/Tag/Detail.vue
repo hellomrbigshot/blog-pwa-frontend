@@ -16,7 +16,7 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getTagDetail } from '@/api/tag'
 @Component({
     components: {
-        pageList: () => import('@/components/Page/pageList.vue')
+        pageList: () => import('@/components/Page/List.vue')
     }
 })
 export default class tagDetail extends Vue {

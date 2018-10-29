@@ -14,6 +14,7 @@ module.exports = {
      * */
     getList (query) {
         const type = query.type
+        const create_user = query.create_user
         const pageSize = query.pageSize
         const Count = query.Count
         let query_obj = {}
@@ -38,8 +39,7 @@ module.exports = {
     // 获取动态数量
     getNum (query) {
         const type = query.type
-        const pageSize = query.pageSize
-        const Count = query.Count
+        const create_user = query.create_user
         let query_obj = {}
         if (type) {
             query_obj.type = type
