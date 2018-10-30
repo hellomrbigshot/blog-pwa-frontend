@@ -27,12 +27,14 @@ module.exports = {
         if (pageSize && Count) {
             return Activity
                 .find(query_obj)
+                .sort({'update_time':-1})
                 .skip(Count)
                 .limit(pageSize)
                 .exec()
         } else {
             return Activity
                 .find(query_obj)
+                .sort({'update_time':-1})
                 .exec()
         }
     },

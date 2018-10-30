@@ -13,13 +13,13 @@
                 </div>
             </div>
         </div>
-        <div class="page">
+        <div class="page" v-if="activity.type==='page'">
             <div class="page-header">
                 <h4>{{ activity.content.title }}</h4>
             </div>
             <div class="page-content">{{ marked(activity.content.content).replace(/<[^>]+>/g, '') }}</div>
-            
         </div>
+        <div class="comment" v-else-if="activity.type==='comment'"></div>
     </div>
 </template>
 <script lang="ts">
@@ -72,6 +72,17 @@ export default class Activity extends Vue {
     .page {
         .page-header {
             margin: 5px 0;
+        }
+        .page-content {
+            margin-bottom: 15px;
+            color: #888;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            line-height: 1.5;
+            word-break: break-all;
+            overflow: hidden;
+            font-size: 14px;
         }
     }
     
