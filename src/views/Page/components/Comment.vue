@@ -1,9 +1,12 @@
 <template>
     <div class="comment">
-        <div class="comment-info">
-            <img class="comment-avatar" :src='imgUrl' alt="" @error="imgError">
-            <span class="comment-author">{{ comment.create_user }}</span>
-        </div>
+        <router-link :to="{ name: 'user', params: { username: comment.create_user }}">
+            <div class="comment-info">
+                <img class="comment-avatar" :src='imgUrl' alt="" @error="imgError">
+                <span class="comment-author">{{ comment.create_user }}</span>
+            </div>
+        </router-link>
+        
         <div class="comment-content">{{ comment.content }}</div>
         <div class="comment-time">{{ formatTime(comment.create_time, '3') }}</div>
     </div>

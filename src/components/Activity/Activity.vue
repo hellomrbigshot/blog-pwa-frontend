@@ -14,12 +14,19 @@
             </div>
         </div>
         <div class="page" v-if="activity.type==='page'">
-            <div class="page-header">
-                <h4>{{ activity.content.title }}</h4>
-            </div>
-            <div class="page-content">{{ marked(activity.content.content).replace(/<[^>]+>/g, '') }}</div>
+            <router-link :to="{ name: 'pageDetail', params: { id: activity.content._id } }">
+                 <div class="page-header">
+                    <h4>{{ activity.content.title }}</h4>
+                </div>
+                <div class="page-content">{{ marked(activity.content.content).replace(/<[^>]+>/g, '') }}</div>
+            </router-link>
         </div>
-        <div class="comment" v-else-if="activity.type==='comment'"></div>
+        <div class="comment" v-else-if="activity.type==='comment'">
+            <router-link :to="`/pages/detail/${activity.content.page_id}#${activity.content._id}`">
+                <div class="comment-header">{{ activity.content.content }}</div>
+                <div class="comment-content">{{ activity.content.page_title }}</div>
+            </router-link>
+        </div>
     </div>
 </template>
 <script lang="ts">
@@ -46,7 +53,7 @@ export default class Activity extends Vue {
     margin-top: 15px;
     background: #fff;
     .activity-header {
-        overflow: auto;
+        overflow: hidden;
         .avatar {
             width: 40px;
             height: 40px;
@@ -83,6 +90,18 @@ export default class Activity extends Vue {
             word-break: break-all;
             overflow: hidden;
             font-size: 14px;
+        }
+    }
+    .comment {
+        .comment-header {
+            padding: 5px 0;
+            color: #333;
+        }
+        .comment-content {
+            padding: 10px 0 5px 20px;
+            box-shadow: 0 1px 2px 1px #ddd;
+            color: #0066CC;
+            font-size: 18px;
         }
     }
     

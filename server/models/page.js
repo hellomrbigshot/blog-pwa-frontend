@@ -93,7 +93,9 @@ module.exports = {
             .exec()
     },
     searchPage(query) {
-        const keywords = query.keywords
+        const keywords = query.keywords || ''
+        const pageSize = query.pageSize
+        const Count = query.Count
         const reg = new RegExp(keywords, 'i')
         let query_obj = {
             secret: false,
@@ -108,6 +110,26 @@ module.exports = {
         return Page
             .find(query_obj)
             .sort({ 'create_date': -1 })
+            .skip(Count)
+            .limit(pageSize)
+            .exec()
+    },
+    searchPageNum(query) {
+        const keywords = query.keywords
+        const reg = new RegExp(keywords, 'i')
+        let query_obj = {
+            secret: false,
+            status: 'normal'
+        }
+        if (keywords) {
+            query_obj['$or'] = [ // 支持标题和正文查找
+                    { title: { $regex: reg }},
+                    { content: { $regex: reg }}
+                ]   
+        }
+        return Page
+            .find(query_obj)
+            .countDocuments()
             .exec()
     }
 }

@@ -6,9 +6,10 @@
             :finished="listFinished"
             @load="onLoad"
             >
-            <div>
+            <div v-if="list.length">
                 <Activity v-for="item, i in list" :activity="item" :key="i"></Activity>
             </div>
+            <div v-else class="empty-content">暂时没有内容=。=</div>
         </van-list>
     </van-pull-refresh>
 </div>  
@@ -72,13 +73,12 @@ export default class activityList extends Vue {
     }
     onLoad () {
         this.page = this.page + 1;
-        this.listFinished = true;
         let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query);
-        getActivityNum(queryObject).then(res => {
+        getActivityList(queryObject).then(res => {
             const { result } = res.data;
             this.listLoading = false;
             this.list.push(...result);
-            if (this.page * this.pageSize > this.total) this.listFinished =true;
+            if (this.page * this.pageSize >= this.total) this.listFinished = true;
         })
     }
 }

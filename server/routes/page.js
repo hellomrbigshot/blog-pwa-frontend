@@ -108,9 +108,17 @@ router.post('/pagelist', async (req, res, next) => { // 获取文章列表
 })
 router.post('/searchpage', async (req, res, next) => { // 模糊搜索
     const keywords = req.body.keywords || ''
+    let page = req.body.page || 1
+    let pageSize = req.body.pageSize || 999
+    pageSize = typeof (pageSize) === 'number' ? pageSize : parseInt(pageSize)
+    page = typeof (page) === 'number' ? page : parseInt(page)
+    const Count =  pageSize * (page - 1)
     try {
-        let result = await PageModel.searchPage({ keywords })
-        res.status(200).json({ code: 'OK', data: { result } })
+        let [total, result] = await Promise.all([
+            PageModel.searchPageNum({ keywords }),
+            PageModel.searchPage({ keywords, Count, pageSize })
+        ]) 
+        res.status(200).json({ code: 'OK', data: { result, total } })
     } catch (e) {
         res.status(200).json({ code: 'ERROR', data: e.message })
     }

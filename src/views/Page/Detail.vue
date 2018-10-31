@@ -5,15 +5,18 @@
                 <div>
                     <h1>{{ detail.title }}</h1>
                 </div>
-                <div class="auto-info">
-                    <a class="auto-avatar inline-block">
-                        <img :src="imgUrl" alt="头像" class="inline-block" ref="img" @error="imgError">
-                    </a>
-                    <div class="auto-info-text">
-                        <div class="auto-name">{{ detail.create_user }}</div>
-                        <div class="auto-create-time">{{ formatTime(detail.create_date, '3') }}发布</div>
+                <router-link :to="{ name: 'user', params: { username: detail.create_user }}">
+                    <div class="auto-info">
+                        <a class="auto-avatar inline-block">
+                            <img :src="imgUrl" alt="头像" class="inline-block" ref="img" @error="imgError">
+                        </a>
+                        <div class="auto-info-text">
+                            <div class="auto-name">{{ detail.create_user }}</div>
+                            <div class="auto-create-time">{{ formatTime(detail.create_date, '3') }}发布</div>
+                        </div>
                     </div>
-                </div>
+                </router-link>
+                
                 <div class="page-content" v-html="marked(detail.content)" ></div>
             </div>
             <div style="margin: 30px 0 10px;">
@@ -23,7 +26,7 @@
         <div style="margin-bottom: 40px;" class="comment-wrapper" id="comments">
             <div class="comment-header">评论({{ comments.length }})</div>
             <div class="comment-list" v-if="comments.length">
-                <Comment v-for="comment, index in comments" :comment="comment" :key="index"></Comment>
+                <Comment v-for="comment, index in comments" :comment="comment" :key="index" :id="comment._id"></Comment>
             </div>
             <div class="comment-empty" v-else>暂时还没有评论(#^.^#)</div>
         </div>
@@ -89,6 +92,7 @@ export default class pageDetail extends Vue {
             .auto-name {
                 font-size: 15px;
                 font-weight: 700;
+                color: #28a946;
             }
             .auto-create-time {
                 font-size: 13px;

@@ -6,9 +6,10 @@
             :finished="listFinished"
             @load="onLoad"
             >
-            <div>
+            <div v-if="list.length">
                 <Page v-for="(detail, index) in list" :key="index" :page="detail"></Page>
             </div>
+            <div v-else class="empty-content">暂时没有内容=。=</div>
         </van-list>
     </van-pull-refresh>
 </div>  
@@ -25,6 +26,7 @@ import mixin from '@/utils/mixin'
 })
 export default class pageList extends Vue {
     @Prop(Object) query!: any;
+    @Prop({ default: '/api/page/pagelist' }) api!: string;
     page: number = 1;
     pageSize: number = 5;
     total: number = 0;
@@ -35,7 +37,7 @@ export default class pageList extends Vue {
     mounted () {
         this.pullLoading = true;
         let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query);
-        getPageList(queryObject).then(res => {
+        getPageList(queryObject, this.api).then(res => {
             const { total, result } = res.data;
             this.list = result;
             this.total = total;
@@ -55,10 +57,11 @@ export default class pageList extends Vue {
     change (val: object[]) {
         return val;
     }
-    onRefresh () {
+    onRefresh (query: object) {
+        if (query) this.query = query;
         this.page = 1;
         let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query);
-        getPageList(queryObject).then(res => {
+        getPageList(queryObject, this.api).then(res => {
             const { total, result } = res.data;
             this.pullLoading = false;
             this.list = result;
@@ -72,13 +75,12 @@ export default class pageList extends Vue {
     }
     onLoad () {
         this.page = this.page + 1;
-        this.listFinished = true;
         let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query);
-        getPageList(queryObject).then(res => {
+        getPageList(queryObject, this.api).then(res => {
             const { result } = res.data;
             this.listLoading = false;
             this.list.push(...result);
-            if (this.page * this.pageSize > this.total) this.listFinished =true;
+            if (this.page * this.pageSize >= this.total) this.listFinished =true;
         })
     }
 }

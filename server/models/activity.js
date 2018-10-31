@@ -24,7 +24,7 @@ module.exports = {
         if (create_user) {
             query_obj.create_user = create_user
         }
-        if (pageSize && Count) {
+        if (pageSize && typeof Count !== 'undefined') {
             return Activity
                 .find(query_obj)
                 .sort({'update_time':-1})

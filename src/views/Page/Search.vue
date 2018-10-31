@@ -7,13 +7,7 @@
             <span>热门：</span>
             <span class="hot-item" v-for="item in hotItems" @click="searchItem(item)">{{ item }}</span>
         </div>
-        <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: 90vh;">
-            <van-list>
-                <div style="padding: 5px 15px;">
-                    <Page v-for="(detail, index) in list" :key="index" :page="detail"></Page>
-                </div>
-            </van-list>
-        </van-pull-refresh>
+        <pageList :query="{ keywords: keywords }" :api="api" ref="pageList"></pageList>
     </div>
 </template>
 <script lang="ts">
@@ -21,23 +15,17 @@ import { Vue, Component } from 'vue-property-decorator'
 import { searchPage }  from '@/api/page.ts'
 @Component({
     components: {
-        'Page': () => import('@/components/Page/Page.vue')
+        pageList: () => import('@/components/Page/List.vue')
     }
 })
 export default class Search extends Vue {
     keywords: string = '';
     pullLoading: boolean = false;
     list: object[] = [];
-    hotItems: string[] = ['Javascript', 'Vue.js', 'get it', '碎碎念']
+    hotItems: string[] = ['Javascript', 'Vue.js', 'get it', '碎碎念'];
+    api: string = '/api/page/searchpage';
     seachPage () {
-        searchPage(this.keywords).then(res => {
-            const { result } = res.data;
-            this.list = result;
-            this.pullLoading = false;
-        })
-    }
-    onRefresh () {
-        this.seachPage();
+        (this.$refs['pageList'] as any).onRefresh({ keywords: this.keywords });
     }
     searchItem (name: string) {
         this.keywords = name;

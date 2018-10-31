@@ -20,10 +20,10 @@
                     <activity-list :query="{ create_user: username }" ></activity-list>
                 </van-tab>
                 <van-tab :title="`文章(${pageNum})`">
-
+                    <activity-list :query="{ create_user: username, type: 'page' }" ></activity-list>
                 </van-tab>
                 <van-tab :title="`评论(${commentNum})`">
-                    
+                    <activity-list :query="{ create_user: username, type: 'comment' }" ></activity-list>
                 </van-tab>
             </van-tabs>
         </div>
