@@ -57,8 +57,7 @@ export default class pageList extends Vue {
     change (val: object[]) {
         return val;
     }
-    onRefresh (query: object) {
-        if (query) this.query = query;
+    onRefresh () {
         this.page = 1;
         let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query);
         getPageList(queryObject, this.api).then(res => {
