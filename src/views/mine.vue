@@ -13,10 +13,10 @@
             <van-cell title="消息中心" @click="$router.push({ name: 'comments' })">
                 <van-icon slot="icon" name="chat" color="#2db7f5" class="van-cell__left-icon"/>
             </van-cell>
-            <van-cell title="文章列表" @click="$router.push({ name: 'pages' })">
+            <van-cell title="文章列表" @click="$router.push({ name: 'myList' })">
                 <van-icon slot="icon" name="wap-nav" color="#19b16b" class="van-cell__left-icon"/>
             </van-cell>
-            <van-cell title="草稿箱">
+            <van-cell title="草稿箱" @click="$router.push({ name: 'draft' })">
                 <van-icon slot="icon" name="tosend" color="#ff972a" class="van-cell__left-icon"/>
             </van-cell>
         </van-cell-group>

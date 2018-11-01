@@ -7,7 +7,7 @@
             @click-left="clickLeft"
             v-if="$route.meta && !$route.meta.hide_header"
         >
-            <div slot="title" @click="$router.push({ name: 'pageList' })" style="padding: 5px 0;">
+            <div v-if="title==='世说新语'" slot="title" @click="$router.push({ name: 'pageList' })" style="padding: 5px 0;">
                 <img :src="logoUrl" height="36px;"/>
             </div>
             <van-icon name="search" slot="left" v-if="showSearchIcon"/>
@@ -46,6 +46,12 @@ export default class Home extends Vue {
             this.showSearchIcon = true;
         } else {
             this.showSearchIcon = false;
+        }
+        if (route.meta && route.meta.rewrite_navbar) {
+            console.log(route)
+            this.title = route.meta.title;
+        } else {
+            this.title = '世说新语';
         }
     }
     clickLeft () {

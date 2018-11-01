@@ -21,7 +21,7 @@ import { getPageList, searchPage }  from '@/api/page.ts';
         pageList: () => import('@/components/Page/List.vue')
     }
 })
-export default class Home extends Vue {
+export default class pageListPage extends Vue {
     active: number = 0;
     api: string = '/api/page/pagelist';
 }

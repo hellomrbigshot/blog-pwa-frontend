@@ -71,7 +71,25 @@ export const normalRouter = {
 
                     }
                     
-                }
+                },
+                {
+                    name: 'draft',
+                    path: 'draft',
+                    component: () => import('@/views/Page/Draft.vue'),
+                    meta: {
+                        title: '草稿箱',
+                        rewrite_navbar: true
+                    }
+                },
+                {
+                    name: 'myList',
+                    path: 'mylist',
+                    component: () => import('@/views/Page/myList.vue'),
+                    meta: {
+                        title: '我的文章',
+                        rewrite_navbar: true
+                    }
+                },
             ]
         },
         {
@@ -127,10 +145,11 @@ export const normalRouter = {
             component: () => import('@/views/Mine.vue'),
             meta: {
                 login: false,
-                title: '消息',
+                title: '个人中心',
                 icon: 'contact',
                 tab_active: 3,
-                search: true
+                search: true,
+                rewrite_navbar: true
             }
         },
         {

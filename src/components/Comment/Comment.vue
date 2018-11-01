@@ -89,6 +89,7 @@ export default class Comment extends Vue {
         .comment-header {
             padding: 5px 0;
             color: #333;
+            font-size: 14px;
         }
         .comment-content {
             padding: 10px 0 5px 20px;
