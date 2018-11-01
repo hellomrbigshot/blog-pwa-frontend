@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="header">
+    <div ref="userBox">
+        <div class="header" v-show="top<160">
             <van-icon name="arrow-left" color="#fff" class="back-icon" @click="$router.go(-1)"></van-icon>
             <div class="user-info">
                 <img :src="imgUrl" alt="" @error="imgError" class="user-avatar">
@@ -14,8 +14,15 @@
                 </div>
             </div>
         </div>
+        <div v-show="top>160">
+            <van-nav-bar
+                :title="username"
+                left-arrow
+                @click-left="$router.go(-1)"
+            />
+        </div>
         <div class="content">
-            <van-tabs v-model="active">
+            <van-tabs v-model="active" sticky>
                 <van-tab :title="`动态(${activityNum})`">
                     <activity-list :query="{ create_user: username }" ></activity-list>
                 </van-tab>
@@ -31,15 +38,19 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import mixin from '@/utils/mixin'
 import { getUserDetail } from '@/api/login'
 import { getActivityList, getActivityNum } from '@/api/activity'
 @Component({
+    mixins: [mixin],
     components: {
         activityList: () => import('@/components/Activity/List.vue')
     }
 })
 export default class userInfo extends Vue {
+    throttleScroll: any;
     imgUrl: string = '';
+    top: number = 0;
     defaultUrl: string = require('@/assets/img/avatar.jpg');
     userInfo: any = {
         oauthinfo: {}
@@ -87,8 +98,16 @@ export default class userInfo extends Vue {
         getActivityNum({ create_user: this.username, type: 'comment' }).then((res: any) => {
             this.commentNum = res.data;
         })
+        this.throttleScroll = this.throttle(() => {
+            this.top = (document.documentElement as any).scrollTop;
+        }, 200);
+        let box: any = this.$refs.userBox;
+        window.addEventListener('scroll', this.throttleScroll, true);
         
 
+    }
+    beforeDestroy() {
+        window.removeEventListener('scroll', this.throttleScroll, true);
     }
     imgError () {
         this.imgUrl = this.defaultUrl;

@@ -1,6 +1,5 @@
 import axios from '@/libs/api.request.ts';
 import qs from 'qs';
-import { create } from 'domain';
 
 export const getActivityList = ({ type, create_user, page, pageSize } = { type: '', create_user: '', page: 1, pageSize: 5 }) => {
     let data: any = {};

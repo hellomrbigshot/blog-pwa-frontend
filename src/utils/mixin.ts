@@ -40,6 +40,8 @@ declare module 'vue/types/vue' {
     interface Vue {
         formatTime (time: any, type: string): void
         marked (content: string): void
+        debounce (fun: any, wait: number): void
+        throttle (fun: any, wait: number): any
         hljsCode (): void
         Cookies: any,
         computed: object
@@ -47,57 +49,71 @@ declare module 'vue/types/vue' {
 }
 @Component
 export default class mixin extends Vue {
-    // methods : {
-        /**
-         * params {string} time
-         * params {string} type
-        */
-        formatTime (time: any, type: string = '1') {
-            let str: string = '';
-            switch (type) {
-                // yyyy-mm-dd hh:MM:ss
-                case '1': 
-                    time = new Date(time);
-                    str = `${ time.getFullYear() }-${ format(time.getMonth()+1) }-${ format(time.getDate()) } ${ format(time.getHours()) }:${ format(time.getMinutes()) }:${ format(time.getSeconds()) }`;
-                    break;
-                // yyyy-mm-dd
-                case '2':
-                    let date: any = new Date(time);
-                    str = `${ time.getFullYear() }-${ format(time.getMonth()+1) }-${ format(time.getDate()) }`;
-                    break;
-                // 倒计时
-                case '3':
-                    str = type3(time);
-                    break;
-            }
-            return str;
+    /**
+     * params {string} time
+     * params {string} type
+    */
+    formatTime (time: any, type: string = '1') {
+        let str: string = '';
+        switch (type) {
+            // yyyy-mm-dd hh:MM:ss
+            case '1': 
+                time = new Date(time);
+                str = `${ time.getFullYear() }-${ format(time.getMonth()+1) }-${ format(time.getDate()) } ${ format(time.getHours()) }:${ format(time.getMinutes()) }:${ format(time.getSeconds()) }`;
+                break;
+            // yyyy-mm-dd
+            case '2':
+                let date: any = new Date(time);
+                str = `${ time.getFullYear() }-${ format(time.getMonth()+1) }-${ format(time.getDate()) }`;
+                break;
+            // 倒计时
+            case '3':
+                str = type3(time);
+                break;
         }
-        /**
-         * params {string} content
-        */
-        marked (content: string) { // 格式化文章
-            return marked(content);
-        }
-        hljsCode () { // 代码高亮
-            let blocks = document.querySelectorAll('code');
-            let dom = Array.prototype.slice.call(blocks);
-            dom.forEach((ele: any) => {
-                hljs.highlightBlock(ele);
-            })
-        }
-        /**
-         * params {function} fun
-         * params {number} number
-        */
-        // debounce (fun: any, wait: number = 100) { // 防抖
-        //     let time: any = null;
-        //     return function () {
-        //         let args = arguments;
-        //         clearTimeout(time);  // 清除上一次定时器，这里用到了闭包
-        //         time = setTimeout(() => {
-        //             fun.apply(this, args);
-        //         }, wait) 
-        //     } 
-        // }
-    // }
+        return str;
+    }
+    /**
+     * params {string} content
+    */
+    marked (content: string) { // 格式化文章
+        return marked(content);
+    }
+    hljsCode () { // 代码高亮
+        let blocks = document.querySelectorAll('code');
+        let dom = Array.prototype.slice.call(blocks);
+        dom.forEach((ele: any) => {
+            hljs.highlightBlock(ele);
+        })
+    }
+    /**
+     * params {function} fun
+     * params {number} number
+    */
+    debounce (fun: any, wait: number = 100) { // 防抖
+        let time: any = null;
+        return function () {
+            let args = arguments;
+            clearTimeout(time);  // 清除上一次定时器，这里用到了闭包
+            time = setTimeout(() => {
+                fun(args);
+            }, wait) 
+        } 
+    }
+    /**
+     * params {function} fun
+     * params {number} number
+     *  
+    */
+   throttle (fun: any, wait: number) {
+    let previous = 0;
+    return  () => {
+      const args = arguments;
+      const now = +new Date();
+      if (now - previous > wait) { // 当前事件与上次执行时间间隔大于 awit 毫秒才执行
+        fun(args);
+        previous = now;
+      }
+    }
+  }
 }
