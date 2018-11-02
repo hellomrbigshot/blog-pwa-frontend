@@ -148,7 +148,7 @@ export const normalRouter = {
                 title: '个人中心',
                 icon: 'contact',
                 tab_active: 3,
-                search: true,
+                search: false,
                 rewrite_navbar: true
             }
         },

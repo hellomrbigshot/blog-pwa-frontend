@@ -29,7 +29,7 @@ import mixin from '@/utils/mixin'
 })
 export default class Comment extends Vue {
     @Prop() comment: any
-    @Prop() type: string
+    @Prop({ default: 'create_user' }) type!: string
     imgUrl: string = require('../../assets/img/avatar.jpg')
     defaultImg: string = require('../../assets/img/avatar.jpg')
     mounted () {

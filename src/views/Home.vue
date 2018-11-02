@@ -48,7 +48,6 @@ export default class Home extends Vue {
             this.showSearchIcon = false;
         }
         if (route.meta && route.meta.rewrite_navbar) {
-            console.log(route)
             this.title = route.meta.title;
         } else {
             this.title = '世说新语';

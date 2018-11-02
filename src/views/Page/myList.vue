@@ -1,6 +1,6 @@
 <template>
     <div>
-        <page-list key="关注" :query="{ status: 'normal', type: 'creator', content: Cookies.get('user') }" :api="api"></page-list>
+        <page-list key="关注" :query="{ status: 'normal', type: 'create_user', content: Cookies.get('user') }" :api="api"></page-list>
     </div>
 </template>
 <script lang="ts">

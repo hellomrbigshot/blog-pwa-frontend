@@ -1,13 +1,24 @@
 <template>
     <div>
-        <div class="user-header" @click="$router.push({ name: 'login' })">
-            <div class="avatar-icon" >
-                <van-icon name="contact" size="25px" color="#fff" style="line-height: 40px;"></van-icon>
-            </div>
-            <div class="user-info">
-                登录/注册
-            </div>
-            <van-icon name="arrow" style="line-height: 40px; float: right;"></van-icon>
+        <div class="user-header" @click="!Cookies.get('user')&&$router.push({ name: 'login' })">
+            <template v-if="!Cookies.get('user')">
+                <div class="avatar-icon" >
+                    <van-icon name="contact" size="25px" color="#fff" style="line-height: 40px;"></van-icon>
+                </div>
+                <div class="user-info">
+                    登录/注册
+                </div>
+                <van-icon name="arrow" style="line-height: 40px; float: right;"></van-icon>
+            </template>
+            <template v-else>
+                <div class="avatar-icon" >
+                    <img :src="imgUrl" alt="" class="avatar-img" @error="imgError">
+                </div>
+                <div class="user-info">
+                    <h4>{{ Cookies.get('user') }}</h4>
+                </div>
+            </template>
+            
         </div>
         <van-cell-group style="margin-top: 10px;">
             <van-cell title="消息中心" @click="$router.push({ name: 'comments' })">
@@ -27,8 +38,18 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+@Component
 export default class Mine extends Vue {
-    
+    imgUrl: string = require('../assets/img/avatar.jpg')
+    defaultImg: string = require('../assets/img/avatar.jpg')
+    mounted() {
+        if (this.Cookies.get('user')) {
+            this.imgUrl = `/api/file/avatar/user?username=${this.Cookies.user}`;
+        }
+    }
+    imgError () {
+        this.imgUrl = this.defaultImg;
+    }
 }
 </script>
 <style lang="scss" scoped>
@@ -45,7 +66,11 @@ export default class Mine extends Vue {
         border-radius: 50%;
         background: #eee;
         float: left;
+        .avatar-img {
+            border-radius: 50%;
+        }
     }
+
     .user-info {
         font-size: 17px;
         // font-weight: 500;
