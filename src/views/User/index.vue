@@ -8,8 +8,12 @@
                     <div class="user-info-name">{{ username }}</div>
                     <div class="user-info-bio">{{ userInfo.bio }}</div>
                     <div class="user-info-oauths">
-                        <van-icon name="github-fill" size="22px" :color="oauthAccounts.github.oauth&&'#24292e'||'#fff'"/>
-                        <van-icon name="weibo" size="22px" style="margin-left: 5px;" :color="oauthAccounts.github.oauth&&'#e6162d'||'#fff'"/>
+                        <a :href="oauthAccounts.github.oauth&&`https://github.com/${oauthAccounts.github.oauth_user}`||'#'">
+                            <van-icon name="github-fill" size="22px" :color="oauthAccounts.github.oauth&&'#24292e'||'#fff'"/>
+                        </a>
+                        <a :href="oauthAccounts.weibo.oauth&&`https://weibo.com/${oauthAccounts.weibo.oauth_user}`||'#'">
+                            <van-icon name="weibo" size="22px" style="margin-left: 5px;" :color="oauthAccounts.weibo.oauth&&'#e6162d'||'#fff'"/>
+                        </a>
                     </div>
                 </div>
             </div>
