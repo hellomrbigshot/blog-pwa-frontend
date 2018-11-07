@@ -56,6 +56,10 @@ export default class activityList extends Vue {
     change (val: object[]) {
         return val;
     }
+    @Watch('query.create_user')
+    onQueryChange () {
+        this.onRefresh();
+    }
     onRefresh () {
         this.page = 1;
         let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query);

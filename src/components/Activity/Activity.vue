@@ -30,7 +30,7 @@
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import mixin from '@/utils/mixin'
 @Component({
     mixins: [mixin]
@@ -40,6 +40,10 @@ export default class Activity extends Vue {
     imgUrl: string = require('../../assets/img/avatar.jpg')
     defaultImg: string = require('../../assets/img/avatar.jpg')
     mounted () {
+        this.imgUrl = `/api/file/avatar/user?username=${this.activity.create_user}`;
+    }
+    @Watch('activity', { deep: true })
+    onActivityChange (newVal: any, oldVal: any) {
         this.imgUrl = `/api/file/avatar/user?username=${this.activity.create_user}`;
     }
     imgError () {

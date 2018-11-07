@@ -77,7 +77,21 @@ export default class userInfo extends Vue {
     get username () {
         return this.$route.params.username
     }
-    mounted () {
+    created () {
+        this.init();
+    }
+    activated () {
+        if (this.userInfo.username && this.userInfo.username !== this.username) {
+            this.init();
+        }
+    }
+    beforeDestroy() {
+        // window.removeEventListener('scroll', this.throttleScroll, true);
+    }
+    imgError () {
+        this.imgUrl = this.defaultUrl;
+    }
+    init () {
         this.imgUrl = `/api/file/avatar/user?username=${this.username}`;
         getUserDetail(this.username).then((res: any) => {
             this.userInfo = res.data;
@@ -106,15 +120,7 @@ export default class userInfo extends Vue {
             this.top = (document.documentElement as any).scrollTop;
         }, 200);
         let box: any = this.$refs.userBox;
-        window.addEventListener('scroll', this.throttleScroll, true);
-        
-
-    }
-    beforeDestroy() {
-        window.removeEventListener('scroll', this.throttleScroll, true);
-    }
-    imgError () {
-        this.imgUrl = this.defaultUrl;
+        // window.addEventListener('scroll', this.throttleScroll, true);
     }
 }
 </script>
