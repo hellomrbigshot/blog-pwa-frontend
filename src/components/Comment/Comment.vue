@@ -1,6 +1,6 @@
 <template>
     <div class="comment-main">
-        <div class="comment-header" @click="$router.push({ name: 'user', params: { username: comment.create_user }})">
+        <div class="comment-header" @click="$router.push({ name: 'userInfo', params: { username: comment.create_user }})">
             <div class="avatar inline-block">
                 <img :src="imgUrl" class="inline-block" alt="" @error="imgError">
             </div>

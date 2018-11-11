@@ -16,7 +16,7 @@
                         </a>
                     </div>
                 </div>
-                <router-link class="user-info-edit" :to="{ name: 'userSetting', params: { username: username }}">编辑</router-link>
+                <router-link v-if="editLimit" class="user-info-edit" :to="{ name: 'userSetting', params: { username: username }}">编辑</router-link>
             </div>
         </div>
         <div v-show="top>160">
@@ -56,6 +56,7 @@ export default class userInfo extends Vue {
     throttleScroll: any;
     imgUrl: string = '';
     top: number = 0;
+    editLimit: boolean = false;
     defaultUrl: string = require('@/assets/img/avatar.jpg');
     userInfo: any = {
         oauthinfo: {}
@@ -82,6 +83,7 @@ export default class userInfo extends Vue {
         this.init();
     }
     activated () {
+        this.editLimit = false;
         if (this.userInfo.username && this.userInfo.username !== this.username) {
             this.init();
         }
@@ -107,6 +109,7 @@ export default class userInfo extends Vue {
                     this.oauthAccounts[type].oauth_user = ''
                 }
             })
+            if (this.userInfo.username === this.Cookies.get('user')) this.editLimit = true;
         })
         getActivityNum({ create_user: this.username, type: '' }).then((res: any) => {
             this.activityNum = res.data;
@@ -176,6 +179,16 @@ export default class userInfo extends Vue {
                 position: absolute;
                 bottom: 15px;
             }
+        }
+        .user-info-edit {
+            font-size: 12px;
+            position: absolute;
+            color: #0099FF;
+            right: 30px;
+            top: 15px;
+            padding: 2px 3px;
+            border: 1px solid #0099FF;
+            border-radius: 5px;
         }
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="user-header" @click="!Cookies.get('user')&&$router.push({ name: 'login' })||$router.push({ name: 'user', params: { username: username }})">
+        <div class="user-header" @click="!Cookies.get('user')&&$router.push({ name: 'login' })||$router.push({ name: 'userInfo', params: { username: username }})">
             <template v-if="!Cookies.get('user')">
                 <div class="avatar-icon" >
                     <van-icon name="contact" size="25px" color="#fff" style="line-height: 40px;"></van-icon>

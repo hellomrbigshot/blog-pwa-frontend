@@ -16,7 +16,7 @@
                 {{ marked(page.content).replace(/<[^>]+>/g, '') }}
             </div>
             <div class="page-bottom">
-                <router-link class="create-user" :to="{ name: 'user', params: { username: page.create_user }}">{{ page.create_user }}</router-link>
+                <router-link class="create-user" :to="{ name: 'userInfo', params: { username: page.create_user }}">{{ page.create_user }}</router-link>
                 <span class="dot">·</span>
                 <span class="create-time">{{ formatTime(page.create_date, '3') }}</span>
             </div>

@@ -153,27 +153,38 @@ export const normalRouter = {
             }
         },
         {
-            name: 'user',
-            path: '/user/:username',
-            component: () => import('@/views/User/index.vue'),
-            meta: {
-                login: false,
-                title: '个人中心',
-                search: false,
-                hide_header: true
-            }
+            name: 'userInfo',
+            component: { template: '<router-view></router-view>' },
+            path: '/user',
+            redirect: '/user/info',
+            children: [
+                {
+                    name: 'userInfo',
+                    path: '/info/:username',
+                    component: () => import('@/views/User/Info.vue'),
+                    meta: {
+                        login: false,
+                        title: '个人中心',
+                        search: false,
+                        hide_header: true
+                    }
+                },
+                {
+                    name: 'userSetting',
+                    path: '/setting/:username',
+                    component: () => import('@/views/User/Setting.vue'),
+                    meta: {
+                        login: true,
+                        title: '个人设置',
+                        search: false,
+                        hide_header: false,
+                        rewrite_navbar: true
+                    }
+                }
+            ]
+            
         },
-        {
-            name: 'userSetting',
-            path: '/user/setting/:username',
-            component: () => import('@views/User/Setting.vue'),
-            meta: {
-                login: true,
-                title: '个人设置',
-                search: false,
-                hide_header: true
-            }
-        }
+        
 
     ]
 

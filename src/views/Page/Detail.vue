@@ -5,7 +5,7 @@
                 <div>
                     <h1>{{ detail.title }}</h1>
                 </div>
-                <router-link :to="{ name: 'user', params: { username: detail.create_user }}">
+                <router-link :to="{ name: 'userInfo', params: { username: detail.create_user }}">
                     <div class="auto-info">
                         <a class="auto-avatar inline-block">
                             <img :src="imgUrl" alt="头像" class="inline-block" ref="img" @error="imgError">

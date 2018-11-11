@@ -1,6 +1,6 @@
 <template>
     <div class="comment">
-        <router-link :to="{ name: 'user', params: { username: comment.create_user }}">
+        <router-link :to="{ name: 'userInfo', params: { username: comment.create_user }}">
             <div class="comment-info">
                 <img class="comment-avatar" :src='imgUrl' alt="" @error="imgError">
                 <span class="comment-author">{{ comment.create_user }}</span>
