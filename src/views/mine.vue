@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="user-header" @click="!Cookies.get('user')&&$router.push({ name: 'login' })">
+        <div class="user-header" @click="!Cookies.get('user')&&$router.push({ name: 'login' })||$router.push({ name: 'user', params: { username: username }})">
             <template v-if="!Cookies.get('user')">
                 <div class="avatar-icon" >
                     <van-icon name="contact" size="25px" color="#fff" style="line-height: 40px;"></van-icon>
@@ -17,6 +17,7 @@
                 <div class="user-info">
                     <h4>{{ Cookies.get('user') }}</h4>
                 </div>
+                <van-icon name="arrow" style="line-height: 40px; float: right;"></van-icon>
             </template>
             
         </div>
@@ -42,6 +43,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class Mine extends Vue {
     imgUrl: string = require('../assets/img/avatar.jpg')
     defaultImg: string = require('../assets/img/avatar.jpg')
+    username: string = this.Cookies.get('user')
     mounted() {
         if (this.Cookies.get('user')) {
             this.imgUrl = `/api/file/avatar/user?username=${this.Cookies.user}`;

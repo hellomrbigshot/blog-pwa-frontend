@@ -12,6 +12,7 @@
                         <van-icon name="weibo" size="22px" style="margin-left: 5px;" :color="oauthAccounts.github.oauth&&'#e6162d'||'#fff'"/>
                     </div>
                 </div>
+                <router-link class="user-info-edit" :to="{ name: 'userSetting', params: { username: username }}">编辑</router-link>
             </div>
         </div>
         <div v-show="top>160">

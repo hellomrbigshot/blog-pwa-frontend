@@ -145,7 +145,7 @@ export const normalRouter = {
             component: () => import('@/views/Mine.vue'),
             meta: {
                 login: false,
-                title: '个人中心',
+                title: '我',
                 icon: 'contact',
                 tab_active: 3,
                 search: false,
@@ -159,6 +159,17 @@ export const normalRouter = {
             meta: {
                 login: false,
                 title: '个人中心',
+                search: false,
+                hide_header: true
+            }
+        },
+        {
+            name: 'userSetting',
+            path: '/user/setting/:username',
+            component: () => import('@views/User/Setting.vue'),
+            meta: {
+                login: true,
+                title: '个人设置',
                 search: false,
                 hide_header: true
             }

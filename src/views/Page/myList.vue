@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <page-list key="关注" :query="{ status: 'normal', type: 'create_user', content: Cookies.get('user') }" :api="api"></page-list>
-    </div>
+    <page-list key="关注" :query="{ status: 'normal', type: 'create_user', content: Cookies.get('user') }" :api="api"></page-list>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
