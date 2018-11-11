@@ -34,6 +34,7 @@ module.exports = {
         } else {
             return Comment
                 .find(query_obj)
+                .sort({ 'create_time': -1 })
                 .exec()
         }
         

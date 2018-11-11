@@ -46,7 +46,7 @@ export default class Mine extends Vue {
     username: string = this.Cookies.get('user')
     mounted() {
         if (this.Cookies.get('user')) {
-            this.imgUrl = `/api/file/avatar/user?username=${this.Cookies.user}`;
+            this.imgUrl = `/api/file/avatar/user?username=${this.Cookies.get('user')}`;
         }
     }
     imgError () {

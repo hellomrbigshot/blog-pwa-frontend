@@ -8,8 +8,12 @@
                     <div class="user-info-name">{{ username }}</div>
                     <div class="user-info-bio">{{ userInfo.bio }}</div>
                     <div class="user-info-oauths">
-                        <van-icon name="github-fill" size="22px" :color="oauthAccounts.github.oauth&&'#24292e'||'#fff'"/>
-                        <van-icon name="weibo" size="22px" style="margin-left: 5px;" :color="oauthAccounts.github.oauth&&'#e6162d'||'#fff'"/>
+                        <a :href="oauthAccounts.github.oauth&&`https://github.com/${oauthAccounts.github.oauth_user}`||'#'">
+                            <van-icon name="github-fill" size="22px" :color="oauthAccounts.github.oauth&&'#24292e'||'#fff'"/>
+                        </a>
+                        <a :href="oauthAccounts.weibo.oauth&&`https://weibo.com/${oauthAccounts.weibo.oauth_user}`||'#'">
+                            <van-icon name="weibo" size="22px" style="margin-left: 5px;" :color="oauthAccounts.weibo.oauth&&'#e6162d'||'#fff'"/>
+                        </a>
                     </div>
                 </div>
                 <router-link class="user-info-edit" :to="{ name: 'userSetting', params: { username: username }}">编辑</router-link>
@@ -74,7 +78,21 @@ export default class userInfo extends Vue {
     get username () {
         return this.$route.params.username
     }
-    mounted () {
+    created () {
+        this.init();
+    }
+    activated () {
+        if (this.userInfo.username && this.userInfo.username !== this.username) {
+            this.init();
+        }
+    }
+    beforeDestroy() {
+        // window.removeEventListener('scroll', this.throttleScroll, true);
+    }
+    imgError () {
+        this.imgUrl = this.defaultUrl;
+    }
+    init () {
         this.imgUrl = `/api/file/avatar/user?username=${this.username}`;
         getUserDetail(this.username).then((res: any) => {
             this.userInfo = res.data;
@@ -103,15 +121,7 @@ export default class userInfo extends Vue {
             this.top = (document.documentElement as any).scrollTop;
         }, 200);
         let box: any = this.$refs.userBox;
-        window.addEventListener('scroll', this.throttleScroll, true);
-        
-
-    }
-    beforeDestroy() {
-        window.removeEventListener('scroll', this.throttleScroll, true);
-    }
-    imgError () {
-        this.imgUrl = this.defaultUrl;
+        // window.addEventListener('scroll', this.throttleScroll, true);
     }
 }
 </script>

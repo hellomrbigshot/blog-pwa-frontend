@@ -21,9 +21,11 @@ function format (num: number = 0) {
     return result;
 }
 function type3 (t: any) {
-    let nowTime = new Date().getTime()
-    let time = new Date(t).getTime();
-    if (nowTime - time < 60*60*1000) {
+    let nowTime = new Date().getTime(),
+        time = new Date(t).getTime();
+    if (nowTime - time < 60*1000) {
+        return  `${Math.floor((nowTime-time)/(1000))} 秒前`;
+    } else if (nowTime - time < 60*60*1000) {
         return  `${Math.floor((nowTime-time)/(60*1000))} 分钟前`;
     } else if (nowTime - time < 24*60*60*1000) {
         return `${Math.floor((nowTime-time)/(60*60*1000))} 小时前`;

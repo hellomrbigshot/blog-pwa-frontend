@@ -34,7 +34,7 @@
     </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { getPageDetail, getCommentListByPageId } from '@/api/page'
 import mixin from '@/utils/mixin.ts'
 import { setTimeout } from 'timers';
@@ -56,15 +56,13 @@ export default class pageDetail extends Vue {
     get id (): string {
         return this.$route.params.id;
     }
-    mounted() {
-        getPageDetail(this.id).then(res => {
-            this.detail = res.data;
-            this.imgUrl = `/api/file/avatar/user?username=${this.detail.create_user}`;
-            setTimeout(() => {
-                this.hljsCode();
-            }, 500);  
-        });
-        this.getCommentList();
+    async created () {
+        await this.getPageDetail();
+    }
+    activated () {
+        if (this.id !== this.detail._id && this.detail._id) { // 更新详情内容
+            this.getPageDetail();
+        }   
     }
     imgError () {
         this.imgUrl = this.defaultImg
@@ -73,6 +71,16 @@ export default class pageDetail extends Vue {
         getCommentListByPageId(this.id).then(res => {
             this.comments = res.data;
         })
+    }
+    getPageDetail () {
+        return Promise.all([getPageDetail(this.id).then(res => {
+            this.detail = res.data;
+            this.imgUrl = `/api/file/avatar/user?username=${this.detail.create_user}`;
+            setTimeout(() => {
+                this.hljsCode();
+            }, 500);  
+        }),
+        this.getCommentList()]);
     }
 }
 </script>

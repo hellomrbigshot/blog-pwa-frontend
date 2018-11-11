@@ -24,6 +24,15 @@ import { getPageList, searchPage }  from '@/api/page.ts';
 export default class pageListPage extends Vue {
     active: number = 0;
     api: string = '/api/page/pagelist';
+    mounted() {
+        console.log('page mounted')
+    }
+    activated () {
+        console.log('page active')
+    }
+    deactivated() {
+        console.log('page deactivated')
+    }
 }
 </script>
 

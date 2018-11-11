@@ -5,7 +5,7 @@
         </form>
         <div class="hot-search-items">
             <span>热门：</span>
-            <span class="hot-item" v-for="item in hotItems" @click="searchItem(item)">{{ item }}</span>
+            <a href="#" class="hot-item" v-for="item in hotItems" @click="searchItem(item)">{{ item }}</a>
         </div>
         <pageList :query="{ keywords: keywords }" :api="api" ref="pageList"></pageList>
     </div>
