@@ -102,9 +102,9 @@ module.exports = {
             status: 'normal'
         }
         if (keywords) {
-            query_obj['$or'] = [ // 支持标题和正文查找
-                    { title: { $regex: reg }},
-                    { content: { $regex: reg }},
+            query_obj['$or'] = [ // 支持标题、正文和标签查找
+                    { title: { $regex: reg, $options: '$i' }},
+                    { content: { $regex: reg, $options: '$i' }},
                     { tags: { $regex: reg, $options: '$i' }}
                 ]   
         }
@@ -123,7 +123,7 @@ module.exports = {
             status: 'normal'
         }
         if (keywords) {
-            query_obj['$or'] = [ // 支持标题和正文查找
+            query_obj['$or'] = [ // 支持标题、正文和标签查找
                     { title: { $regex: reg, $options: '$i' }},
                     { content: { $regex: reg, $options: '$i' }},
                     { tags: { $regex: reg, $options: '$i' }}
