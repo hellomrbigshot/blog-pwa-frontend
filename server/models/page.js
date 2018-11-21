@@ -104,7 +104,8 @@ module.exports = {
         if (keywords) {
             query_obj['$or'] = [ // 支持标题和正文查找
                     { title: { $regex: reg }},
-                    { content: { $regex: reg }}
+                    { content: { $regex: reg }},
+                    { tags: { $regex: reg, $options: '$i' }}
                 ]   
         }
         return Page
