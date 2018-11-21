@@ -23,8 +23,7 @@ router.post('/new', checkLogin, async (req, res, next) => { // 新建文章
             create_date,
             update_date,
             status,
-            secret,
-            tags
+            secret
         }
         const result = await PageModel.create(page)
         await ActivityModel.create({ type: 'page', id: result._id, create_time: result.create_date, update_date: result.update_date, create_user: result.create_user })
