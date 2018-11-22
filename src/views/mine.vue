@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="user-header" @click="!Cookies.get('user')&&$router.push({ name: 'login' })||$router.push({ name: 'userInfo', params: { username: username }})">
+        <div class="user-header" @click="toUserInfoPage">
             <template v-if="!Cookies.get('user')">
                 <div class="avatar-icon" >
                     <van-icon name="contact" size="25px" color="#fff" style="line-height: 40px;"></van-icon>
@@ -51,6 +51,12 @@ export default class Mine extends Vue {
     }
     imgError () {
         this.imgUrl = this.defaultImg;
+    }
+    toUserInfoPage () {
+        if (this.username) 
+            this.$router.push({ name: 'userInfo', params: { username: this.username }});
+        else 
+            this.$router.push({ name: 'login' });
     }
 }
 </script>

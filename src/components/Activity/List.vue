@@ -6,7 +6,7 @@
             :finished="listFinished"
             @load="onLoad"
             >
-            <div v-if="list.length">
+            <div v-if="list.length && active">
                 <Activity v-for="item, i in list" :activity="item" :key="i"></Activity>
             </div>
             <div v-else class="empty-content">暂时没有内容=。=</div>
@@ -32,6 +32,7 @@ export default class activityList extends Vue {
     pullLoading: boolean = false;
     listLoading: boolean = false;
     listFinished: boolean = true;
+    active:boolean = false;
     list: object[] = [];
     mounted () {
         this.pullLoading = true;
@@ -84,6 +85,12 @@ export default class activityList extends Vue {
             this.list.push(...result);
             if (this.page * this.pageSize >= this.total) this.listFinished = true;
         })
+    }
+    activated () {
+        this.active = true;
+    }
+    deactivated () {
+        this.active = false;
     }
 }
 </script>

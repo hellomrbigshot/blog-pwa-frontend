@@ -19,12 +19,8 @@ module.exports = {
         port: '8081',
         proxy: {
             '/api': {
-                target: 'http://localhost:4600/api',
-                changeOrigin: true,
-                ws: true,
-                pathRewrite: {
-                  '^/api': ''
-                }
+                target: 'http://www.hellomrbigbigshot.xyz',
+                changeOrigin: true
             }
         }
     }
