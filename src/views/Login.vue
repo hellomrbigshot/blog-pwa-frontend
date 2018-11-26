@@ -18,8 +18,12 @@
             </div>
             <div>
                 <div style="margin: 40px auto; width: 120px;">  
-                    <van-icon name="github-fill" size="40px" color="#fff"/>
-                    <van-icon name="weibo" size="40px" style="margin-left: 40px;" color="#fff"/>
+                    <a href="/api/oauth/github">
+                        <van-icon name="github-fill" size="40px" color="#fff"/>
+                    </a>
+                    <a href="/api/oauth/weibo">
+                        <van-icon name="weibo" size="40px" style="margin-left: 40px;" color="#fff"/>
+                    </a>
                 </div>
             </div>
         </div>  
