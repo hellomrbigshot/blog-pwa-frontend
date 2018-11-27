@@ -19,7 +19,7 @@ module.exports = {
         port: '8081',
         proxy: {
             '/api': {
-                target: 'http://www.hellomrbigbigshot.xyz',
+                target: 'http://m.hellomrbigbigshot.xyz',
                 changeOrigin: true
             }
         }
