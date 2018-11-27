@@ -34,10 +34,10 @@ export default class activityList extends Vue {
     listFinished: boolean = true;
     active:boolean = false;
     list: object[] = [];
-    mounted () {
+    async mounted () {
         this.pullLoading = true;
         let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query);
-        getActivityList(queryObject).then(res => {
+        await getActivityList(queryObject).then(res => {
             const { total, result } = res.data;
             this.list = result;
             this.total = total;
@@ -47,7 +47,14 @@ export default class activityList extends Vue {
             } else {
                 this.listFinished = false;
             }
+            this.active = true;
         })
+    }
+    activated () {
+        this.active = true;
+    }
+    deactivated () {
+        this.active = false;
     }
     @Watch('list', { deep: true })
     pageChange (val: object[], oldVal: object[]) {
@@ -85,12 +92,6 @@ export default class activityList extends Vue {
             this.list.push(...result);
             if (this.page * this.pageSize >= this.total) this.listFinished = true;
         })
-    }
-    activated () {
-        this.active = true;
-    }
-    deactivated () {
-        this.active = false;
     }
 }
 </script>
