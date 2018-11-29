@@ -46,11 +46,12 @@ export const normalRouter = {
                 title: '首页',
                 icon: 'wap-home',
                 tab_active: 0,
-                search: true
+                search: true,
+                keepAlive: true
             },
             children: [
                 {
-                    name: 'pageList',
+                    name: 'pageListPage',
                     path: 'list',
                     component: () => import('@/views/Page/List.vue'),
                     meta: {
@@ -164,7 +165,7 @@ export const normalRouter = {
             }
         },
         {
-            name: 'userInfo',
+            name: 'user',
             component: { template: '<router-view></router-view>' },
             path: '/user',
             redirect: '/user/info',
@@ -178,7 +179,7 @@ export const normalRouter = {
                         title: '个人中心',
                         search: false,
                         hide_header: true,
-                        keepAlive: false
+                        keepAlive: true
                     }
                 },
                 {

@@ -7,7 +7,7 @@
             @load="onLoad"
             >
             <div v-if="list.length">
-                <Comment v-for="item, i in list" :comment="item" :key="i" :type="query.type"></Comment>
+                <Comment v-for="(item, i) in list" :comment="item" :key="i" :type="query.type"></Comment>
             </div>
             <div v-else class="empty-content">暂时没有内容=。=</div>
         </van-list>

@@ -24,7 +24,7 @@ import mixin from '@/utils/mixin'
         'Page': () => import('./Page.vue')
     }
 })
-export default class pageList extends Vue {
+export default class pageListComponent extends Vue {
     @Prop(Object) query!: any;
     @Prop({ default: '/api/page/pagelist' }) api!: string;
     page: number = 1;

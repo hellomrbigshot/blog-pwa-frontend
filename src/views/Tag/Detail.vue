@@ -20,20 +20,12 @@ import { getTagDetail } from '@/api/tag'
     }
 })
 export default class tagDetail extends Vue {
+    name: string = '';
     tagDetail: object = {};
     total: number = 0;
     mounted () {
+        this.name = this.$route.params.name;
         getTagDetail(this.name).then(res => {
-            let { data } = res;
-            this.tagDetail = data;
-        })
-    }
-    get name () {
-            return this.$route.params.name;
-    }
-    @Watch('name')
-    onNameChange (newVal: string, oldVal: string) {
-        getTagDetail(newVal).then(res => {
             let { data } = res;
             this.tagDetail = data;
         })
