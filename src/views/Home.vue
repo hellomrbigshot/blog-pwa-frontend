@@ -13,9 +13,10 @@
             <van-icon name="search" slot="left" v-if="showSearchIcon"/>
         </van-nav-bar>
         <div :style="{ minHeight: '100vh', boxSizing: 'border-box', paddingTop: $route.meta && !$route.meta.hide_header && '46px' || '0', background: '#f5f6fa', paddingBottom: $route.meta && typeof $route.meta.tab_active !== 'undefined' && '50px' || '0' }">
-            <keep-alive>
+            <keep-alive v-if="$route.meta.keepAlive">
                 <router-view :key="$route.fullPath"></router-view>
             </keep-alive>
+            <router-view v-else :key="$route.fullPath"></router-view>
         </div>
         <tab-bar v-if="$route.meta && typeof $route.meta.tab_active !== 'undefined'"></tab-bar>
     </div>

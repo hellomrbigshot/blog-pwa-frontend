@@ -30,6 +30,14 @@ pre code {
 img {
     max-width: 100%;
 }
+blockquote {
+    border-left: 2px solid #009a61;
+    background: #f6f6f6;
+    color: #555;
+    font-size: 1em;
+    padding: 10px 20px;
+    margin: 1.5em 0;
+}
 .page-content {
     font-size: 14px;
     line-height: 2;

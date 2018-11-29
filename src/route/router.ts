@@ -3,7 +3,8 @@ export const loginRouter: object = {
     name: 'login',
     meta: {
         title: '登录',
-        login: false
+        login: false,
+        keepAlive: false
     },
     component: () => import('@/views/Login.vue')
 }
@@ -12,7 +13,8 @@ export const registerRouter: object = {
     name: 'register',
     meta: {
         title: '注册',
-        login: false
+        login: false,
+        keepAlive: false
     },
     component: () => import('@/views/Register.vue')
 }
@@ -21,7 +23,8 @@ export const page404 = {
     name: 'error-404',
     meta: {
         title: '404-页面不存在',
-        login: false
+        login: false,
+        keepAlive: true
     },
     component: () => import('@/views/error-page/404.vue')
 }
@@ -52,7 +55,8 @@ export const normalRouter = {
                     component: () => import('@/views/Page/List.vue'),
                     meta: {
                         search: true,
-                        tab_active: 0
+                        tab_active: 0,
+                        keepAlive: true
                     }
                 },
                 {
@@ -60,7 +64,8 @@ export const normalRouter = {
                     path: 'detail/:id',
                     component: () => import('@/views/Page/Detail.vue'),
                     meta: {
-                        search: false
+                        search: false,
+                        keepAlive: false
                     }
                 },
                 {
@@ -68,7 +73,7 @@ export const normalRouter = {
                     path: 'search',
                     component: () => import('@/views/Page/Search.vue'),
                     meta: {
-
+                        keepAlive: false
                     }
                     
                 },
@@ -78,7 +83,8 @@ export const normalRouter = {
                     component: () => import('@/views/Page/Draft.vue'),
                     meta: {
                         title: '草稿箱',
-                        rewrite_navbar: true
+                        rewrite_navbar: true,
+                        keepAlive: true
                     }
                 },
                 {
@@ -87,7 +93,8 @@ export const normalRouter = {
                     component: () => import('@/views/Page/myList.vue'),
                     meta: {
                         title: '我的文章',
-                        rewrite_navbar: true
+                        rewrite_navbar: true,
+                        keepAlive: true
                     }
                 },
             ]
@@ -112,7 +119,8 @@ export const normalRouter = {
                     meta: {
                         login: false,
                         tab_active: 1,
-                        search: true
+                        search: true,
+                        keepAlive: true
                     }
                 },
                 {
@@ -122,7 +130,8 @@ export const normalRouter = {
                     meta: {
                         login: false,
                         tab_active: 1,
-                        search: false
+                        search: false,
+                        keepAlive: true
                     }
                 }
             ]
@@ -136,7 +145,8 @@ export const normalRouter = {
                 title: '消息',
                 icon: 'chat',
                 tab_active: 2,
-                search: true
+                search: true,
+                keepAlive: true
             }
         },
         {
@@ -149,7 +159,8 @@ export const normalRouter = {
                 icon: 'contact',
                 tab_active: 3,
                 search: false,
-                rewrite_navbar: true
+                rewrite_navbar: true,
+                keepAlive: true
             }
         },
         {
@@ -166,7 +177,8 @@ export const normalRouter = {
                         login: false,
                         title: '个人中心',
                         search: false,
-                        hide_header: true
+                        hide_header: true,
+                        keepAlive: false
                     }
                 },
                 {
@@ -178,7 +190,8 @@ export const normalRouter = {
                         title: '个人设置',
                         search: false,
                         hide_header: false,
-                        rewrite_navbar: true
+                        rewrite_navbar: true,
+                        keepAlive: false
                     }
                 }
             ]
