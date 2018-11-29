@@ -72,6 +72,8 @@ export default class mixin extends Vue {
             case '3':
                 str = type3(time);
                 break;
+            default: 
+                break;
         }
         return str;
     }

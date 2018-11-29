@@ -28,7 +28,7 @@ export default class Register extends Vue {
     repassword: string = '';
     logoUrl: string = require('@/assets/img/logo_white_transparent.png');
     get redirect () {
-        return this.$route.query.redirect && decodeURIComponent(this.$route.query.redirect) || '';
+        return this.$route.query.redirect && decodeURIComponent(<string>this.$route.query.redirect) || '';
     }
     submit () {
         try {

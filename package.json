@@ -53,7 +53,9 @@
       "eslint:recommended",
       "@vue/typescript"
     ],
-    "rules": {},
+    "rules": {
+      "no-case-declarations": 0
+    },
     "parserOptions": {
       "parser": "typescript-eslint-parser"
     }

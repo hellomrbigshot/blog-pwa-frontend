@@ -42,7 +42,7 @@ export default class Login extends Vue {
     password: string = '';
     logoUrl: string = require('@/assets/img/logo_white_transparent.png');
     get redirect () {
-        return this.$route.query.redirect && decodeURIComponent(this.$route.query.redirect) || '';
+        return this.$route.query.redirect && decodeURIComponent(<string>this.$route.query.redirect) || '';
     }
     submit () {
         if (!this.username.trim()) {
