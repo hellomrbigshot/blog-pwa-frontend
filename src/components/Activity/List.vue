@@ -6,7 +6,7 @@
             :finished="listFinished"
             @load="onLoad"
             >
-            <div v-if="list.length && active">
+            <div v-if="list.length">
                 <Activity v-for="item, i in list" :activity="item" :key="i"></Activity>
             </div>
             <div v-else class="empty-content">暂时没有内容=。=</div>
@@ -47,14 +47,7 @@ export default class activityList extends Vue {
             } else {
                 this.listFinished = false;
             }
-            this.active = true;
         })
-    }
-    activated () {
-        this.active = true;
-    }
-    deactivated () {
-        this.active = false;
     }
     @Watch('list', { deep: true })
     pageChange (val: object[], oldVal: object[]) {

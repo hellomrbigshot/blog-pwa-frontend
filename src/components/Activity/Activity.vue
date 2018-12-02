@@ -13,20 +13,22 @@
                 </div>
             </div>
         </div>
-        <div class="page" v-if="activity.type==='page'">
-            <router-link :to="{ name: 'pageDetail', params: { id: activity.content._id } }">
-                 <div class="page-header">
-                    <h4>{{ activity.content.title }}</h4>
-                </div>
-                <div class="page-content">{{ marked(activity.content.content).replace(/<[^>]+>/g, '') }}</div>
-            </router-link>
-        </div>
-        <div class="comment" v-else-if="activity.type==='comment'">
-            <router-link :to="`/pages/detail/${activity.content.page_id}#${activity.content._id}`">
-                <div class="comment-header">{{ activity.content.content }}</div>
-                <div class="comment-content">{{ activity.content.page_title }}</div>
-            </router-link>
-        </div>
+        <template>
+            <div class="page" v-if="activity.type==='page'">
+                <router-link :to="{ name: 'pageDetail', params: { id: activity.content._id } }">
+                    <div class="page-header">
+                        <h4>{{ activity.content.title }}</h4>
+                    </div>
+                    <div class="page-content">{{ marked(activity.content.content).replace(/<[^>]+>/g, '') }}</div>
+                </router-link>
+            </div>
+            <div class="comment" v-else-if="activity.type==='comment'">
+                <router-link :to="`/pages/detail/${activity.content.page_id}#${activity.content._id}`">
+                    <div class="comment-header">{{ activity.content.content }}</div>
+                    <div class="comment-content">{{ activity.content.page_title }}</div>
+                </router-link>
+            </div>
+        </template>
     </div>
 </template>
 <script lang="ts">
