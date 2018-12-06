@@ -18,6 +18,16 @@ export const registerRouter: object = {
     },
     component: () => import('@/views/Register.vue')
 }
+export const skeleton: object = {
+    path: '/skeleton',
+    name: 'skeleton',
+    meta: {
+        title: '骨架屏',
+        login: false,
+        keepAlive: true
+    },
+    component: () => import('@/Skeleton.vue')
+}
 export const page404 = {
     path: '*',
     name: 'error-404',
@@ -205,6 +215,7 @@ export const normalRouter = {
 }
 export const routers: Array<object> = [ 
     loginRouter,
+    skeleton,
     registerRouter,
     page404,
     normalRouter
