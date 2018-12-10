@@ -5,11 +5,12 @@ function resolve (dir) {
 }
 module.exports = {
     pwa: {
-        name: 'newWords',
+        name: 'NewWords',
         themeColor: '#4DBA87',
         msTileColor: '#000000',
         appleMobileWebAppCapable: 'yes',
         appleMobileWebAppStatusBarStyle: 'black',
+        manifestPath: 'manifest.json',
     
         // configure the workbox plugin
         workboxPluginMode: 'InjectManifest',

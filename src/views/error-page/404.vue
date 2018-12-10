@@ -1,7 +1,12 @@
 <template>
     <div class="content-center">
         <img :src="imgUrl"/>
-        <van-button size="small" type="primary" @click="$router.go(-1)">返回</van-button>
+        <div>
+            <van-button size="small" type="primary" @click="$router.go(-1)">返回</van-button>
+        </div>
+        <div>
+            <van-button size="small" style="margin-top: 10px;" @click="$router.push({ name: 'pageListPage' })">首页</van-button>
+        </div>
     </div>
 </template>
 <script lang="ts">
