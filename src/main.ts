@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vant from 'vant'
 import Cookies from 'js-cookie'
+import './registerServiceWorker'
 import 'vant/lib/index.css';
 import 'highlight.js/styles/solarized-light.css'
 import '@/assets/css/iconfont/iconfont.css'

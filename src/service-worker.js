@@ -1,6 +1,6 @@
 // set the prefix and suffix of our sw's name
 workbox.core.setCacheNameDetails({
-    prefix: 'newWords',
+    prefix: 'NewWords',
     suffix: 'v1.0.0',
   });
   // have our sw update and control a web page as soon as possible.
