@@ -4,6 +4,21 @@ function resolve (dir) {
     return path.join(__dirname,dir)
 }
 module.exports = {
+    pwa: {
+        name: 'newWords',
+        themeColor: '#4DBA87',
+        msTileColor: '#000000',
+        appleMobileWebAppCapable: 'yes',
+        appleMobileWebAppStatusBarStyle: 'black',
+    
+        // configure the workbox plugin
+        workboxPluginMode: 'InjectManifest',
+        workboxOptions: {
+          // swSrc is required in InjectManifest mode.
+          swSrc: 'src/service-worker.js',
+          // ...other Workbox options...
+        }
+    },
     configureWebpack: {
         plugins: [
             new SkeletonWebpackPlugin({
