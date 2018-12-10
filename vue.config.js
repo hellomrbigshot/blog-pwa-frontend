@@ -5,9 +5,9 @@ function resolve (dir) {
 }
 module.exports = {
     pwa: {
-        name: 'NewWords',
-        themeColor: '#4DBA87',
-        msTileColor: '#000000',
+        name: '世说新语',
+        themeColor: '#33ccff',
+        msTileColor: '#33ccff',
         appleMobileWebAppCapable: 'yes',
         appleMobileWebAppStatusBarStyle: 'black',
         manifestPath: 'manifest.json',
