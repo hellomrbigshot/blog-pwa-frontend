@@ -1,6 +1,6 @@
 {
     "name": "世说新语",
-    "short_name": "NewWords",
+    "short_name": "世说新语",
     "icons": [
       {
         "src": "/img/icons/icon-192x192.png",
@@ -15,6 +15,6 @@
     ],
     "start_url": "/pages/list",
     "display": "standalone",
-    "background_color": "#000000",
-    "theme_color": "#4DBA87"
+    "background_color": "#33ccff",
+    "theme_color": "#33ccff"
   }
