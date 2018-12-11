@@ -1,7 +1,7 @@
 // set the prefix and suffix of our sw's name
 workbox.core.setCacheNameDetails({
     prefix: 'NewWords',
-    suffix: 'v1.0.0',
+    suffix: 'v1.0.2',
   });
   // have our sw update and control a web page as soon as possible.
   workbox.skipWaiting();
@@ -11,15 +11,39 @@ workbox.core.setCacheNameDetails({
   workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
   
   // cache our data, and use networkFirst strategy.
+  
   workbox.routing.registerRoute(
-    new RegExp('.*experiments\?.*'), 
+    /\.(?:png|gif|jpg|jpeg|svg)$/,
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: 'images',
+      plugins: [
+        new workbox.expiration.Plugin({
+          maxEntries: 60,
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+        }),
+      ],
+    }),
+  );
+  
+  workbox.routing.registerRoute(
+    new RegExp('https://m.hellomrbigbigshot.xyz*'), 
     workbox.strategies.networkFirst()
   );
   workbox.routing.registerRoute(
-    new RegExp('.*experiments/\\d'),
-    workbox.strategies.networkFirst()  
-  )
+    new RegExp('https://m.hellomrbigbigshot.xyz/api'),
+    workbox.strategies.networkFirst({
+      cacheName: 'api',
+    }),
+  );
+  
   workbox.routing.registerRoute(
-    new RegExp('.*experiment_types.*'),
-    workbox.strategies.networkFirst()
-  )
+    new RegExp('https://fonts.(?:googleapis|gstatic).com/(.*)'),
+    workbox.strategies.cacheFirst({
+      cacheName: 'googleapis',
+      plugins: [
+        new workbox.expiration.Plugin({
+          maxEntries: 30,
+        }),
+      ],
+    }),
+  );
