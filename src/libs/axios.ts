@@ -52,6 +52,10 @@ class HttpRequest {
                             name: 'login',
                             query: { redirect: router.currentRoute.fullPath }
                         });
+                        break;
+                    case 402:
+                        Toast.fail('用户已登录');
+                        break;
                 }
             }
             return Promise.reject(error.response.data);
