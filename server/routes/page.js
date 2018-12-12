@@ -92,13 +92,14 @@ router.post('/pagelist', async (req, res, next) => { // 获取文章列表
     const content = req.body.content
     const status = req.body.status
     const secret = req.body.secret
+    const sort = req.body.sort || 'create_date'
     pageSize = typeof (pageSize) === 'number' ? pageSize : parseInt(pageSize)
     page = typeof (page) === 'number' ? page : parseInt(page)
     const Count =  pageSize * (page - 1)
     try {
         let [total, result] = await Promise.all([
             PageModel.getPageNum({ type, content, status, secret }),
-            PageModel.getPageList({ type, content, status, pageSize, Count, secret })
+            PageModel.getPageList({ type, content, status, pageSize, Count, secret, sort })
         ])
         res.status(200).json({ code: 'OK', data: { result, total }})
     } catch (e) {
@@ -129,13 +130,14 @@ router.post('/limitpagelist', checkLogin, async (req, res, next) => { // 根据�
     const content = req.body.content
     const status = req.body.status
     const secret = req.body.secret
+    const sort = req.body.sort || 'create_date'
     pageSize = typeof (pageSize) === 'number' ? pageSize : parseInt(pageSize)
     page = typeof (page) === 'number' ? page : parseInt(page)
     const Count =  pageSize * (page - 1)
     try {
         let [total, result] = await Promise.all([
             PageModel.getPageNum({ type, content, status, secret }),
-            PageModel.getPageList({ type, content, status, pageSize, Count, secret })
+            PageModel.getPageList({ type, content, status, pageSize, Count, secret, sort })
         ])
         res.status(200).json({ code: 'OK', data: { result, total }})
     } catch (e) {
