@@ -7,7 +7,7 @@
             @load="onLoad"
             >
             <div v-if="list.length">
-                <Activity v-for="item, i in list" :activity="item" :key="i"></Activity>
+                <Activity v-for="(item, i) in list" :activity="item" :key="i"></Activity>
             </div>
             <div v-else class="empty-content">暂时没有内容=。=</div>
         </van-list>
@@ -34,10 +34,10 @@ export default class activityList extends Vue {
     listFinished: boolean = true;
     active:boolean = false;
     list: object[] = [];
-    async mounted () {
+    mounted () {
         this.pullLoading = true;
         let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query);
-        await getActivityList(queryObject).then(res => {
+        getActivityList(queryObject).then(res => {
             const { total, result } = res.data;
             this.list = result;
             this.total = total;

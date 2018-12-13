@@ -57,7 +57,7 @@ router.post('/edit', checkLogin, async (req, res, next) => { // 编辑文章
             tags
         }
         const result = await PageModel.update(id, page)
-        await ActivityModel.create({ type: 'page', id: result._id, create_time: result.create_date, update_date: result.update_date, create_user: result.create_user })
+        await ActivityModel.create({ type: 'page', id: result._id, create_time: result.create_date, update_time: result.update_date, create_user: result.create_user })
         const [page_num, draft_num] = await Promise.all([
             PageModel.getPageNum({ type: 'create_user', content: create_user, status: 'normal' }),
 			PageModel.getPageNum({ type: 'create_user', content: create_user, status: 'draft' }),
