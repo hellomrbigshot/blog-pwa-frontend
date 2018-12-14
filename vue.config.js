@@ -7,7 +7,7 @@ module.exports = {
     pwa: {
         name: '世说新语',
         themeColor: '#33ccff',
-        msTileColor: '#33ccff',
+        msTileColor: '#fff',
         appleMobileWebAppCapable: 'yes',
         appleMobileWebAppStatusBarStyle: 'black',
         manifestPath: 'manifest.json',
