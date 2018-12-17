@@ -49,14 +49,17 @@ import { getActivityList, getActivityNum } from '@/api/activity'
 @Component({
     mixins: [mixin],
     components: {
-        activityList: () => import('@/components/Activity/List.vue')
+        activityList: () => import('@/components/Activity/List.vue'),
+        pageList: () => import('@/components/Page/List.vue')
     }
 })
 export default class userInfo extends Vue {
+    api: string = '/api/page/pagelist';
     throttleScroll: any;
     imgUrl: string = '';
     top: number = 0;
     editLimit: boolean = false;
+    username: string = '';
     defaultUrl: string = require('@/assets/img/avatar.jpg');
     userInfo: any = {
         oauthinfo: {}
@@ -75,21 +78,9 @@ export default class userInfo extends Vue {
     activityNum: number = 0;
     pageNum: number = 0;
     commentNum: number = 0;
-    
-    get username () {
-        return this.$route.params.username
-    }
     created () {
+        this.username = decodeURIComponent(this.$route.params.username);
         this.init();
-    }
-    activated () {
-        this.editLimit = false;
-        if (this.userInfo.username && this.userInfo.username !== this.username) {
-            this.init();
-        }
-    }
-    beforeDestroy() {
-        // window.removeEventListener('scroll', this.throttleScroll, true);
     }
     imgError () {
         this.imgUrl = this.defaultUrl;
@@ -124,7 +115,6 @@ export default class userInfo extends Vue {
             this.top = (document.documentElement as any).scrollTop;
         }, 200);
         let box: any = this.$refs.userBox;
-        // window.addEventListener('scroll', this.throttleScroll, true);
     }
 }
 </script>

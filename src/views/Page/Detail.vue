@@ -5,7 +5,7 @@
                 <div>
                     <h1>{{ detail.title }}</h1>
                 </div>
-                <router-link :to="{ name: 'userInfo', params: { username: detail.create_user }}">
+                <router-link :to="{ name: 'userInfo', params: { username: encodeURIComponent(detail.create_user) }}">
                     <div class="auto-info">
                         <a class="auto-avatar inline-block">
                             <img :src="imgUrl" alt="头像" class="inline-block" ref="img" @error="imgError">
@@ -78,7 +78,7 @@ export default class pageDetail extends Vue {
             this.imgUrl = `/api/file/avatar/user?username=${this.detail.create_user}`;
             setTimeout(() => {
                 this.hljsCode();
-            }, 500);  
+            }, 0);  
         }),
         this.getCommentList()]);
     }
