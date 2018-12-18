@@ -4,8 +4,7 @@ node_js:
 branchs:
   only:
   - master
-install:
-- npm install
+install: case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;
 script:
 - npm run build
 env:
@@ -16,4 +15,4 @@ before_install:
   -in id_rsa.enc -out ~/.ssh/id_rsa -d
 after_success:
 - chmod 600 ~/.ssh/id_rsa   #还是Linux文件权限问题
-- ssh blog@118.24.157.36 -o StrictHostKeyChecking=no 'cd ~/blog-pwa && git pull && npm install && npm run build'   #使用ssh连接服务器
+- ssh blog@118.24.157.36 -o StrictHostKeyChecking=no 'cd ~/blog-pwa && git pull && cnpm install && cnpm run build'   #使用ssh连接服务器
