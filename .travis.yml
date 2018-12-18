@@ -8,5 +8,6 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_1db7356b8c0c_key -iv $encrypted_1db7356b8c0c_iv
   -in id_rsa.enc -out ~\/.ssh/id_rsa -d
 after_success:
-- chmod 600 ~/.ssh/id_rsa   #还是Linux文件权限问题
-- ssh blog@118.24.157.36 -o StrictHostKeyChecking=no 'cd ~/blog-pwa && git pull && npm install && npm run build'   #使用ssh连接>服务器
+- chmod 600 ~/.ssh/id_rsa
+- ssh blog@118.24.157.36 -o StrictHostKeyChecking=no 'cd ~/blog-pwa && git pull &&
+  npm install && npm run build'
