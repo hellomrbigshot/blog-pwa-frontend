@@ -1,7 +1,7 @@
-<center>
+<p align="center">
 <h1>blog-pwa</h1>
 <a href="https://travis-ci.org/hellomrbigshot/blog-pwa"><img src="https://travis-ci.org/hellomrbigshot/blog-pwa.svg?branch=master" /></a>
-</center>
+</p>
 
 
 [address](m.hellomrbigbigshot.xyz)
