@@ -1,5 +1,7 @@
 # blog-pwa
-[地址](m.hellomrbigbigshot.xyz)
+
+[address](m.hellomrbigbigshot.xyz)
+### open with chrome in your phone then add it to screen.
 
 ## Project setup
 ```
