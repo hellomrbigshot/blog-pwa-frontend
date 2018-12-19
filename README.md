@@ -1,6 +1,6 @@
-<center>
+
 <h1>blog-pwa</h1>
-![Build Status](https://travis-ci.org/hellomrbigshot/blog-pwa.svg?branch=master)
+<a href="https://travis-ci.org/hellomrbigshot/blog-pwa"><img src="https://travis-ci.org/hellomrbigshot/blog-pwa.svg?branch=master" /></a>
 
 
 [address](m.hellomrbigbigshot.xyz)
