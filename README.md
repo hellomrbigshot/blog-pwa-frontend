@@ -1,7 +1,7 @@
 <center>
 <h1>blog-pwa</h1>
-[![Build Status](https://travis-ci.org/hellomrbigshot/blog-pwa.svg?branch=master)](https://travis-ci.org/hellomrbigshot/blog-pwa)
-</center>
+![Build Status](https://travis-ci.org/hellomrbigshot/blog-pwa.svg?branch=master)
+
 
 [address](m.hellomrbigbigshot.xyz)
 ### open with chrome in your phone then add it to screen.
