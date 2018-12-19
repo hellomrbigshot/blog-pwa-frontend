@@ -18,5 +18,5 @@ before_install:
   -in id_rsa.enc -out ~/.ssh/id_rsa -d
 after_success:
 - chmod 600 ~/.ssh/id_rsa
-- scp -o stricthostkeychecking=no -r ./* travis@118.24.157.36:/var/www/mobile
+- scp -o stricthostkeychecking=no '-r ./dist/* travis@118.24.157.36:/var/www/mobile'
     
