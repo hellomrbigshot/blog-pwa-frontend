@@ -12,7 +12,7 @@
                         </a>
                         <div class="auto-info-text">
                             <div class="auto-name">{{ detail.create_user }}</div>
-                            <div class="auto-create-time">{{ formatTime(detail.create_date, '3') }}发布</div>
+                            <div class="auto-create-time">{{ formatTime(detail.create_time, '3') }}发布</div>
                         </div>
                     </div>
                 </router-link>

@@ -18,7 +18,7 @@
             <div class="page-bottom">
                 <router-link class="create-user" :to="{ name: 'userInfo', params: { username: encodeURIComponent(page.create_user) }}">{{ page.create_user }}</router-link>
                 <span class="dot">·</span>
-                <span class="create-time">{{ formatTime(page.create_date, '3') }}</span>
+                <span class="create-time">{{ formatTime(page.create_time, '3') }}</span>
             </div>
         </div>
     </router-link>
