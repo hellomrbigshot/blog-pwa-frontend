@@ -9,7 +9,7 @@
                 <div class="activity-user-action">
                     <span v-if="activity.type==='comment'">发表了评论</span>
                     <span v-else-if="activity.type==='page'">{{ activity.content.create_time === activity.content.update_time && '发布了文章' || '更新了文章' }}</span>
-                    <span style="margin-left: 10px;">{{ formatTime(activity.content.update_time, '3') }}</span>
+                    <span style="margin-left: 10px;">{{ formatTime(activity.update_time, '3') }}</span>
                 </div>
             </div>
         </div>

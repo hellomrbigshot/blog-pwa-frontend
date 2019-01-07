@@ -1,7 +1,7 @@
 import axios from '@/libs/api.request.ts';
 import qs from 'qs';
 
-export const getPageList = ({ type, status, content, pageSize, page, secret, keywords } = { type: '', status: '', content: '', pageSize: 10, page: 1, secret: false, keywords: '' }, api: string = '/api/page/pagelist') => {
+export const getPageList = ({ type, status, content, pageSize, page, secret, keywords, sort } = { type: '', status: '', content: '', pageSize: 10, page: 1, secret: false, keywords: '', sort: 'create_time' }, api: string = '/api/page/pagelist') => {
     const data = {
         type,
         status,
@@ -9,7 +9,8 @@ export const getPageList = ({ type, status, content, pageSize, page, secret, key
         pageSize,
         page,
         secret,
-        keywords
+        keywords,
+        sort
     };
     return axios.request({
         url: api,

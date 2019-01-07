@@ -18,7 +18,11 @@
             <div class="page-bottom">
                 <router-link class="create-user" :to="{ name: 'userInfo', params: { username: encodeURIComponent(page.create_user) }}">{{ page.create_user }}</router-link>
                 <span class="dot">·</span>
-                <span class="create-time">{{ formatTime(page.create_time, '3') }}</span>
+                <span class="create-time">{{ formatTime(page.update_time, '3') }}</span>
+                <template v-if="page.update_time !== page.create_time">
+                    <span class="dot">·</span>
+                    <span class="create-time">更新</span>
+                </template>
             </div>
         </div>
     </router-link>
