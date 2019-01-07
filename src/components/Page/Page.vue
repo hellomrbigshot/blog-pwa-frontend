@@ -43,7 +43,6 @@ export default class Page extends Vue {
     margin-top: 15px;
     padding: 10px 15px;
     color: #9E9E9E;
-    // border-bottom: 1px dashed #9E9E9E;
     background: #fff;
     .page-tag, .page-content {
         font-size: 14px;
