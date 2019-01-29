@@ -81,7 +81,9 @@ export default class mixin extends Vue {
      * params {string} content
     */
     marked (content: string) { // 格式化文章
+        if (!content.trim()) return '';
         return marked(content);
+
     }
     hljsCode () { // 代码高亮
         let blocks = document.querySelectorAll('code');
