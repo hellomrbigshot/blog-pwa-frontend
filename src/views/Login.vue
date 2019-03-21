@@ -42,7 +42,7 @@ export default class Login extends Vue {
     password: string = '';
     logoUrl: string = require('@/assets/img/logo_white_transparent.png');
     get redirect () {
-        return this.$route.query.redirect && decodeURIComponent(<string>this.$route.query.redirect) || '';
+        return this.$route.query.redirect && decodeURIComponent(this.$route.query.redirect as string) || '';
     }
     submit () {
         if (!this.username.trim()) {
@@ -53,7 +53,7 @@ export default class Login extends Vue {
             this.$toast('请填写密码');
             return false;
         }
-        loginApi({ username: this.username, password: this.password }).then((res: any) => {
+        loginApi({ username: this.username, password: this.password }).then((result: any) => {
             this.$toast.success('登录成功');
             this.Cookies.set('user', this.username, { expires: 7 });
             getUserInfo(this.username).then((res: any) => {

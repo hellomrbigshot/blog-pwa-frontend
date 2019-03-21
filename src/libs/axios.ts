@@ -58,7 +58,7 @@ class HttpRequest {
                         break;
                 }
             }
-            return Promise.reject(error.response.data);
+            return Promise.reject(error.resoinse ? error.response.data : error);
         })
     }
     request (options: any) {

@@ -1,33 +1,38 @@
 <template>
     <div>
-        <div class="fix-bottom set-comment" style="line-height: 30px;" v-show="!createComment">
+        <div class="fix-bottom set-comment" style="line-height: 30px;" v-show="!showCommentInput">
             <van-row>
-                <van-col span="8" @click.native="createComment=true">
+                <van-col span="20" @click.native="toggleCommentInput">
                     <div class="overflow: auto;">
-                        <van-icon name="edit" size="16px" />
+                        <van-icon name="edit" size="18px" class="van-icon"/>
                         <span style="margin-left: 6px;">写回复</span>
                     </div>
                 </van-col>
-                <van-col span="12">&nbsp;</van-col>
-                <van-col span="4">
+                <van-col span="2">&nbsp;</van-col>
+                <van-col span="2">
                     <a href="#comments" style="color: #909090;">
                         <Badge :info="comments.length">
-                            <van-icon slot="content" name="chat" size="16px" />
+                            <van-icon slot="content" name="chat" size="18px" />
                         </Badge>
                     </a>
                     
                 </van-col>
             </van-row>
         </div>
-        <div class="fix-shadow" v-show="createComment" @click.prevent="createComment=false;">
+        <div class="fix-shadow" v-show="showCommentInput" @click.prevent="showCommentInput=false;">
             <div class="fix-bottom set-comment create-comment" @click.stop="">
-                <div>
-                    <van-field v-model="comment" type="textarea" :autosize="{ maxHeight: 100, minHeight: 30 }" placeholder="回复" />
-                </div>
                 <div style="overflow: auto;">
-                    <van-icon name="passed" size="14px" style="margin: 10px 20px 10px 0; float: right;" @click="setComment"></van-icon>
+                    <span style="float: left; margin-left: 15px; line-height: 30px; color: #000;">回复</span>
+                    <van-icon name="passed" size="18px" :class="['comment-icon', comment.trim().length?'active-icon':'']" style="float: right;" @click="setComment"></van-icon>
                 </div>
-                
+                <div class="comment-input">
+                    <van-field 
+                        ref="commentInput"
+                        v-model="comment"
+                        type="textarea"
+                        :autosize="{ maxHeight: 100, minHeight: 100 }"
+                        :placeholder="`回复${detail.create_user}`" />
+                </div>
             </div>
         </div>
         
@@ -37,6 +42,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { sendComment, getCommentListByPageId } from '@/api/page'
+import { setTimeout } from 'timers';
 @Component({
     components: {
         Badge: () => import('@/components/Badge.vue')
@@ -45,8 +51,15 @@ import { sendComment, getCommentListByPageId } from '@/api/page'
 export default class setComment extends Vue {
     @Prop(Object) detail!: any
     @Prop(Array) comments!: object[]
-    createComment: boolean = false
+    showCommentInput: boolean = false
     comment: string = ''
+    toggleCommentInput () {
+        this.showCommentInput = true;
+        setTimeout(() => {
+          let commentInput = this.$refs['commentInput'] as HTMLElement;
+          commentInput.focus();
+        }, 0)
+    }
     setComment () {
         if (!this.Cookies.get('user')) {
             this.$router.replace({
@@ -72,7 +85,7 @@ export default class setComment extends Vue {
             this.$toast('评论发送成功');
             this.$emit('update');
             this.comment = '';
-            this.createComment = false;
+            this.showCommentInput = false;
         })
 
     }
@@ -82,9 +95,11 @@ export default class setComment extends Vue {
 .set-comment {
     box-shadow: 0 5px 5px 7px #ddd;
     background: #fff;
-    font-size: 13px;
+    font-size: 14px;
     padding: 5px 10px;
     color: #909090;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 .fix-shadow {
     position: fixed;
@@ -95,7 +110,17 @@ export default class setComment extends Vue {
     background: rgba(244, 244, 244, 0.5);
 }
 .create-comment {
-    // height: 100px;
+    .comment-input {
+      /deep/ .van-cell {
+        font-size: 13px;
+      }
+    }
+}
+.van-icon {
+  padding: 6px;
+}
+.active-icon {
+  color: #28a946;
 }
 </style>
 

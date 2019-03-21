@@ -16,12 +16,12 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
-import { getPageList }  from '@/api/page.ts'
+import { getPageList } from '@/api/page.ts'
 import mixin from '@/utils/mixin'
 @Component({
     mixins: [mixin],
     components: {
-        'Page': () => import('./Page.vue')
+        Page: () => import('./Page.vue')
     }
 })
 export default class pageListComponent extends Vue {
@@ -84,4 +84,4 @@ export default class pageListComponent extends Vue {
     }
 }
 </script>
-
+ 

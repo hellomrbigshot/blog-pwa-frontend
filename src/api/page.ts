@@ -1,7 +1,9 @@
 import axios from '@/libs/api.request.ts';
 import qs from 'qs';
 
-export const getPageList = ({ type, status, content, pageSize, page, secret, keywords, sort } = { type: '', status: '', content: '', pageSize: 10, page: 1, secret: false, keywords: '', sort: 'create_time' }, api: string = '/api/page/pagelist') => {
+export const getPageList = (
+  { type, status, content, pageSize, page, secret, keywords, sort } = { type: '', status: '', content: '', pageSize: 10, page: 1, secret: false, keywords: '', sort: 'create_time' },
+  api: string = '/api/page/pagelist') => {
     const data = {
         type,
         status,
@@ -32,7 +34,9 @@ export const searchPage = (keywords: string) => {
         method: 'post'
     })
 }
-export const sendComment = ({ content, create_user, page_id, page_title, to_user } = { content: '', create_user: '', page_id: '', page_title: '', to_user: '' }) => {
+export const sendComment = (
+  { content, create_user, page_id, page_title, to_user } = { content: '', create_user: '', page_id: '', page_title: '', to_user: '' }
+  ) => {
     const data = {
         content,
         create_user,
@@ -46,10 +50,10 @@ export const sendComment = ({ content, create_user, page_id, page_title, to_user
         method: 'post'
     })
 }
-export const getCommentListByPageId = (page_id: string) => {
+export const getCommentListByPageId = (pageId: string) => {
     return axios.request({
         url: '/api/comment/getpagecommentlist',
-        data: qs.stringify({ page_id }),
+        data: qs.stringify({ page_id: pageId }),
         method: 'post'
     })
 }

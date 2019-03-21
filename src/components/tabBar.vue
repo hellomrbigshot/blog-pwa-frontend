@@ -17,17 +17,16 @@ interface Route {
 @Component
 export default class tabBar extends Vue {
     active: number = 0;
-    tab_obj: any = ['pages', 'tags', 'comments', 'mine'];
+    tabObj: any = ['pages', 'tags', 'comments', 'mine'];
     @Watch('$route', { immediate: true, deep: true })
     onRouteChanged (val: Route, oldVal: Route) {
-        this.active = this.tab_obj.findIndex((item: string) => val.fullPath.indexOf(item) > -1);
+        this.active = this.tabObj.findIndex((item: string) => val.fullPath.indexOf(item) > -1);
     }
     mounted () {
         // console.log(this.$route)
     }
-    
     tabChange (active: number) {
-        this.$router.push({ name: this.tab_obj[active] })
+        this.$router.push({ name: this.tabObj[active] })
     }
 }
 </script>

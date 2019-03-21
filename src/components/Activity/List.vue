@@ -16,7 +16,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
-import { getActivityList, getActivityNum }  from '@/api/activity.ts'
+import { getActivityList, getActivityNum } from '@/api/activity.ts'
 import mixin from '@/utils/mixin'
 @Component({
     mixins: [mixin],
@@ -32,7 +32,7 @@ export default class activityList extends Vue {
     pullLoading: boolean = false;
     listLoading: boolean = false;
     listFinished: boolean = true;
-    active:boolean = false;
+    active: boolean = false;
     list: object[] = [];
     mounted () {
         this.pullLoading = true;

@@ -28,7 +28,7 @@ export default class Register extends Vue {
     repassword: string = '';
     logoUrl: string = require('@/assets/img/logo_white_transparent.png');
     get redirect () {
-        return this.$route.query.redirect && decodeURIComponent(<string>this.$route.query.redirect) || '';
+        return this.$route.query.redirect && decodeURIComponent(this.$route.query.redirect as string) || '';
     }
     submit () {
         try {
@@ -44,7 +44,8 @@ export default class Register extends Vue {
             if (this.repassword.trim() !== this.password.trim()) {
                 throw new Error('两次密码输入不一致');
             }
-            registerApi({ username: this.username.trim(), password: this.password.trim(), repassword: this.repassword.trim() }).then(res => {
+            registerApi({ username: this.username.trim(), password: this.password.trim(), repassword: this.repassword.trim() })
+              .then(result => {
                 this.$toast.success('注册成功');
                 this.Cookies.set('user', this.username);
                 getUserInfo(this.username).then((res: any) => {
@@ -53,13 +54,10 @@ export default class Register extends Vue {
                     const url = this.redirect && this.redirect || '/pages';
                     this.$router.push(url);
                 })
-            }) 
+            })
         } catch (e) {
             this.$toast.fail(e.message);
         }
-        
-        
-
     }
 }
 

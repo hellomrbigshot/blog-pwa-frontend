@@ -90,11 +90,11 @@ export default class userInfo extends Vue {
         getUserDetail(this.username).then((res: any) => {
             this.userInfo = res.data;
             Object.keys(this.oauthAccounts).forEach(type => {
-                let filter_oauth_obj = this.userInfo.oauthinfo.find((item: any) => item.type === type)
-                if (filter_oauth_obj) {
+                let filterOauthObj = this.userInfo.oauthinfo.find((item: any) => item.type === type)
+                if (filterOauthObj) {
                     this.oauthAccounts[type].oauth = true
                     this.oauthAccounts[type].oauth_user =
-                    filter_oauth_obj.domain || filter_oauth_obj.name
+                    filterOauthObj.domain || filterOauthObj.name
                 } else {
                     this.oauthAccounts[type].oauth = false
                     this.oauthAccounts[type].oauth_user = ''

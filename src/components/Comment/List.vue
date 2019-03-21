@@ -16,7 +16,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
-import { getCommentList }  from '@/api/comment.ts'
+import { getCommentList } from '@/api/comment.ts'
 import mixin from '@/utils/mixin'
 import { getActivityList } from '@/api/activity';
 @Component({

@@ -53,10 +53,11 @@ export default class Mine extends Vue {
         this.imgUrl = this.defaultImg;
     }
     toUserInfoPage () {
-        if (this.username) 
+        if (this.username) {
             this.$router.push({ name: 'userInfo', params: { username: encodeURIComponent(this.username) }});
-        else 
+        } else {
             this.$router.push({ name: 'login' });
+        }
     }
 }
 </script>

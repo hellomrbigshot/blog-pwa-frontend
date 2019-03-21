@@ -12,7 +12,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { searchPage }  from '@/api/page.ts'
+import { searchPage } from '@/api/page.ts'
 import { setTimeout } from 'timers';
 @Component({
     components: {
@@ -29,7 +29,6 @@ export default class Search extends Vue {
         setTimeout(() => {
             (this.$refs['pageList'] as any).onRefresh();
         }, 0)
-        
     }
     searchItem (name: string) {
         this.keywords = name;

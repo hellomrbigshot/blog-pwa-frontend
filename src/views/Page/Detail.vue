@@ -17,16 +17,16 @@
                     </div>
                 </router-link>
                 
-                <div class="page-content" v-html="marked(detail.content)" ></div>
+                <div class="page-content m-editor-preview" v-html="marked(detail.content)" ></div>
             </div>
             <div style="margin: 30px 0 10px;">
-                <van-tag plain v-for="tag, i in detail.tags" @click.native="$router.push({ name: 'tagDetail', params: { name: tag }})" style="margin-right: 5px;">{{ tag }}</van-tag>
+                <van-tag plain v-for="(tag, i) in detail.tags" :key="i" @click.native="$router.push({ name: 'tagDetail', params: { name: tag }})" style="margin-right: 5px;">{{ tag }}</van-tag>
             </div>
         </main>
         <div style="margin-bottom: 40px;" class="comment-wrapper" id="comments">
             <div class="comment-header">评论({{ comments.length }})</div>
             <div class="comment-list" v-if="comments.length">
-                <Comment v-for="comment, index in comments" :comment="comment" :key="index" :id="comment._id"></Comment>
+                <Comment v-for="(comment, index) in comments" :comment="comment" :key="index" :id="comment._id"></Comment>
             </div>
             <div class="comment-empty" v-else>暂时还没有评论(#^.^#)</div>
         </div>
@@ -34,6 +34,7 @@
     </div>
 </template>
 <script lang="ts">
+import 'simple-m-editor/dist/simple-m-editor.css';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { getPageDetail, getCommentListByPageId } from '@/api/page'
 import mixin from '@/utils/mixin.ts'
@@ -62,7 +63,7 @@ export default class pageDetail extends Vue {
     activated () {
         if (this.id !== this.detail._id && this.detail._id) { // 更新详情内容
             this.getPageDetail();
-        }   
+        }
     }
     imgError () {
         this.imgUrl = this.defaultImg
@@ -76,9 +77,6 @@ export default class pageDetail extends Vue {
         return Promise.all([getPageDetail(this.id).then(res => {
             this.detail = res.data;
             this.imgUrl = `/api/file/avatar/user?username=${this.detail.create_user}`;
-            setTimeout(() => {
-                this.hljsCode();
-            }, 0);  
         }),
         this.getCommentList()]);
     }

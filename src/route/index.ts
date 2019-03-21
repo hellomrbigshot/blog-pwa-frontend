@@ -20,15 +20,15 @@ const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
     if (!Cookies.get('user') && to.meta.login) {
-        next({ 
-            name: 'login', 
+        next({
+            name: 'login',
             query: {
                 redirect: to.fullPath
-            } 
+            }
         });
     } else {
         next();
-    }   
+    }
 })
 
 export default router
