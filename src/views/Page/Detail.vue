@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div @scroll.native="detailScroll" ref="pageDetail">
         <main class="container main-container" style="margin: 10px 0 10px; background: #fff;" v-if="detail.content" ref="scrollBody">
             <div class="page-detail">
                 <div>
@@ -16,7 +16,6 @@
                         </div>
                     </div>
                 </router-link>
-                
                 <div class="page-content m-editor-preview" v-html="marked(detail.content)" ></div>
             </div>
             <div style="margin: 30px 0 10px;">
@@ -26,7 +25,7 @@
         <div style="margin-bottom: 40px;" class="comment-wrapper" id="comments">
             <div class="comment-header">评论({{ comments.length }})</div>
             <div class="comment-list" v-if="comments.length">
-                <Comment v-for="(comment, index) in comments" :comment="comment" :key="index" :id="comment._id"></Comment>
+                <Comment v-for="(comment, index) in comments" :comment="comment" :key="index"></Comment>
             </div>
             <div class="comment-empty" v-else>暂时还没有评论(#^.^#)</div>
         </div>
@@ -34,11 +33,10 @@
     </div>
 </template>
 <script lang="ts">
-import 'simple-m-editor/dist/simple-m-editor.css';
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { getPageDetail, getCommentListByPageId } from '@/api/page'
 import mixin from '@/utils/mixin.ts'
-import { setTimeout } from 'timers';
+import { setTimeout } from 'timers'
 @Component({
     mixins: [mixin],
     components: {
@@ -57,8 +55,17 @@ export default class pageDetail extends Vue {
     get id (): string {
         return this.$route.params.id;
     }
-    async created () {
-        await this.getPageDetail();
+    async mounted () {
+        await this.getPageDetail()
+        setTimeout(() => {
+          let hash = this.$route.params.hash
+          if (hash) {
+            const hashDom = document.getElementById(hash) as Element
+            if (hashDom) {
+              hashDom.scrollIntoView()
+            }
+          }
+        }, 500)
     }
     activated () {
         if (this.id !== this.detail._id && this.detail._id) { // 更新详情内容
@@ -70,15 +77,19 @@ export default class pageDetail extends Vue {
     }
     getCommentList () {
         getCommentListByPageId(this.id).then(res => {
-            this.comments = res.data;
+            this.comments = res.data
         })
     }
     getPageDetail () {
         return Promise.all([getPageDetail(this.id).then(res => {
-            this.detail = res.data;
-            this.imgUrl = `/api/file/avatar/user?username=${this.detail.create_user}`;
+            this.detail = res.data
+            this.imgUrl = `/api/file/avatar/user?username=${this.detail.create_user}`
         }),
-        this.getCommentList()]);
+        this.getCommentList()])
+    }
+    detailScroll (e: any) {
+      const detailPage = this.$refs['detailPage'] as HTMLElement
+      console.log(e.target)
     }
 }
 </script>
@@ -98,7 +109,7 @@ export default class pageDetail extends Vue {
             .auto-name {
                 font-size: 15px;
                 font-weight: 700;
-                color: #28a946;
+                color: #07c160;
             }
             .auto-create-time {
                 font-size: 13px;

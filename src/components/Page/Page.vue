@@ -67,7 +67,7 @@ export default class Page extends Vue {
     .page-bottom {
         margin-bottom: 5px;
         .create-user {
-            color: #28a946;
+            color: #07c160;
             font-size: 13px;
         }
         .dot {

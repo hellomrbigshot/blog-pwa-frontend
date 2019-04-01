@@ -18,7 +18,7 @@ export const registerRouter: object = {
   },
   component: () => import('@/views/Register.vue')
 }
-export const skeleton: object = {
+export const skeleton = {
   path: '/skeleton',
   name: 'skeleton',
   meta: {
@@ -55,7 +55,7 @@ export const normalRouter = {
         login: false,
         title: '首页',
         icon: 'wap-home',
-        tab_active: 0,
+        tabActive: 0,
         search: true,
         keepAlive: true
       },
@@ -66,13 +66,13 @@ export const normalRouter = {
           component: () => import('@/views/Page/List.vue'),
           meta: {
             search: true,
-            tab_active: 0,
+            tabActive: 0,
             keepAlive: true
           }
         },
         {
           name: 'pageDetail',
-          path: 'detail/:id',
+          path: 'detail/:id/:hash?',
           component: () => import('@/views/Page/Detail.vue'),
           meta: {
             search: false,
@@ -80,11 +80,23 @@ export const normalRouter = {
           }
         },
         {
-          name: 'pageSeach',
+          name: 'pageSearch',
           path: 'search',
           component: () => import('@/views/Page/Search.vue'),
           meta: {
             keepAlive: false
+          }
+        },
+        {
+          name: 'pageCreate',
+          path: 'create',
+          component: () => import('@/views/Page/Create.vue'),
+          meta: {
+            title: '写文章',
+            rewriteNavbar: true,
+            keepAlive: true,
+            login: true,
+            hideHeader: true,
           }
         },
         {
@@ -93,8 +105,9 @@ export const normalRouter = {
           component: () => import('@/views/Page/Draft.vue'),
           meta: {
             title: '草稿箱',
-            rewrite_navbar: true,
-            keepAlive: true
+            rewriteNavbar: true,
+            keepAlive: true,
+            login: true
           }
         },
         {
@@ -103,7 +116,7 @@ export const normalRouter = {
           component: () => import('@/views/Page/myList.vue'),
           meta: {
             title: '我的文章',
-            rewrite_navbar: true,
+            rewriteNavbar: true,
             keepAlive: true
           }
         }
@@ -118,7 +131,7 @@ export const normalRouter = {
         login: false,
         title: '标签',
         icon: 'records',
-        tab_active: 1,
+        tabActive: 1,
         search: true
       },
       children: [
@@ -128,7 +141,7 @@ export const normalRouter = {
           component: () => import('@/views/Tag/List.vue'),
           meta: {
             login: false,
-            tab_active: 1,
+            tabActive: 1,
             search: true,
             keepAlive: true
           }
@@ -139,7 +152,7 @@ export const normalRouter = {
           component: () => import('@/views/Tag/Detail.vue'),
           meta: {
             login: false,
-            tab_active: 1,
+            tabActive: 1,
             search: false,
             keepAlive: true
           }
@@ -154,7 +167,7 @@ export const normalRouter = {
         login: true,
         title: '消息',
         icon: 'chat',
-        tab_active: 2,
+        tabActive: 2,
         search: true,
         keepAlive: true
       }
@@ -167,9 +180,9 @@ export const normalRouter = {
         login: false,
         title: '我',
         icon: 'contact',
-        tab_active: 3,
+        tabActive: 3,
         search: false,
-        rewrite_navbar: true,
+        rewriteNavbar: true,
         keepAlive: true
       }
     },
@@ -187,7 +200,7 @@ export const normalRouter = {
             login: false,
             title: '个人中心',
             search: false,
-            hide_header: true,
+            hideHeader: true,
             keepAlive: true
           }
         },
@@ -199,8 +212,8 @@ export const normalRouter = {
             login: true,
             title: '个人设置',
             search: false,
-            hide_header: false,
-            rewrite_navbar: true,
+            hideHeader: false,
+            rewriteNavbar: true,
             keepAlive: false
           }
         }

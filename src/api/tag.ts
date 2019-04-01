@@ -12,6 +12,12 @@ export const getTagList = ({ page, pageSize } = { page: 1, pageSize: 10 }) => {
         method: 'post'
     })
 }
+export const getAllTags = () => {
+  return axios.request({
+    url: '/api/tag/alltags',
+    method: 'post'
+  })
+}
 export const getTagDetail = (name: string) => {
     const data = {
         name

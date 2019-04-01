@@ -7,16 +7,19 @@
             <div class="comment-user-info">
                 <div class="comment-user-name">{{ comment.create_user }}</div>
                 <div class="comment-user-action">
-                    <span v-if="type==='create_user'">发表了评论</span>
-                    <span v-else-if="type==='to_user'">评论了我</span>
+                    <span v-if="type==='create_user'">回复</span>
+                    <span v-else-if="type==='to_user'">回复我说</span>
                     <span style="margin-left: 10px;">{{ formatTime(comment.create_time, '3') }}</span>
                 </div>
             </div>
         </div>
         <div class="comment">
-            <router-link :to="`/pages/detail/${comment.page_id}#${comment._id}`">
+            <router-link :to="`/pages/detail/${comment.page_id}/${comment._id}`">
                 <div class="comment-header">{{ comment.content }}</div>
-                <div class="comment-content">{{ comment.page_title }}</div>
+                <div class="comment-content" v-if="!comment.reply_user">{{ comment.page_title }}</div>
+                <div class="comment-content comment-reply-content" v-else>
+                  <router-link style="color: #07c160;" :to="{ name: 'userInfo', params: { username: encodeURIComponent(comment.reply_user) }}">{{ comment.reply_user }}</router-link>：{{ comment.reply_content }}
+                </div>
             </router-link>
         </div>
     </div>
@@ -97,9 +100,11 @@ export default class Comment extends Vue {
             color: #0066CC;
             font-size: 16px;
         }
-    }
-    
+        .comment-reply-content {
+          font-size: 14px;
+          color: #555;
+        }
+    }   
 }
-
 </style>
 

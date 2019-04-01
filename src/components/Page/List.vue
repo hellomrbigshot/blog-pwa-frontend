@@ -1,6 +1,6 @@
 <template>
 <div>
-    <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: 90vh;">
+    <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: calc(100vh - 140px); box-sizing: border-box;">
         <van-list
             v-model="listLoading"
             :finished="listFinished"

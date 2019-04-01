@@ -3,24 +3,25 @@ import Vant from 'vant'
 import Cookies from 'js-cookie'
 import './registerServiceWorker'
 import 'vant/lib/index.css';
-import 'highlight.js/styles/solarized-light.css'
-import '@/assets/css/iconfont/iconfont.css'
-import '@/assets/css/main.scss'
-let fundebug = require('fundebug-javascript')
-let VConsole = require('vconsole')
-fundebug.apikey = '8c8147a1846a6efc110b2ba3d86d41c60e2be94ed4a899eaa81542d30d790501'
+import '@/assets/css/iconfont/iconfont.css';
+import '@/assets/css/main.scss';
+import 'simple-m-editor/dist/simple-m-editor.css';
+// let fundebug = require('fundebug-javascript');
+let VConsole = require('vconsole');
+// fundebug.apikey = '8c8147a1846a6efc110b2ba3d86d41c60e2be94ed4a899eaa81542d30d790501';
 
-import App from './App.vue'
-import router from './route'
-import store from './vuex'
+import App from './App.vue';
+import router from './route';
+import store from './vuex';
 
 Vue.use(Vant)
 
 Vue.config.productionTip = false
 Vue.prototype.Cookies = Cookies
+Vue.prototype.$bus = new Vue()
 
 let vConsole = new VConsole();
-console.log('Hello world');
+// console.log('Hello world');
 
 function formatComponentName (vm: any) {
   if (vm.$root === vm) return 'root';
@@ -36,35 +37,37 @@ function formatComponentName (vm: any) {
   );
 }
 
-Vue.config.errorHandler = (err: any, vm: any, info: any) => {
-  if (vm) {
-      const componentName = formatComponentName(vm);
-      const propsData = vm.$options && vm.$options.propsData;
-      fundebug.notifyError(err, {
-          metaData: {
-              componentName,
-              propsData,
-              info
-          }
-      });
-  } else {
-      fundebug.notifyError(err);
-  }
-};
+// Vue.config.errorHandler = (err: any, vm: any, info: any) => {
+//   if (vm) {
+//       const componentName = formatComponentName(vm);
+//       const propsData = vm.$options && vm.$options.propsData;
+//       fundebug.notifyError(err, {
+//           metaData: {
+//               componentName,
+//               propsData,
+//               info
+//           }
+//       });
+//   } else {
+//       fundebug.notifyError(err);
+//   }
+// };
 
-if (/Android/gi.test(navigator.userAgent)) {
+const userAgent = navigator.userAgent
+const regAndroid = /Android/gi
+if (regAndroid.test(userAgent)) {
   window.addEventListener('resize', () => {
+    const activeElement = document.activeElement
     if (
-      document.activeElement.tagName === 'INPUT' ||
-      document.activeElement.tagName === 'TEXTAREA'
+      activeElement &&
+      (activeElement.tagName === 'INPUT' ||
+      activeElement.tagName === 'TEXTAREA')
     ) {
       window.setTimeout(() => {
-        if ('scrollIntoView' in document.activeElement) {
-          console.log('scrollIntoView')
-          document.activeElement.scrollIntoView()
-        } else {
-          console.log('scrollIntoViewIfNeeded')
-          document.activeElement.scrollIntoViewIfNeeded()
+        if ('scrollIntoView' in activeElement) {
+          activeElement!.scrollIntoView()
+        } else if ('scrollIntoViewIfNeeded' in activeElement) {
+          activeElement!.scrollIntoViewIfNeeded()
         }
       }, 0)
     }

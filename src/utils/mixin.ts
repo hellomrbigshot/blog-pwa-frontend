@@ -1,16 +1,16 @@
 import marked from 'marked'
 import hljs from 'highlight.js'
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import { Component, Vue } from 'vue-property-decorator'
 declare module 'vue/types/vue' {
   interface Vue {
     Cookies: any
     computed: object
+    $bus: any
     formatTime(time: any, type: string): void
     marked(content: string): void
-    debounce(fun: any, wait: number): void
+    debounce(fun: any, ctx: any, wait: number): any
     throttle(fun: any, wait: number): any
-    hljsCode(): void
   }
 }
 marked.setOptions({
@@ -47,9 +47,7 @@ function type3(t: any) {
   } else if (nowTime - time < 7 * 24 * 60 * 60 * 1000) {
     return `${Math.floor((nowTime - time) / (24 * 60 * 60 * 1000))} 天前`
   } else if (new Date().getFullYear() === new Date(t).getFullYear()) {
-    return `${format(new Date(t).getMonth() + 1)}月${format(
-      new Date(t).getDate()
-    )}日`
+    return `${format(new Date(t).getMonth() + 1)}月${format(new Date(t).getDate())}日`
   } else {
     return `${new Date(t).getFullYear()}-${format(
       new Date(t).getMonth() + 1
@@ -98,27 +96,20 @@ export default class mixin extends Vue {
     if (!content.trim()) return ''
     return marked(content)
   }
-  // hljsCode () { // 代码高亮
-  //     let blocks = document.querySelectorAll('code');
-  //     let dom = Array.prototype.slice.call(blocks);
-  //     dom.forEach((ele: any) => {
-  //         hljs.highlightBlock(ele);
-  //     })
-  // }
   /**
    * params {function} fun
    * params {number} number
    */
-  debounce(fun: any, wait: number = 100) {
+  debounce(fun: any, ctx: any, wait = 100) {
     // 防抖
     let time: any = null
-    return () => {
-      let args = arguments
-      clearTimeout(time) // 清除上一次定时器，这里用到了闭包
+    const rtn = (...params: any[]) => {
+      clearTimeout(time) // 清除上一次定时器
       time = setTimeout(() => {
-        fun(args)
+        fun.apply(ctx, params)
       }, wait)
     }
+    return rtn
   }
   /**
    * params {function} fun

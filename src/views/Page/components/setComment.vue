@@ -2,7 +2,7 @@
     <div>
         <div class="fix-bottom set-comment" style="line-height: 30px;" v-show="!showCommentInput">
             <van-row>
-                <van-col span="20" @click.native="toggleCommentInput">
+                <van-col span="20" @click.native="toggleCommentInput(true)">
                     <div class="overflow: auto;">
                         <van-icon name="edit" size="18px" class="van-icon"/>
                         <span style="margin-left: 6px;">写回复</span>
@@ -31,13 +31,11 @@
                         v-model="comment"
                         type="textarea"
                         :autosize="{ maxHeight: 100, minHeight: 100 }"
-                        :placeholder="`回复${detail.create_user}`" />
+                        :placeholder="`回复${toComment.create_user || detail.create_user}`" />
                 </div>
             </div>
         </div>
-        
     </div>
-    
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
@@ -53,7 +51,17 @@ export default class setComment extends Vue {
     @Prop(Array) comments!: object[]
     showCommentInput: boolean = false
     comment: string = ''
-    toggleCommentInput () {
+    toComment: any = {}
+    mounted () {
+      this.$bus.$on('toComment', (comment: object) => {
+        this.toComment = comment
+        this.toggleCommentInput(false)
+      })
+    }
+    toggleCommentInput (clearToComment: boolean) {
+        if (clearToComment) {
+          this.toComment = {}
+        }
         this.showCommentInput = true;
         setTimeout(() => {
           let commentInput = this.$refs['commentInput'] as HTMLElement;
@@ -79,7 +87,9 @@ export default class setComment extends Vue {
             to_user: this.detail.create_user,
             page_id: this.detail._id,
             page_title: this.detail.title,
-            content: this.comment
+            content: this.comment,
+            reply_user: this.toComment.create_user || '',
+            reply_content: this.toComment.content || ''
         }
         sendComment(commentObject).then((res: object) => {
             this.$toast('评论发送成功');
@@ -120,7 +130,7 @@ export default class setComment extends Vue {
   padding: 6px;
 }
 .active-icon {
-  color: #28a946;
+  color: #07c160;
 }
 </style>
 

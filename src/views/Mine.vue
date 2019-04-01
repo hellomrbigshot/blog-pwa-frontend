@@ -22,6 +22,9 @@
             
         </div>
         <van-cell-group style="margin-top: 10px;">
+            <van-cell title="写文章" @click="$router.push({ name: 'pageCreate' })">
+                <van-icon slot="icon" name="new-o" color="#2db7f5" class="van-cell__left-icon"/>
+            </van-cell>
             <van-cell title="消息中心" @click="$router.push({ name: 'comments' })">
                 <van-icon slot="icon" name="chat" color="#2db7f5" class="van-cell__left-icon"/>
             </van-cell>
