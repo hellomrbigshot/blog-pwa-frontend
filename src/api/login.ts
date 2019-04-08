@@ -12,6 +12,12 @@ export const loginApi = ({ username, password } = { username: '', password: '' }
         method: 'post'
     })
 }
+export const signoutApi = () => {
+  return axios.request({
+    url: '/api/signout',
+    method: 'post'
+  })
+}
 export const registerApi = ({ username, password, repassword } = { username: '', password: '', repassword: '' }) => {
     const data = {
         username,

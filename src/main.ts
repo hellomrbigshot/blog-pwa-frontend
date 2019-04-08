@@ -64,11 +64,7 @@ if (regAndroid.test(userAgent)) {
       activeElement.tagName === 'TEXTAREA')
     ) {
       window.setTimeout(() => {
-        if ('scrollIntoView' in activeElement) {
-          activeElement!.scrollIntoView()
-        } else if ('scrollIntoViewIfNeeded' in activeElement) {
-          activeElement!.scrollIntoViewIfNeeded()
-        }
+        activeElement.scrollIntoView()
       }, 0)
     }
   })

@@ -1,6 +1,5 @@
 import marked from 'marked'
 import hljs from 'highlight.js'
-// import Cookies from 'js-cookie'
 import { Component, Vue } from 'vue-property-decorator'
 declare module 'vue/types/vue' {
   interface Vue {
