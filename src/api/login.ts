@@ -1,11 +1,11 @@
-import axios from '@/libs/api.request.ts';
-import qs from 'qs';
+import axios from '@/libs/api.request.ts'
+import qs from 'qs'
 
 export const loginApi = ({ username, password } = { username: '', password: '' }) => {
     const data = {
         username,
         password
-    };
+    }
     return axios.request({
         url: '/api/signin',
         data: qs.stringify(data),
@@ -23,7 +23,7 @@ export const registerApi = ({ username, password, repassword } = { username: '',
         username,
         password,
         repassword
-    };
+    }
     return axios.request({
         url: '/api/signup',
         data: qs.stringify(data),

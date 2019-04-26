@@ -11,14 +11,14 @@
     </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component({
     components: {
         commentList: () => import('@/components/Comment/List.vue')
     }
 })
 export default class commentsPage extends Vue {
-    active: number = 0;
+    active: number = 0
 }
 </script>
 

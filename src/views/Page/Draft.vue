@@ -4,14 +4,14 @@
     </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { getPageList, searchPage } from '@/api/page.ts';
+import { Component, Prop, Vue } from 'vue-property-decorator'
+import { getPageList, searchPage } from '@/api/page.ts'
 @Component({
     components: {
         pageList: () => import('@/components/Page/List.vue')
     }
 })
 export default class Draft extends Vue {
-    api: string = '/api/page/limitpagelist';
+    api: string = '/api/page/limitpagelist'
 }
 </script>

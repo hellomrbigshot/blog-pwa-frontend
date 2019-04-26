@@ -70,7 +70,7 @@ export default class pageListComponent extends Vue {
   }
   onLoad() {
     this.page = this.page + 1
-    let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query);
+    let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query)
     getPageList(queryObject, this.api).then(res => {
       const { result } = res.data
       this.listLoading = false

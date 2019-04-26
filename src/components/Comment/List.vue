@@ -12,7 +12,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
-import { getCommentList } from '@/api/comment.ts'
+import { getCommentList, updateCommentStatus, getUnReadCommentNum } from '@/api/comment.ts'
 import mixin from '@/utils/mixin'
 import { getActivityList } from '@/api/activity'
 @Component({
@@ -43,6 +43,7 @@ export default class commentList extends Vue {
       } else {
         this.listFinished = false
       }
+      this.changeCommentStatus(result)
     })
   }
   @Watch('list', { deep: true })
@@ -66,6 +67,7 @@ export default class commentList extends Vue {
       } else {
         this.listFinished = false
       }
+      this.changeCommentStatus(result)
     })
   }
   onLoad() {
@@ -76,8 +78,30 @@ export default class commentList extends Vue {
       this.listLoading = false
       this.list.push(...result)
       if (this.page * this.pageSize >= this.total) this.listFinished = true
+      this.changeCommentStatus(result)
     })
+  }
+  async changeCommentStatus(list: any[]) { // 将获取到的评论标记为已读
+    if (this.query.type !== 'to_user') return
+    const ids = list.reduce((arr: any[], item: any) => {
+      if (!item.is_read) {
+        arr.push(item._id)
+      }
+      return arr
+    }, [])
+    if (ids.length) {
+      await updateCommentStatus(ids).then(res => { // 修改评论状态
+        this.list.forEach((item: any) => {
+          if (ids.includes(item._id)) {
+            item.is_read = true
+          }
+        })
+      })
+      await getUnReadCommentNum().then(res => { // 获取未读评论数量
+        const { result } = res.data
+        this.$store.commit('changeMsgNum', result)
+      })
+    }
   }
 }
 </script>
-

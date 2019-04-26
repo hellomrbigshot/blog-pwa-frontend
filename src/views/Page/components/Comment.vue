@@ -30,7 +30,7 @@ export default class PageComment extends Vue {
       return Boolean(this.Cookies.get('user'))
     }
     imgError() {
-        this.imgUrl = this.defaultImg;
+        this.imgUrl = this.defaultImg
     }
     setCommentToUser() {
         this.$bus.$emit('toComment', this.comment)

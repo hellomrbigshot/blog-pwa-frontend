@@ -20,10 +20,12 @@ interface Route {
 export default class tabBar extends Vue {
   active: number = 0
   tabObj: string[] = ['pages', 'tags', 'comments', 'mine']
-  unreadMsgNum: number = 0
   @Watch('$route', { immediate: true, deep: true })
   onRouteChanged(val: Route, oldVal: Route) {
     this.active = this.tabObj.findIndex((item: string) => val.fullPath.indexOf(item) > -1)
+  }
+  get unreadMsgNum() {
+    return this.$store.state.unreadMsgNum
   }
   mounted() {
   }

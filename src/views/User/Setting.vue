@@ -14,8 +14,8 @@ export default class userSetting extends Vue {
         return this.$route.params.username
     }
     get info () {
-        const info: any = localStorage.getItem('user');
-        return JSON.parse(info);
+        const info: any = localStorage.getItem('user')
+        return JSON.parse(info)
     }
 }
 </script>

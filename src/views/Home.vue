@@ -48,16 +48,12 @@ export default class Home extends Vue {
   showSearchIcon: boolean = true
   logoUrl: string = require('@/assets/img/logo_black_transparent.png')
   socket: any = io(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8082' : 'https://hellomrbigbigshot.xyz'}`)
-  unreadMsgNum: number = 0
   mounted() {
-    console.log('mounted')
     this.checkRoute(this.$route)
-    // this.socket.removeAllListeners()
     this.socket.on('unread-comment', (msg: number) => {
-      console.log('xixi')
-      console.log(msg)
-      if (msg > 0 && msg !== this.unreadMsgNum) {
-        this.unreadMsgNum = msg
+      const unreadMsgNum = this.$store.state.unreadMsgNum
+      if (msg !== unreadMsgNum) {
+        this.$store.commit('changeMsgNum', msg)
       }
     })
   }

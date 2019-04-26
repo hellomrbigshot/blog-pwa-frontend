@@ -37,7 +37,7 @@ function type3(t: any) {
   let nowTime = new Date().getTime()
   let time = new Date(t).getTime()
   if (nowTime - time < 60 * 1000) {
-    // return  `${Math.floor((nowTime-time)/(1000))} 秒前`;
+    // return  `${Math.floor((nowTime-time)/(1000))} 秒前`
     return `刚刚`
   } else if (nowTime - time < 60 * 60 * 1000) {
     return `${Math.floor((nowTime - time) / (60 * 1000))} 分钟前`

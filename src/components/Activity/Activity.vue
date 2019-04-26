@@ -42,14 +42,14 @@ export default class Activity extends Vue {
     imgUrl: string = require('../../assets/img/avatar.jpg')
     defaultImg: string = require('../../assets/img/avatar.jpg')
     mounted () {
-        this.imgUrl = `/api/file/avatar/user?username=${this.activity.create_user}`;
+        this.imgUrl = `/api/file/avatar/user?username=${this.activity.create_user}`
     }
     @Watch('activity', { deep: true })
     onActivityChange (newVal: any, oldVal: any) {
-        this.imgUrl = `/api/file/avatar/user?username=${this.activity.create_user}`;
+        this.imgUrl = `/api/file/avatar/user?username=${this.activity.create_user}`
     }
     imgError () {
-        this.imgUrl = this.defaultImg;
+        this.imgUrl = this.defaultImg
     }
 }
 </script>

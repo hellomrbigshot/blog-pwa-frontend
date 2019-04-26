@@ -16,7 +16,7 @@
     "object-literal-sort-keys": false,
     "no-consecutive-blank-lines": false,
     "no-string-literal": false,
-    "semicolon": [false, "never"],
+    "semicolon": [false, "always"],
     "prefer-const": false,
     "class-name": false,
     "space-before-function-paren": [false, "never"],

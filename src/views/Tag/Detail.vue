@@ -20,18 +20,18 @@ import { getTagDetail } from '@/api/tag'
     }
 })
 export default class tagDetail extends Vue {
-    name: string = '';
-    tagDetail: object = {};
-    total: number = 0;
+    name: string = ''
+    tagDetail: object = {}
+    total: number = 0
     mounted () {
-        this.name = this.$route.params.name;
+        this.name = this.$route.params.name
         getTagDetail(this.name).then(res => {
-            let { data } = res;
-            this.tagDetail = data;
+            let { data } = res
+            this.tagDetail = data
         })
     }
     listChange (val: object[], oldVal: object[]) {
-        this.total = val.length;
+        this.total = val.length
     }
 }
 </script>

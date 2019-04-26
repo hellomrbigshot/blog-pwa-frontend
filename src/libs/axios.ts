@@ -1,14 +1,14 @@
-import axios from 'axios';
-import { Toast } from 'vant';
-import Cookies from 'js-cookie';
-import router from '@/route/index';
+import axios from 'axios'
+import { Toast } from 'vant'
+import Cookies from 'js-cookie'
+import router from '@/route/index'
 
 class HttpRequest {
-    baseUrl: string;
-    queue: any;
+    baseUrl: string
+    queue: any
     constructor (baseUrl: string) {
-        this.baseUrl = baseUrl;
-        this.queue = {};
+        this.baseUrl = baseUrl
+        this.queue = {}
     }
     getInsideConfig () {
         const config = {
@@ -16,56 +16,56 @@ class HttpRequest {
             headers: {
 
             }
-        };
-        return config;
+        }
+        return config
     }
     distroy (url: string) {
-        delete this.queue[url];
+        delete this.queue[url]
         if (!Object.keys(this.queue).length) {}
-    };
+    }
     interceptors (instance: any, url: string) {
         // 请求拦截
         instance.interceptors.request.use((config: any) => {
             // 添加全局 loading
             if (!Object.keys(this.queue).length) {}
-            this.queue[url] = true;
-            return config;
+            this.queue[url] = true
+            return config
         }, (error: any) => {
-            return Promise.reject(error);
-        });
+            return Promise.reject(error)
+        })
         instance.interceptors.response.use((res: any) => {
-            this.distroy(url);
-            const { code, data } = res.data;
+            this.distroy(url)
+            const { code, data } = res.data
             if (code === 'ERROR') {
-                Toast.fail(data);
-                return Promise.reject(data);
+                Toast.fail(data)
+                return Promise.reject(data)
             }
-            return { code, data };
+            return { code, data }
         }, (error: any) => {
-            this.distroy(url);
+            this.distroy(url)
             if (error.response) {
                 switch (error.response.status) {
                     case 401:
-                        Cookies.remove('user');
-                        localStorage.removeItem('user');
+                        Cookies.remove('user')
+                        localStorage.removeItem('user')
                         router.replace({
                             name: 'login',
                             query: { redirect: router.currentRoute.fullPath }
-                        });
-                        break;
+                        })
+                        break
                     case 402:
-                        Toast.fail('用户已登录');
-                        break;
+                        Toast.fail('用户已登录')
+                        break
                 }
             }
-            return Promise.reject(error.resoinse ? error.response.data : error);
+            return Promise.reject(error.resoinse ? error.response.data : error)
         })
     }
     request (options: any) {
-        const instance = axios.create();
-        options = Object.assign(this.getInsideConfig(), options);
-        this.interceptors(instance, options.url);
-        return instance(options);
+        const instance = axios.create()
+        options = Object.assign(this.getInsideConfig(), options)
+        this.interceptors(instance, options.url)
+        return instance(options)
     }
 }
-export default HttpRequest;
+export default HttpRequest

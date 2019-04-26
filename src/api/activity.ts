@@ -1,12 +1,12 @@
-import axios from '@/libs/api.request.ts';
-import qs from 'qs';
+import axios from '@/libs/api.request.ts'
+import qs from 'qs'
 
 export const getActivityList = ({ type, create_user, page, pageSize } = { type: '', create_user: '', page: 1, pageSize: 5 }) => {
-    let data: any = {};
+    let data: any = {}
     if (type) data.type = type
     if (create_user) data.create_user = create_user
-    data.page = page;
-    data.pageSize = pageSize;
+    data.page = page
+    data.pageSize = pageSize
     return axios.request({
         url: '/api/activity/getlist',
         method: 'post',

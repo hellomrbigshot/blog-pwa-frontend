@@ -27,7 +27,7 @@ export const getPageList = (
         secret,
         keywords,
         sort
-    };
+    }
     return axios.request({
         url: api,
         data: qs.stringify(data),

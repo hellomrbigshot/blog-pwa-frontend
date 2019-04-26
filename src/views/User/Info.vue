@@ -59,7 +59,7 @@ export default class userInfo extends Vue {
   defaultUrl: string = require('@/assets/img/avatar.jpg')
   userInfo: any = {
     oauthinfo: {}
-  };
+  }
   oauthAccounts: any = {
     github: {
       oauth: false,
@@ -69,7 +69,7 @@ export default class userInfo extends Vue {
       oauth: false,
       oauth_user: ''
     }
-  };
+  }
   active: number = 0
   activityNum: number = 0
   pageNum: number = 0
@@ -84,7 +84,7 @@ export default class userInfo extends Vue {
   init() {
     this.imgUrl = `/api/file/avatar/user?username=${this.username}`
     getUserDetail(this.username).then((res: any) => {
-      this.userInfo = res.data;
+      this.userInfo = res.data
       Object.keys(this.oauthAccounts).forEach(type => {
         let filterOauthObj = this.userInfo.oauthinfo.find((item: any) => item.type === type)
         if (filterOauthObj) {

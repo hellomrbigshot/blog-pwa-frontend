@@ -53,7 +53,7 @@ export default class pageDetail extends Vue {
   defaultImg: string = require('../../assets/img/avatar.jpg')
   showContent: boolean = false
   get id(): string {
-    return this.$route.params.id;
+    return this.$route.params.id
   }
   async mounted() {
     await this.getPageDetail()
@@ -69,7 +69,7 @@ export default class pageDetail extends Vue {
   }
   activated() {
     if (this.id !== this.detail._id && this.detail._id) { // 更新详情内容
-      this.getPageDetail();
+      this.getPageDetail()
     }
   }
   imgError() {

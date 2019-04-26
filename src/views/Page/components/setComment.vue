@@ -57,7 +57,7 @@ export default class setComment extends Vue {
     if (clearToComment) {
       this.toComment = {}
     }
-    this.showCommentInput = true;
+    this.showCommentInput = true
     setTimeout(() => {
       let commentInput = this.$refs['commentInput'] as HTMLElement
       commentInput.focus()
