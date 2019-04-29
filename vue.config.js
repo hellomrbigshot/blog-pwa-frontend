@@ -44,10 +44,15 @@ module.exports = {
         }
     },
     devServer: {
-        port: '8081',
+        // host: '172.20.4.38',
+        // host: '192.168.124.12',
+        // host: '192.168.100.39',
+        port: '8088',
         proxy: {
             '/api': {
-                target: 'https://m.hellomrbigbigshot.xyz',
+                target: 'http://localhost:8081',
+                // target: 'https://m.hellomrbigbigshot.xyz',
+                ws: true,
                 changeOrigin: true
             }
         }

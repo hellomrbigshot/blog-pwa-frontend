@@ -32,35 +32,35 @@
     </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { loginApi, getUserInfo } from '@/api/login'
 import '@/assets/css/login.scss'
 @Component
 export default class Login extends Vue {
-    title: string = '世说新语';
-    username: string = '';
-    password: string = '';
-    logoUrl: string = require('@/assets/img/logo_white_transparent.png');
+    title: string = '世说新语'
+    username: string = ''
+    password: string = ''
+    logoUrl: string = require('@/assets/img/logo_white_transparent.png')
     get redirect () {
-        return this.$route.query.redirect && decodeURIComponent(<string>this.$route.query.redirect) || '';
+        return this.$route.query.redirect && decodeURIComponent(this.$route.query.redirect as string) || ''
     }
     submit () {
         if (!this.username.trim()) {
-            this.$toast('请填写用户名');
-            return false;
+            this.$toast('请填写用户名')
+            return false
         }
         if (!this.password.trim()) {
-            this.$toast('请填写密码');
-            return false;
+            this.$toast('请填写密码')
+            return false
         }
-        loginApi({ username: this.username, password: this.password }).then((res: any) => {
-            this.$toast.success('登录成功');
-            this.Cookies.set('user', this.username, { expires: 7 });
+        loginApi({ username: this.username, password: this.password }).then((result: any) => {
+            this.$toast.success('登录成功')
+            this.Cookies.set('user', this.username, { expires: 7 })
             getUserInfo(this.username).then((res: any) => {
-                const { data } = res;
-                localStorage.setItem('user', JSON.stringify(data));
-                const url = this.redirect && this.redirect || '/pages';
-                this.$router.push(url);
+                const { data } = res
+                localStorage.setItem('user', JSON.stringify(data))
+                const url = this.redirect && this.redirect || '/pages'
+                this.$router.push(url)
             })
         })
 

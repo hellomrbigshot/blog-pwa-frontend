@@ -9,7 +9,7 @@
     </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import mixin from '@/utils/mixin.ts'
 @Component({
     mixins: [mixin]

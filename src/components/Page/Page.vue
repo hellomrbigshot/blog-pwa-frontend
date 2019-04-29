@@ -18,20 +18,24 @@
             <div class="page-bottom">
                 <router-link class="create-user" :to="{ name: 'userInfo', params: { username: encodeURIComponent(page.create_user) }}">{{ page.create_user }}</router-link>
                 <span class="dot">·</span>
-                <span class="create-time">{{ formatTime(page.create_date, '3') }}</span>
+                <span class="create-time">{{ formatTime(page.update_time, '3') }}</span>
+                <template v-if="page.update_time !== page.create_time">
+                    <span class="dot">·</span>
+                    <span class="create-time">更新</span>
+                </template>
             </div>
         </div>
     </router-link>
     
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import mixin from '@/utils/mixin.ts'
 @Component({
     mixins: [mixin]
 })
 export default class Page extends Vue {
-    @Prop() page: any;
+    @Prop() page: any
 }
 </script>
 <style lang="scss" scoped>
@@ -39,7 +43,6 @@ export default class Page extends Vue {
     margin-top: 15px;
     padding: 10px 15px;
     color: #9E9E9E;
-    // border-bottom: 1px dashed #9E9E9E;
     background: #fff;
     .page-tag, .page-content {
         font-size: 14px;
@@ -64,7 +67,7 @@ export default class Page extends Vue {
     .page-bottom {
         margin-bottom: 5px;
         .create-user {
-            color: #28a946;
+            color: #07c160;
             font-size: 13px;
         }
         .dot {

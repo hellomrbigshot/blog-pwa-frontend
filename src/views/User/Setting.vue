@@ -7,15 +7,15 @@
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component }  from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator'
 @Component
 export default class userSetting extends Vue {
     get username () {
         return this.$route.params.username
     }
     get info () {
-        const info: any = localStorage.getItem('user');
-        return JSON.parse(info);
+        const info: any = localStorage.getItem('user')
+        return JSON.parse(info)
     }
 }
 </script>

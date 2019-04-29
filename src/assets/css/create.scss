@@ -1,0 +1,111 @@
+@import './color.scss';
+.nav-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 30px;
+  padding: 10px 10px;
+  overflow: auto;
+  border-bottom: 1px solid #eee;
+  &-left, &-title {
+    float: left;
+    line-height: 30px;
+    font-size: 18px;
+    color: $activeFontColor;
+  }
+  &-title {
+    margin-left: 10px;
+    // font-size: 20px;
+    font-weight: bold;
+    color: $normalFontColor;
+    .error-msg {
+      color: $errorFontColor;
+    }
+  }
+  &-right {
+    float: right;
+    line-height: 30px;
+    font-size: 14px;
+    color: $disableFontColor;
+  }
+  .active {
+    color: $activeFontColor;
+  }
+}
+.title-content, .tag-content, .content-content {
+  padding: 10px 10px;
+  background: #fff;
+  height: calc(100vh - 51px);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-top: 51px;
+  textarea, .tag-list, .input-wrapper, input {
+    width: 100%;
+    border: none;
+  }
+  textarea {
+    resize: none;
+    height: 100%;
+  }
+}
+.tag-content {
+  display: flex;
+  flex-direction: column;
+}
+.tag-list {
+  padding: 5px 0;
+  font-size: 12px;
+  margin-bottom: 20px;
+  .tag-item {
+    display: inline-block;
+    padding: 3px 5px;
+    margin: 0 5px;
+    color: #9E9E9E;
+    background: #efefef;
+    border-radius: 3px;
+    overflow: auto;
+  }
+}
+.tag-ul-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  .tag-ul {
+    .tag-li {
+      padding: 10px 0;
+      overflow: auto;
+      .tag-icon {
+        color: #fff;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        background: $activeFontColor;
+        font-size: 22px;
+        display: inline-block;
+      }
+      .tag-name {
+        display: inline-block;
+        margin-left: 10px;
+        line-height: 40px;
+      }
+      &:nth-child(1) {
+        margin-top: 10px;
+      }
+    }
+  }
+}
+.create-action {
+  font-size: 14px;
+  div {
+    padding: 10px 0 10px 10px;
+  }
+  .create-btn {
+    width: 100%;
+    color: $activeFontColor;
+    cursor: pointer;
+  }
+}
+

@@ -22,44 +22,42 @@ import { registerApi, getUserInfo } from '@/api/login'
 import '@/assets/css/login.scss'
 @Component
 export default class Register extends Vue {
-    title: string = '世说新语';
-    username: string = '';
-    password: string = '';
-    repassword: string = '';
-    logoUrl: string = require('@/assets/img/logo_white_transparent.png');
+    title: string = '世说新语'
+    username: string = ''
+    password: string = ''
+    repassword: string = ''
+    logoUrl: string = require('@/assets/img/logo_white_transparent.png')
     get redirect () {
-        return this.$route.query.redirect && decodeURIComponent(<string>this.$route.query.redirect) || '';
+        return this.$route.query.redirect && decodeURIComponent(this.$route.query.redirect as string) || '';
     }
     submit () {
         try {
             if (!this.username.trim()) {
-                throw new Error('请填写用户名');
+                throw new Error('请填写用户名')
             }
             if (!this.password.trim()) {
-                throw new Error('请填写密码');
+                throw new Error('请填写密码')
             }
             if (!this.repassword.trim()) {
-                throw new Error('请确认密码');
+                throw new Error('请确认密码')
             }
             if (this.repassword.trim() !== this.password.trim()) {
-                throw new Error('两次密码输入不一致');
+                throw new Error('两次密码输入不一致')
             }
-            registerApi({ username: this.username.trim(), password: this.password.trim(), repassword: this.repassword.trim() }).then(res => {
-                this.$toast.success('注册成功');
-                this.Cookies.set('user', this.username);
+            registerApi({ username: this.username.trim(), password: this.password.trim(), repassword: this.repassword.trim() })
+              .then(result => {
+                this.$toast.success('注册成功')
+                this.Cookies.set('user', this.username)
                 getUserInfo(this.username).then((res: any) => {
-                    const { data } = res;
-                    localStorage.setItem('user', JSON.stringify(data));
-                    const url = this.redirect && this.redirect || '/pages';
-                    this.$router.push(url);
+                    const { data } = res
+                    localStorage.setItem('user', JSON.stringify(data))
+                    const url = this.redirect && this.redirect || '/pages'
+                    this.$router.push(url)
                 })
-            }) 
+            })
         } catch (e) {
-            this.$toast.fail(e.message);
+            this.$toast.fail(e.message)
         }
-        
-        
-
     }
 }
 

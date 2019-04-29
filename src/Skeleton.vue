@@ -48,12 +48,10 @@
         </section>
     </div>
 </template>
-
 <script>
-
 export default {
     name: 'skeleton'
-};
+}
 </script>
 
 <style scoped lang="scss">
@@ -120,5 +118,4 @@ export default {
   left: 0;
   right: 0;
 }
-
 </style>

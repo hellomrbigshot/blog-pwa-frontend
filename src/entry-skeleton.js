@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import Skeleton from './Skeleton';
+import Vue from 'vue'
+import Skeleton from './Skeleton'
 
 export default new Vue({
     components: {
