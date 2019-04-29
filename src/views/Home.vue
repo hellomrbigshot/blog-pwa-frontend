@@ -47,15 +47,15 @@ export default class Home extends Vue {
   aliveArray: [string] = ['pageList']
   showSearchIcon: boolean = true
   logoUrl: string = require('@/assets/img/logo_black_transparent.png')
-  socket: any = io(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8082' : 'https://hellomrbigbigshot.xyz'}`)
+  // socket: any = io(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8082' : 'https://hellomrbigbigshot.xyz'}`)
   mounted() {
     this.checkRoute(this.$route)
-    this.socket.on('unread-comment', (msg: number) => {
-      const unreadMsgNum = this.$store.state.unreadMsgNum
-      if (msg !== unreadMsgNum) {
-        this.$store.commit('changeMsgNum', msg)
-      }
-    })
+    // this.socket.on('unread-comment', (msg: number) => {
+    //   const unreadMsgNum = this.$store.state.unreadMsgNum
+    //   if (msg !== unreadMsgNum) {
+    //     this.$store.commit('changeMsgNum', msg)
+    //   }
+    // })
   }
   @Watch('$route')
   routeChange(newVal: object, oldVal: object) {
