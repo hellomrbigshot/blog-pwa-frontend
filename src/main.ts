@@ -5,7 +5,7 @@ import './registerServiceWorker'
 import 'vant/lib/index.css'
 import '@/assets/css/iconfont/iconfont.css'
 import '@/assets/css/main.scss'
-import 'simple-m-editor/dist/simple-m-editor.css'
+import '@/assets/css/markdownPreview.css'
 // let fundebug = require('fundebug-javascript')
 let VConsole = require('vconsole')
 // fundebug.apikey = '8c8147a1846a6efc110b2ba3d86d41c60e2be94ed4a899eaa81542d30d790501'
@@ -13,7 +13,6 @@ let VConsole = require('vconsole')
 import App from './App.vue'
 import router from './route'
 import store from './vuex'
-import { eventNames } from 'cluster'
 
 Vue.use(Vant)
 
