@@ -29,10 +29,10 @@ export default class tabBar extends Vue {
     return this.$store.state.unreadMsgNum
   }
   async mounted() {
-    await getUnReadCommentNum().then(res => { // 获取未读评论数量
-      const { result } = res.data
-      this.$store.commit('changeMsgNum', result)
-    })
+    // await getUnReadCommentNum().then(res => { // 获取未读评论数量
+    //   const { result } = res.data
+    //   this.$store.commit('changeMsgNum', result)
+    // })
   }
   tabChange(active: number) {
     this.$router.push({ name: this.tabObj[active] })

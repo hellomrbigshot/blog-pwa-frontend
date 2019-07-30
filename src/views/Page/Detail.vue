@@ -19,7 +19,7 @@
         <div class="page-content m-editor-preview" v-html="marked(detail.content)"></div>
       </div>
       <div style="margin: 30px 0 10px;">
-        <van-tag plain v-for="(tag, i) in detail.tags" :key="i" @click.native="$router.push({ name: 'tagDetail', params: { name: tag }})" style="margin-right: 5px;">{{ tag }}</van-tag>
+        <van-tag size="large" plain v-for="(tag, i) in detail.tags" :key="i" @click.native="$router.push({ name: 'tagDetail', params: { name: tag }})" style="margin-right: 5px;">{{ tag }}</van-tag>
       </div>
     </main>
     <div style="margin-bottom: 40px;" class="comment-wrapper" id="comments">
