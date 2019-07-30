@@ -17,7 +17,7 @@ export const getCommentList = (
         data: qs.stringify(data)
     })
 }
-export const updateCommentStatus = (ids: any[] = []) => { // 将评论标记为 已读
+export const updateCommentStatus = (ids: string[] = []) => { // 将评论标记为 已读
   return axios.request({
     url: '/api/comment/updatecommentstatus',
     method: 'post',
