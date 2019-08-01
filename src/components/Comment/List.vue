@@ -1,13 +1,18 @@
 <template>
   <div>
-    <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: calc(100vh - 140px); box-sizing: border-box;">
-      <van-list v-model="listLoading" :finished="listFinished" @load="onLoad" :immediate-check="false">
-        <div v-if="list.length">
-          <Comment v-for="(item, i) in list" :comment="item" :key="i" :type="query.type"></Comment>
-        </div>
-        <div v-else class="empty-content">暂时没有内容=。=</div>
-      </van-list>
-    </van-pull-refresh>
+    <van-skeleton title avatar :row="4" :loading="showSkeleton">
+      <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: calc(100vh - 140px); box-sizing: border-box;">
+        <van-list v-model="listLoading" :finished="listFinished" @load="onLoad" :immediate-check="false">
+          <div v-if="list.length">
+            <Comment v-for="(item, i) in list" :comment="item" :key="i" :type="query.type"></Comment>
+          </div>
+          <div v-else class="empty-content">暂时没有内容=。=</div>
+        </van-list>
+      </van-pull-refresh>
+    </van-skeleton>
+    <van-skeleton style="margin-top: 12px;" title avatar :row="4" :loading="showSkeleton" />
+    <van-skeleton style="margin-top: 12px;" title avatar :row="4" :loading="showSkeleton" />
+    <van-skeleton style="margin-top: 12px;" title avatar :row="4" :loading="showSkeleton" />
   </div>
 </template>
 <script lang="ts">
@@ -29,6 +34,7 @@ export default class commentList extends Vue {
   pullLoading: boolean = false
   listLoading: boolean = false
   listFinished: boolean = true
+  showSkeleton: boolean = true
   list: object[] = []
   mounted() {
     this.pullLoading = true
@@ -43,6 +49,7 @@ export default class commentList extends Vue {
       } else {
         this.listFinished = false
       }
+      this.showSkeleton = false
       this.changeCommentStatus(result)
     })
   }

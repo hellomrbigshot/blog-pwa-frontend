@@ -1,13 +1,19 @@
 <template>
   <div>
-    <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: calc(100vh - 140px); box-sizing: border-box;">
-      <van-list v-model="listLoading" :finished="listFinished" @load="onLoad" :immediate-check="false">
-        <div v-if="list.length">
-          <Page v-for="(detail, index) in list" :key="index" :page="detail"></Page>
-        </div>
-        <div v-else class="empty-content">暂时没有内容=。=</div>
-      </van-list>
-    </van-pull-refresh>
+    <van-skeleton title :row="5" :loading="showSkeleton">
+      <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: calc(100vh - 140px); box-sizing: border-box;">
+
+        <van-list v-model="listLoading" :finished="listFinished" @load="onLoad" :immediate-check="false">
+          <div v-if="list.length">
+            <Page v-for="(detail, index) in list" :key="index" :page="detail"></Page>
+          </div>
+          <div v-else class="empty-content">暂时没有内容=。=</div>
+        </van-list>
+      </van-pull-refresh>
+    </van-skeleton>
+    <van-skeleton style="margin-top: 12px;" title :row="5" :loading="showSkeleton" />
+    <van-skeleton style="margin-top: 12px;" title :row="5" :loading="showSkeleton" />
+    <van-skeleton style="margin-top: 12px;" title :row="5" :loading="showSkeleton" />
   </div>
 </template>
 <script lang="ts">
@@ -29,6 +35,7 @@ export default class pageListComponent extends Vue {
   pullLoading: boolean = false
   listLoading: boolean = false
   listFinished: boolean = true
+  showSkeleton: boolean = true
   list: object[] = []
   mounted() {
     this.pullLoading = true
@@ -43,6 +50,7 @@ export default class pageListComponent extends Vue {
       } else {
         this.listFinished = false
       }
+      this.showSkeleton = false
     })
   }
   @Watch('list', { deep: true })

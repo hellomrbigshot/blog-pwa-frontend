@@ -9,7 +9,7 @@
             <div class="page-head">
                 <h4>{{ page.title }}
                     <van-tag v-if="page.status==='draft'">草稿</van-tag>
-                    <van-tag v-if="page.secret" type="danger">私密</van-tag>
+                    <van-tag v-else-if="page.secret" type="danger">私密</van-tag>
                 </h4>
             </div>
             <div class="page-content">
