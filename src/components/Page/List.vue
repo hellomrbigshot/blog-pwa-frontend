@@ -2,10 +2,9 @@
   <div>
     <van-skeleton title :row="5" :loading="showSkeleton">
       <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: calc(100vh - 140px); box-sizing: border-box;">
-
         <van-list v-model="listLoading" :finished="listFinished" @load="onLoad" :immediate-check="false">
           <div v-if="list.length">
-            <Page v-for="(detail, index) in list" :key="index" :page="detail"></Page>
+            <Page v-for="(detail, index) in list" :key="index" :page="detail"/>
           </div>
           <div v-else class="empty-content">暂时没有内容=。=</div>
         </van-list>
@@ -20,6 +19,7 @@
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
 import { getPageList } from '@/api/page.ts'
 import mixin from '@/utils/mixin'
+import { clearTimeout } from 'timers';
 @Component({
   mixins: [mixin],
   components: {
@@ -37,21 +37,22 @@ export default class pageListComponent extends Vue {
   listFinished: boolean = true
   showSkeleton: boolean = true
   list: object[] = []
-  mounted() {
+  async mounted() {
     this.pullLoading = true
     let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query)
-    getPageList(queryObject, this.api).then(res => {
-      const { total, result } = res.data
-      this.list = result
-      this.total = total
-      this.pullLoading = false
-      if (this.total <= this.pageSize * this.page) {
-        this.listFinished = true
-      } else {
-        this.listFinished = false
-      }
+    let res = await getPageList(queryObject, this.api)
+    const { total, result } = res.data
+    this.list = result
+    this.total = total
+    this.pullLoading = false
+    if (this.total <= this.pageSize * this.page) {
+      this.listFinished = true
+    } else {
+      this.listFinished = false
+    }
+    setTimeout(() => {
       this.showSkeleton = false
-    })
+    }, 1000)
   }
   @Watch('list', { deep: true })
   pageChange(val: object[], oldVal: object[]) {

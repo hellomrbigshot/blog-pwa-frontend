@@ -36,6 +36,9 @@ import mixin from '@/utils/mixin.ts'
 })
 export default class Page extends Vue {
     @Prop() page: any
+    mounted() {
+      
+    }
 }
 </script>
 <style lang="scss" scoped>
