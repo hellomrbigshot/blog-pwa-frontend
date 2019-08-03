@@ -19,7 +19,7 @@
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
 import { getPageList } from '@/api/page.ts'
 import mixin from '@/utils/mixin'
-import { clearTimeout } from 'timers';
+
 @Component({
   mixins: [mixin],
   components: {
