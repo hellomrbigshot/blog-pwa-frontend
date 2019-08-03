@@ -1,13 +1,18 @@
 <template>
   <div>
-    <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: 50vh">
-      <van-list v-model="listLoading" :finished="listFinished" @load="onLoad">
-        <div v-if="list.length">
-          <Activity v-for="(item, i) in list" :activity="item" :key="i"></Activity>
-        </div>
-        <div v-else class="empty-content">暂时没有内容=。=</div>
-      </van-list>
-    </van-pull-refresh>
+    <van-skeleton title avatar :row="4" :loading="showSkeleton">
+      <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: 50vh">
+        <van-list v-model="listLoading" :finished="listFinished" @load="onLoad">
+          <div v-if="list.length">
+            <Activity v-for="(item, i) in list" :activity="item" :key="i"></Activity>
+          </div>
+          <div v-else class="empty-content">暂时没有内容=。=</div>
+        </van-list>
+      </van-pull-refresh>
+    </van-skeleton>
+    <van-skeleton style="margin-top: 12px;" title avatar :row="4" :loading="showSkeleton" />
+    <van-skeleton style="margin-top: 12px;" title avatar :row="4" :loading="showSkeleton" />
+    <van-skeleton style="margin-top: 12px;" title avatar :row="4" :loading="showSkeleton" />
   </div>
 </template>
 <script lang="ts">
@@ -28,6 +33,7 @@ export default class activityList extends Vue {
   pullLoading: boolean = false
   listLoading: boolean = false
   listFinished: boolean = true
+  showSkeleton: boolean = true
   active: boolean = false
   list: object[] = []
   mounted() {
@@ -43,6 +49,7 @@ export default class activityList extends Vue {
       } else {
         this.listFinished = false
       }
+      this.showSkeleton = false
     })
   }
   @Watch('list', { deep: true })

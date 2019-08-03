@@ -1,35 +1,37 @@
 <template>
   <div @scroll.native="detailScroll" ref="pageDetail">
-    <main class="container main-container" style="margin: 10px 0 10px; background: #fff;" v-if="detail.content" ref="scrollBody">
-      <div class="page-detail">
-        <div>
-          <h1>{{ detail.title }}</h1>
-        </div>
-        <router-link :to="{ name: 'userInfo', params: { username: encodeURIComponent(detail.create_user) }}">
-          <div class="auto-info">
-            <a class="auto-avatar inline-block">
-              <img :src="imgUrl" alt="头像" class="inline-block" ref="img" @error="imgError">
-            </a>
-            <div class="auto-info-text">
-              <div class="auto-name">{{ detail.create_user }}</div>
-              <div class="auto-create-time">{{ formatTime(detail.create_time, '3') }}发布</div>
-            </div>
+    <van-skeleton title :row="20" :loading="showSkeleton">
+      <main class="container main-container" style="margin: 10px 0 10px; background: #fff;" v-if="detail.content" ref="scrollBody">
+        <div class="page-detail">
+          <div>
+            <h1>{{ detail.title }}</h1>
           </div>
-        </router-link>
-        <div class="page-content m-editor-preview" v-html="marked(detail.content)"></div>
+          <router-link :to="{ name: 'userInfo', params: { username: encodeURIComponent(detail.create_user) }}">
+            <div class="auto-info">
+              <a class="auto-avatar inline-block">
+                <img :src="imgUrl" alt="头像" class="inline-block" ref="img" @error="imgError">
+              </a>
+              <div class="auto-info-text">
+                <div class="auto-name">{{ detail.create_user }}</div>
+                <div class="auto-create-time">{{ formatTime(detail.create_time, '3') }}发布</div>
+              </div>
+            </div>
+          </router-link>
+          <div class="page-content m-editor-preview" v-html="marked(detail.content)"></div>
+        </div>
+        <div style="margin: 30px 0 10px;">
+          <van-tag size="large" plain v-for="(tag, i) in detail.tags" :key="i" @click.native="$router.push({ name: 'tagDetail', params: { name: tag }})" style="margin-right: 5px;">{{ tag }}</van-tag>
+        </div>
+      </main>
+      <div style="margin-bottom: 40px;" class="comment-wrapper" id="comments">
+        <div class="comment-header">评论({{ comments.length }})</div>
+        <div class="comment-list" v-if="comments.length">
+          <Comment v-for="(comment, index) in comments" :comment="comment" :key="index"></Comment>
+        </div>
+        <div class="comment-empty" v-else>暂时还没有评论(#^.^#)</div>
       </div>
-      <div style="margin: 30px 0 10px;">
-        <van-tag size="large" plain v-for="(tag, i) in detail.tags" :key="i" @click.native="$router.push({ name: 'tagDetail', params: { name: tag }})" style="margin-right: 5px;">{{ tag }}</van-tag>
-      </div>
-    </main>
-    <div style="margin-bottom: 40px;" class="comment-wrapper" id="comments">
-      <div class="comment-header">评论({{ comments.length }})</div>
-      <div class="comment-list" v-if="comments.length">
-        <Comment v-for="(comment, index) in comments" :comment="comment" :key="index"></Comment>
-      </div>
-      <div class="comment-empty" v-else>暂时还没有评论(#^.^#)</div>
-    </div>
-    <set-comment :detail="detail" :comments="comments" @update="getCommentList"></set-comment>
+      <set-comment :detail="detail" :comments="comments" @update="getCommentList"></set-comment>
+    </van-skeleton>
   </div>
 </template>
 <script lang="ts">
@@ -52,11 +54,13 @@ export default class pageDetail extends Vue {
   imgUrl: string = require('../../assets/img/avatar.jpg')
   defaultImg: string = require('../../assets/img/avatar.jpg')
   showContent: boolean = false
+  showSkeleton: boolean = true
   get id(): string {
     return this.$route.params.id
   }
   async mounted() {
     await this.getPageDetail()
+    this.showSkeleton = false
     setTimeout(() => {
       let hash = this.$route.params.hash
       if (hash) {
