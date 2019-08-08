@@ -39,13 +39,14 @@ export default class Search extends Vue {
 <style lang="scss" scoped>
 .hot-search-items {
     font-size: 12px;
-    padding: 5px 15px;
+    padding: 10px 15px 5px;
     .hot-item {
         padding: 3px 5px;
         background: #0080ff;
         margin-left: 10px;
         color: #fff;
         border-radius: 5px;
+        display: inline-block;
     }
 }
 </style>

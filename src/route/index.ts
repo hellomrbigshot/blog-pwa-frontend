@@ -25,9 +25,13 @@ router.beforeEach((to, from, next) => {
         redirect: to.fullPath
       }
     })
-  } else {
-    next()
   }
+  if (Cookies.get('user') && ['login', 'register'].includes(to.name || '')) {
+    next({
+      name: 'pages'
+    })
+  }
+  next()
 })
 
 export default router
