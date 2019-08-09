@@ -36,9 +36,14 @@ import mixin from '@/utils/mixin.ts'
 })
 export default class Page extends Vue {
     @Prop() page: any
-    // created() {
-    //   console.log('create_time', new Date().getTime())
-    // }
+    created() {
+      // console.log('create_time', new Date().getTime())
+    }
+    mounted() {
+      this.$nextTick(() => {
+        // console.log('finish_time', new Date().getTime())
+      })
+    }
 }
 </script>
 <style lang="scss" scoped>

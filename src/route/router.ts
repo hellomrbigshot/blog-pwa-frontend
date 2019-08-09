@@ -84,7 +84,7 @@ export const normalRouter = {
           path: 'search',
           component: () => import('@/views/Page/Search.vue'),
           meta: {
-            keepAlive: false
+            keepAlive: true
           }
         },
         {

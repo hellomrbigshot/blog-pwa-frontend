@@ -19,11 +19,13 @@
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
 import { getPageList } from '@/api/page.ts'
 import mixin from '@/utils/mixin'
+import Page from './Page.vue' // 异步引入会出现一段白屏
 
 @Component({
   mixins: [mixin],
   components: {
-    Page: () => import('./Page.vue')
+    // Page: () => import('./Page.vue')
+    Page
   }
 })
 export default class pageListComponent extends Vue {
@@ -50,9 +52,7 @@ export default class pageListComponent extends Vue {
     } else {
       this.listFinished = false
     }
-    setTimeout(() => {
-      this.showSkeleton = false
-    }, 1000)
+    this.showSkeleton = false
   }
   @Watch('list', { deep: true })
   pageChange(val: object[], oldVal: object[]) {
