@@ -23,7 +23,7 @@ import { getActivityList } from '@/api/activity'
 @Component({
   mixins: [mixin],
   components: {
-    Comment: () => import('./Comment.vue')
+    Comment: () => import('./CommentListItem.vue')
   }
 })
 export default class commentList extends Vue {

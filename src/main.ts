@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vant from 'vant'
 import Cookies from 'js-cookie'
+import { Lazyload } from 'vant'
 import './registerServiceWorker'
 import 'vant/lib/index.css'
 import '@/assets/css/iconfont/iconfont.css'
@@ -15,6 +16,7 @@ import router from './route'
 import store from './vuex'
 
 Vue.use(Vant)
+Vue.use(Lazyload)
 
 Vue.config.productionTip = false
 Vue.prototype.Cookies = Cookies

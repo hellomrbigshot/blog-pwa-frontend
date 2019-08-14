@@ -19,7 +19,7 @@
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
 import { getActivityList, getActivityNum } from '@/api/activity.ts'
 import mixin from '@/utils/mixin'
-import Activity from './Activity.vue' // 异步加载组件会出现白屏
+import Activity from './ActivityListItem.vue' // 异步加载组件会出现白屏
 
 
 @Component({
@@ -43,7 +43,6 @@ export default class activityList extends Vue {
   mounted() {
     this.pullLoading = true
     let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query)
-
     getActivityList(queryObject).then(res => {
       const { total, result } = res.data
       this.list = result

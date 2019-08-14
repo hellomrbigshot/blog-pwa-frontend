@@ -26,11 +26,11 @@
       <div style="margin-bottom: 40px;" class="comment-wrapper" id="comments">
         <div class="comment-header">评论({{ comments.length }})</div>
         <div class="comment-list" v-if="comments.length">
-          <Comment v-for="(comment, index) in comments" :comment="comment" :key="index"></Comment>
+          <comment-list-item v-for="(comment, index) in comments" :comment="comment" :key="index"></comment-list-item>
         </div>
         <div class="comment-empty" v-else>暂时还没有评论(#^.^#)</div>
       </div>
-      <set-comment :detail="detail" :comments="comments" @update="getCommentList"></set-comment>
+      <comment-setter :detail="detail" :comments="comments" @update="getCommentList"></comment-setter>
     </van-skeleton>
   </div>
 </template>
@@ -42,8 +42,8 @@ import { setTimeout } from 'timers'
 @Component({
   mixins: [mixin],
   components: {
-    setComment: () => import('./components/setComment.vue'),
-    Comment: () => import('./components/Comment.vue')
+    CommentSetter: () => import('./components/CommentSetter.vue'),
+    CommentListItem: () => import('./components/CommentListItem.vue')
   }
 })
 export default class pageDetail extends Vue {

@@ -4,7 +4,7 @@
       <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: calc(100vh - 140px); box-sizing: border-box;">
         <van-list v-model="listLoading" :finished="listFinished" @load="onLoad" :immediate-check="false">
           <div v-if="list.length">
-            <Page v-for="(detail, index) in list" :key="index" :page="detail"/>
+            <page-list-item v-for="(detail, index) in list" :key="index" :page="detail"/>
           </div>
           <div v-else class="empty-content">暂时没有内容=。=</div>
         </van-list>
@@ -19,13 +19,13 @@
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
 import { getPageList } from '@/api/page.ts'
 import mixin from '@/utils/mixin'
-import Page from './Page.vue' // 异步引入会出现一段白屏
+import PageListItem from './PageListItem.vue' // 异步引入会出现一段白屏
 
 @Component({
   mixins: [mixin],
   components: {
     // Page: () => import('./Page.vue')
-    Page
+    PageListItem
   }
 })
 export default class pageListComponent extends Vue {
