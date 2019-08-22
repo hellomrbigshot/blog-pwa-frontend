@@ -16,7 +16,11 @@
             </a>
           </div>
         </div>
-        <router-link v-if="editLimit" class="user-info-edit" :to="{ name: 'userSetting', params: { username: username }}">编辑</router-link>
+        <router-link 
+          v-if="editLimit"
+          class="user-info-edit"
+          :to="{ name: 'userSetting', params: { username: username }}"
+        >编辑</router-link>
       </div>
     </div>
     <div v-show="top>160">
@@ -45,8 +49,8 @@ import { getActivityList, getActivityNum } from '@/api/activity'
 @Component({
   mixins: [mixin],
   components: {
-    activityList: () => import('@/components/Activity/List.vue'),
-    pageList: () => import('@/components/Page/List.vue')
+    activityList: () => import('@/components/Activity/ActivityList.vue'),
+    pageList: () => import('@/components/Page/PageList.vue')
   }
 })
 export default class userInfo extends Vue {

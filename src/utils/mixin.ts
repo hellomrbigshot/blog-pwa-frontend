@@ -1,5 +1,5 @@
 import marked from 'marked'
-import hljs from 'highlight.js'
+import hljs from '../libs/hljs'
 import { Component, Vue } from 'vue-property-decorator'
 declare module 'vue/types/vue' {
   interface Vue {

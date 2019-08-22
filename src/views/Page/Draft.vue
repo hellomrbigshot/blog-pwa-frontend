@@ -8,7 +8,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import { getPageList, searchPage } from '@/api/page.ts'
 @Component({
     components: {
-        pageList: () => import('@/components/Page/List.vue')
+        pageList: () => import('@/components/Page/PageList.vue')
     }
 })
 export default class Draft extends Vue {

@@ -173,25 +173,25 @@ export const normalRouter = {
       }
     },
     {
-      name: 'mine',
-      path: '/mine',
-      component: () => import('@/views/Mine.vue'),
-      meta: {
-        login: false,
-        title: '我',
-        icon: 'contact',
-        tabActive: 3,
-        search: false,
-        rewriteNavbar: true,
-        keepAlive: true
-      }
-    },
-    {
       name: 'user',
       component: { template: '<router-view></router-view>' },
       path: '/user',
       redirect: '/user/info',
       children: [
+        {
+          name: 'usercenter',
+          path: '/center',
+          component: () => import('@/views/User/Center.vue'),
+          meta: {
+            login: false,
+            title: '用户中心',
+            icon: 'contact',
+            tabActive: 3,
+            search: false,
+            rewriteNavbar: true,
+            keepAlive: true
+          }
+        },
         {
           name: 'userInfo',
           path: '/info/:username',

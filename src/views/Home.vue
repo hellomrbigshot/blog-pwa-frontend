@@ -37,7 +37,7 @@ import mixin from '@/utils/mixin'
 import io from 'socket.io-client'
 @Component({
   components: {
-    tabBar: () => import('@/components/tabBar.vue')
+    TabBar: () => import('@/components/TabBar.vue')
   },
   mixins: [mixin]
 })

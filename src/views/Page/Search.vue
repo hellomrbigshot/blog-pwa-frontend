@@ -16,7 +16,7 @@ import { searchPage } from '@/api/page.ts'
 import { setTimeout } from 'timers'
 @Component({
     components: {
-        pageList: () => import('@/components/Page/List.vue')
+        pageList: () => import('@/components/Page/PageList.vue')
     }
 })
 export default class Search extends Vue {

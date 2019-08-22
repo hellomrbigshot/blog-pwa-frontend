@@ -9,7 +9,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import { getUnReadCommentNum } from '@/api/comment'
 interface Route {
   path: string
@@ -20,20 +20,20 @@ interface Route {
 @Component
 export default class tabBar extends Vue {
   active: number = 0
-  tabObj: string[] = ['pages', 'tags', 'comments', 'mine']
+  tabObj: string[] = ['pages', 'tags', 'comments', 'usercenter']
   @Watch('$route', { immediate: true, deep: true })
   onRouteChanged(val: Route, oldVal: Route) {
-    this.active = this.tabObj.findIndex((item: string) => val.fullPath.indexOf(item) > -1)
+    this.active = this.tabObj.findIndex((item: string) => val.name.indexOf(item) > -1 || val.fullPath.indexOf(item) > -1)
   }
   get unreadMsgNum() {
     return this.$store.state.unreadMsgNum
   }
-  async mounted() {
+  // async mounted() {
     // await getUnReadCommentNum().then(res => { // 获取未读评论数量
     //   const { result } = res.data
     //   this.$store.commit('changeMsgNum', result)
     // })
-  }
+  // }
   tabChange(active: number) {
     this.$router.push({ name: this.tabObj[active] })
   }

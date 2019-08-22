@@ -14,7 +14,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component({
     components: {
-        commentList: () => import('@/components/Comment/List.vue')
+        commentList: () => import('@/components/Comment/CommentList.vue')
     }
 })
 export default class commentsPage extends Vue {

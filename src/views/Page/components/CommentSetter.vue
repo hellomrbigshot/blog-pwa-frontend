@@ -15,7 +15,6 @@
               <van-icon slot="content" name="chat" size="18px" />
             </Badge>
           </a>
-
         </van-col>
       </van-row>
     </div>
@@ -117,13 +116,11 @@ export default class setComment extends Vue {
   bottom: 0;
   background: rgba(244, 244, 244, 0.5);
 }
-.create-comment {
-  .comment-input {
-    /deep/ .van-cell {
-      font-size: 13px;
-    }
-  }
+
+.comment-input /deep/ .van-cell {
+  font-size: 13px;
 }
+
 .van-icon {
   padding: 6px;
 }
