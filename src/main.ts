@@ -22,9 +22,9 @@ Vue.config.productionTip = false
 Vue.prototype.Cookies = Cookies
 Vue.prototype.$bus = new Vue()
 
-if (process.env.NODE_ENV === 'development') {
-  let vConsole = new VConsole()
-}
+// if (process.env.NODE_ENV === 'development') {
+//   let vConsole = new VConsole()
+// }
 // console.log('Hello world')
 
 function formatComponentName (vm: any) {

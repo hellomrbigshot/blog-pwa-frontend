@@ -26,7 +26,7 @@
           </li>
         </ul>
       </div>
-      <van-actionsheet
+      <van-action-sheet
         v-model="showActionSheet"
       >
         <div class="create-action">
@@ -34,7 +34,7 @@
           <div class="create-btn" @click="handleDeleteTag(true)">确认</div>
           <div class="create-btn" @click="handleDeleteTag(false)">取消</div>
         </div>
-      </van-actionsheet>
+      </van-action-sheet>
     </div>
     <div class="content-content" v-else-if="step === 'content'">
       <textarea type="textarea" style="border: none;" v-model="page.content" ref="input"/>

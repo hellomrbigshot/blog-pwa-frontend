@@ -30,8 +30,8 @@ export default class tagDetail extends Vue {
             this.tagDetail = data
         })
     }
-    listChange (val: object[], oldVal: object[]) {
-        this.total = val.length
+    listChange (total: number) {
+        this.total = total
     }
 }
 </script>

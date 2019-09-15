@@ -56,7 +56,10 @@ export default class Login extends Vue {
     }
     loginApi({ username: this.username, password: this.password }).then((result: any) => {
       this.$toast.success('登录成功')
+      const { token, refresh_token: refreshToken } = result.data
       this.Cookies.set('user', this.username, { expires: 7 })
+      this.Cookies.set('token', token)
+      this.Cookies.set('refreshToken', refreshToken)
       getUserInfo(this.username).then((res: any) => {
         const { data } = res
         localStorage.setItem('user', JSON.stringify(data))

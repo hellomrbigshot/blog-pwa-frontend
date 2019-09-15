@@ -18,14 +18,21 @@
         </van-col>
       </van-row>
     </div>
-    <div class="fix-shadow" v-show="showCommentInput" @click.prevent="showCommentInput=false;">
-      <div class="fix-bottom set-comment create-comment" @click.stop="">
+    <div class="fix-shadow" v-show="showCommentInput" @click="showCommentInput=false;">
+      <div class="fix-bottom set-comment create-comment" id="commentInputWrapper" @click.stop="">
         <div style="overflow: auto;">
           <span style="float: left; margin-left: 15px; line-height: 30px; color: #000;">回复</span>
           <van-icon name="passed" size="18px" :class="['comment-icon', comment.trim().length?'active-icon':'']" style="float: right;" @click="setComment"></van-icon>
         </div>
         <div class="comment-input">
-          <van-field ref="commentInput" v-model="comment" type="textarea" :autosize="{ maxHeight: 100, minHeight: 100 }" :placeholder="`回复${toComment.create_user || detail.create_user}`" />
+          <van-field
+            ref="commentInput"
+            v-model="comment"
+            type="textarea"
+            :autosize="{ maxHeight: 100, minHeight: 100 }"
+            :placeholder="`回复${toComment.create_user || detail.create_user}`"
+            @focus="handleInputFocus"
+          />
         </div>
       </div>
     </div>
@@ -58,13 +65,19 @@ export default class setComment extends Vue {
     }
     this.showCommentInput = true
     setTimeout(() => {
-      let commentInput = this.$refs['commentInput'] as HTMLElement
+      const commentInput = this.$refs['commentInput'] as HTMLElement
       commentInput.focus()
     }, 0)
   }
   scrollToComment() {
     const comment = document.getElementById('comments') as HTMLElement
     comment.scrollIntoView()
+  }
+  handleInputFocus() {
+    const commentInput = document.getElementById('commentInputWrapper') as HTMLElement
+    setTimeout(() => {
+      commentInput.scrollIntoView(true)
+    }, 10)
   }
   setComment() {
     if (!this.Cookies.get('user')) {
