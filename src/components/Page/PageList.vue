@@ -46,6 +46,7 @@ export default class pageListComponent extends Vue {
     const { total, result } = res.data
     this.list = result
     this.total = total
+    this.change(total)
     this.pullLoading = false
     if (this.total <= this.pageSize * this.page) {
       this.listFinished = true
@@ -54,13 +55,9 @@ export default class pageListComponent extends Vue {
     }
     this.showSkeleton = false
   }
-  @Watch('list', { deep: true })
-  pageChange(val: object[], oldVal: object[]) {
-    this.change(val)
-  }
   @Emit()
-  change(val: object[]) {
-    return val
+  change(total: number) {
+    return total
   }
   onRefresh() {
     this.page = 1

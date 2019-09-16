@@ -81,6 +81,8 @@ export default class Mine extends Vue {
   Singout() {
     signoutApi().then((res: any) => {
       this.Cookies.remove('user')
+      this.Cookies.remove('token')
+      this.Cookies.remove('refreshToken')
       this.$router.push({ name: 'pageListPage' })
     })
   }

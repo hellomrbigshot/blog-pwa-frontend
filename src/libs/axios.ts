@@ -3,6 +3,7 @@ import { Toast } from 'vant'
 import Cookies from 'js-cookie'
 import router from '@/route/index'
 
+
 class HttpRequest {
   baseUrl: string
   queue: any
@@ -10,10 +11,12 @@ class HttpRequest {
     this.baseUrl = baseUrl
     this.queue = {}
   }
-  getInsideConfig() {
+  getInsideConfig(token: string | undefined) {
     const config = {
       baseURL: this.baseUrl,
-      headers: {}
+      headers: {
+        Authorization: `Beare ${token}`
+      }
     }
     return config
   }
@@ -43,27 +46,67 @@ class HttpRequest {
       this.distroy(url)
       if (error.response) {
         switch (error.response.status) {
-          case 401:
+          case 402:
             Cookies.remove('user')
             localStorage.removeItem('user')
+            Cookies.remove('token')
+            Cookies.remove('refreshToken')
             router.replace({
               name: 'login',
               query: { redirect: router.currentRoute.fullPath }
             })
-            break
-          case 402:
-            Toast.fail('用户已登录')
-            break
+            return false
+            // break
+          // case 402:
+          //   Toast.fail('用户已登录')
+          //   break
         }
       }
-      return Promise.reject(error.resoinse ? error.response.data : error)
+      return Promise.reject(error)
     })
   }
-  request(options: any) {
+  fetchRefreshToken() {
+    const token = Cookies.get('refreshToken')
+    return axios({
+      url: '/api/signin/refreshToken',
+      headers: { Authorization: `Beare ${token}` },
+      method: 'get'
+    })
+  }
+  request(options: any): any {
     const instance = axios.create()
-    options = Object.assign(this.getInsideConfig(), options)
+    const token = Cookies.get('token')
+    options = Object.assign(options, this.getInsideConfig(Cookies.get('token')))
     this.interceptors(instance, options.url)
-    return instance(options)
+    return instance(options).then(res => {
+      return res
+    }).catch(e => {
+      if (e.response.status === 401) {
+        return this.fetchRefreshToken().then(res => {
+          const { data } = res.data
+          const { token: Token, refresh_token: refreshToken } = data
+          Cookies.set('token', Token)
+          Cookies.set('refreshToken', refreshToken)
+          return this.request(options) // 重新调用这个接口
+        }).catch(error => {
+          if (error.response) {
+            switch (error.response.status) {
+              case 402:
+                Cookies.remove('user')
+                localStorage.removeItem('user')
+                Cookies.remove('token')
+                Cookies.remove('refreshToken')
+                router.replace({
+                  name: 'login',
+                  query: { redirect: router.currentRoute.fullPath }
+                })
+                break
+            }
+          }
+          return Promise.reject(error)
+        })
+      }
+    })
   }
 }
 export default HttpRequest
