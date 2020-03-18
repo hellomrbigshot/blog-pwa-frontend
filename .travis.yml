@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- '8.9.1'
+- 8.9.1
 branchs:
   only:
   - master
@@ -8,16 +8,16 @@ cache:
   apt: true
   directories:
   - node_modules
+before_install:
+  - openssl aes-256-cbc -K $encrypted_9b2d7e19d83c_key -iv $encrypted_9b2d7e19d83c_iv
+    -in id_rsa.enc -out ~/.ssh/id_rsa -d
+  - chmod 600 ~/.ssh/id_rsa
+  - echo -e "Host 39.104.15.110\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 install:
 - git pull
-- rm -rf package-lock.json && rm -rf node_modules && npm install 
+- rm -rf yarn-lock.json && rm -rf node_modules && yarn
 script:
-- npm run build
-before_install:
-- openssl aes-256-cbc -K $encrypted_1db7356b8c0c_key -iv $encrypted_1db7356b8c0c_iv
-  -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- yarn build
 after_success:
-- chmod 600 ~/.ssh/id_rsa
-- rm -rf travis@118.24.157.36:/var/www/mobile/*
-- scp -o stricthostkeychecking=no -r ./dist/* travis@118.24.157.36:/var/www/mobile
-    
+- rm -rf root@39.104.15.110:/home/www/mobile/*
+- scp -r ./build/* root@39.104.15.110:/home/www/mobile
