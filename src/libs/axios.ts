@@ -2,12 +2,14 @@ import axios from 'axios'
 import { Toast } from 'vant'
 import Cookies from 'js-cookie'
 import router from '@/route/index'
+import store from '@/vuex'
+import { CHANGE_LOADING_ARR } from '@/vuex/mutation-types'
 
 
 class HttpRequest {
   baseUrl: string
   queue: any
-  constructor(baseUrl: string) {
+  constructor (baseUrl: string) {
     this.baseUrl = baseUrl
     this.queue = {}
   }
@@ -20,14 +22,15 @@ class HttpRequest {
     }
     return config
   }
-  distroy(url: string) {
+  distroy (url: string) {
     delete this.queue[url]
     if (!Object.keys(this.queue).length) { }
   }
-  interceptors(instance: any, url: string) {
+  interceptors (instance: any, url: string) {
     // 请求拦截
     instance.interceptors.request.use((config: any) => {
       // 添加全局 loading
+      store.commit(CHANGE_LOADING_ARR, { type: 'ADD' })
       if (!Object.keys(this.queue).length) { }
       this.queue[url] = true
       return config
@@ -35,6 +38,7 @@ class HttpRequest {
       return Promise.reject(error)
     })
     instance.interceptors.response.use((res: any) => {
+      store.commit(CHANGE_LOADING_ARR, { type: 'MINUS' })
       this.distroy(url)
       const { code, data } = res.data
       if (code === 'ERROR') {
@@ -43,6 +47,7 @@ class HttpRequest {
       }
       return { code, data }
     }, (error: any) => {
+      store.commit(CHANGE_LOADING_ARR, { type: 'MINUS' })
       this.distroy(url)
       if (error.response) {
         switch (error.response.status) {
@@ -65,14 +70,14 @@ class HttpRequest {
     })
   }
   fetchRefreshToken() {
-    const token = Cookies.get('refreshToken')
+    const token: string | undefined = Cookies.get('refreshToken')
     return axios({
       url: '/api/signin/refreshToken',
       headers: { Authorization: `Beare ${token}` },
       method: 'get'
     })
   }
-  request(options: any): any {
+  request (options: any): any {
     const instance = axios.create()
     const token = Cookies.get('token')
     options = Object.assign(options, this.getInsideConfig(Cookies.get('token')))

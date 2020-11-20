@@ -3,13 +3,17 @@ import hljs from '../libs/hljs'
 import { Component, Vue } from 'vue-property-decorator'
 declare module 'vue/types/vue' {
   interface Vue {
-    Cookies: any
+    Cookies: {
+      get: (params: string) => string,
+      set: (params: string, str: string, option?: { expires: number }) => void,
+      remove: (params: string) => void
+    }
     computed: object
-    $bus: any
+    $bus: Vue
     formatTime(time: any, type: string): void
     marked(content: string): void
-    debounce(fun: any, ctx: any, wait: number): any
-    throttle(fun: any, wait: number): any
+    debounce (fun: (...a: any[]) => void, wait: number): () => void
+    throttle (fun: (...a: any[]) => void, wait: number): () => void
   }
 }
 marked.setOptions({
@@ -29,11 +33,11 @@ marked.setOptions({
   xhtml: false
 })
 // 不足 10 自动补 0
-function format(num: number = 0) {
+function format (num: number = 0) {
   const result: string = num < 10 ? `0${num}` : `${num}`
   return result
 }
-function type3(t: any) {
+function type3 (t: any) {
   let nowTime = new Date().getTime()
   let time = new Date(t).getTime()
   if (nowTime - time < 60 * 1000) {
@@ -59,7 +63,7 @@ export default class mixin extends Vue {
    * params {string} time
    * params {string} type
    */
-  formatTime(time: any, type: string = '1') {
+  formatTime(time: Date, type: string = '1') {
     let str: string = ''
     switch (type) {
       // yyyy-mm-dd hh:MM:ss
@@ -98,13 +102,13 @@ export default class mixin extends Vue {
    * params {function} fun
    * params {number} number
    */
-  debounce(fun: any, ctx: any, wait = 100) {
+  debounce(fun: (...a: any[]) => unknown, wait: number = 100) {
     // 防抖
-    let time: any = null
-    const rtn = (...params: any[]) => {
+    let time: number | undefined
+    const rtn = (...args: any[]) => {
       clearTimeout(time) // 清除上一次定时器
-      time = setTimeout(() => {
-        fun.apply(ctx, params)
+      time = window.setTimeout(() => {
+        fun.apply(this, args)
       }, wait)
     }
     return rtn
@@ -114,14 +118,12 @@ export default class mixin extends Vue {
    * params {number} number
    *
    */
-  throttle(fun: any, wait: number) {
+  throttle (fun: (...a: any[]) => unknown, wait: number = 100) {
     let previous = 0
-    return () => {
-      const args = arguments
+    return (...args: any[]) => {
       const now = +new Date()
       if (now - previous > wait) {
-        // 当前事件与上次执行时间间隔大于 awit 毫秒才执行
-        fun(args)
+        fun.apply(this, args)
         previous = now
       }
     }

@@ -31,6 +31,11 @@ router.beforeEach((to, from, next) => {
       name: 'pages'
     })
   }
+  if (to.fullPath === '/') {
+    next({
+      name: 'pageListPage'
+    })
+  }
   next()
 })
 

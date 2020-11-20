@@ -14,11 +14,10 @@ const stylus = require('highlight.js/lib/languages/stylus')
 const typescript = require('highlight.js/lib/languages/typescript')
 const xml = require('highlight.js/lib/languages/xml')
 
-interface obj {
+interface IObj {
   [propName: string]: any
 }
-
-const languagesMapping: obj = {
+const languagesMapping: IObj = {
   javascript,
   java,
   css,

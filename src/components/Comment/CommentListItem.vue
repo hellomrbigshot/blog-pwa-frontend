@@ -27,11 +27,13 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import mixin from '@/utils/mixin'
+import { IComment } from './index'
 @Component({
+  name: 'CommentListItem',
   mixins: [mixin]
 })
 export default class Comment extends Vue {
-  @Prop() comment: any
+  @Prop() comment!: IComment
   @Prop({ default: 'create_user' }) type!: string
   imgUrl: string = require('../../assets/img/avatar.jpg')
   defaultImg: string = require('../../assets/img/avatar.jpg')

@@ -55,7 +55,7 @@ import { getActivityList, getActivityNum } from '@/api/activity'
 })
 export default class userInfo extends Vue {
   api: string = '/api/page/pagelist'
-  throttleScroll: any
+  throttleScroll: (() => void) | undefined
   imgUrl: string = ''
   top: number = 0
   editLimit: boolean = false

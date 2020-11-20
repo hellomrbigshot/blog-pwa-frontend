@@ -19,14 +19,14 @@
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
 import { getActivityList, getActivityNum } from '@/api/activity.ts'
 import mixin from '@/utils/mixin'
-import Activity from './ActivityListItem.vue' // 异步加载组件会出现白屏
+// import Activity from './ActivityListItem.vue' // 异步加载组件会出现白屏
 
 
 @Component({
   mixins: [mixin],
   components: {
-    // Activity: () => import('./Activity.vue')
-    Activity
+    Activity: () => import('./ActivityListItem.vue')
+    // Activity
   }
 })
 export default class activityList extends Vue {
