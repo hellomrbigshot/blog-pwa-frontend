@@ -1,6 +1,6 @@
 <template>
   <div ref="pageDetail" @scroll="detailScroll">
-    <van-skeleton title :row="20" :loading="showSkeleton">
+    <van-skeleton title :row="15" class="skeleton" :loading="showSkeleton">
       <main
         v-if="detail.content"
         ref="scrollBody"
@@ -146,6 +146,12 @@ export default class pageDetail extends Vue {
     padding: 40px 100px;
     text-align: center;
   }
+}
+.skeleton {
+  margin-top: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: #fff;
 }
 </style>
 

@@ -4,16 +4,16 @@
       v-if="!showSkeleton"
       v-model="pullLoading"
       style="min-height: calc(100vh - 140px); box-sizing: border-box;"
-      @refresh="onRefresh"
+      @refresh="onLoad(1)"
     >
       <van-list
         v-model="listLoading"
         :finished="listFinished"
         :immediate-check="false"
-        @load="onLoad"
+        @load="onLoad(page + 1)"
       >
         <div v-if="list.length">
-          <page-list-item
+          <PageListItem
             v-for="detail in list"
             :key="detail._id"
             :page="detail"
@@ -23,7 +23,7 @@
       </van-list>
     </van-pull-refresh>
     <template v-else>
-      <PageListItemSkeleton v-for="i in 3" :key="i"/>
+      <PageListItemSkeleton v-for="i in 3" :key="i" />
     </template>
   </div>
 </template>
@@ -55,6 +55,7 @@ export default class pageListComponent extends Vue {
   page: number = 1
   pageSize: number = 5
   total: number = 0
+  skeletonNum: number = 3
   pullLoading: boolean = false
   listLoading: boolean = false
   listFinished: boolean = true
@@ -89,7 +90,7 @@ export default class pageListComponent extends Vue {
       const { total, result } = res.data
       this.pullLoading = false
       this.list = result
-      this.total = total
+      this.total = total - 0
       if (this.total <= this.pageSize * this.page) {
         this.listFinished = true
       } else {
@@ -97,15 +98,22 @@ export default class pageListComponent extends Vue {
       }
     })
   }
-  onLoad () {
-    this.page = this.page + 1
+  async onLoad (page) {
+    this.page = page
     let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query)
-    getPageList(queryObject, this.api).then(res => {
-      const { result } = res.data
-      this.listLoading = false
-      this.list.push(...result)
-      if (this.page * this.pageSize >= this.total) this.listFinished = true
-    })
+    const { data: { total, result } } = await getPageList(queryObject, this.api)
+    this.total = total - 0
+    if (this.page === 1) {
+      this.pullLoading = false
+      this.list = result
+    } else {
+      this.list = this.list.concat(result)
+    }
+    if (this.total <= this.pageSize * this.page) {
+      this.listFinished = true
+    } else {
+      this.listFinished = false
+    }
   }
 }
 </script>

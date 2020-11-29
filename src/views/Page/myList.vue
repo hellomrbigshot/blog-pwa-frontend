@@ -1,6 +1,6 @@
 <template>
   <page-list
-    key="关注"
+    key="MyList"
     :query="{
       status: 'normal',
       type: 'create_user',

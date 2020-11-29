@@ -1,6 +1,7 @@
 export interface ITag {
   _id: string,
-  description: '',
-  name: '',
-  create_user: ''
+  description: string,
+  name: string,
+  create_user: string,
+  page_num?: number
 }
