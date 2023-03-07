@@ -171,8 +171,8 @@ export default class Create extends Vue {
     if (!this.tagSearchStr.trim()) {
       this.showTagList = []
     } else {
-      this.showTagList = this.tagList.filter((tag: any) => {
-        return tag.indexOf(this.tagSearchStr) > -1
+      this.showTagList = this.tagList.filter((tag: string) => {
+        return tag.toLowerCase().includes(this.tagSearchStr.toLowerCase())
       })
     }
   }

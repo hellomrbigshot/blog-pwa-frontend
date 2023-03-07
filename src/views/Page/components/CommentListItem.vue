@@ -18,12 +18,13 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { IComment } from '@/types/comment'
 import mixin from '@/utils/mixin'
 @Component({
     mixins: [mixin]
 })
 export default class PageComment extends Vue {
-    @Prop(Object) comment!: any
+    @Prop(Object) comment!: IComment
     defaultImg: string = require('@/assets/img/avatar.jpg')
     imgUrl: string = `/api/file/avatar/user?username=${this.comment.create_user}`
     get isLogin (): boolean {

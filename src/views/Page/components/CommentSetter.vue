@@ -42,26 +42,40 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { sendComment, getCommentListByPageId } from '@/api/page'
 import { setTimeout } from 'timers'
+import { IComment } from '@/types/comment'
+const defaultComment = {
+  _id: '',
+  is_read: false,
+  to_user: '',
+  reply_user: '',
+  reply_content: '',
+  content: '',
+  create_user: '',
+  page_id: '',
+  page_title: '',
+  create_time: '',
+  title: ''
+}
 @Component({
   components: {
     Badge: () => import('@/components/Badge.vue')
   }
 })
 export default class setComment extends Vue {
-  @Prop(Object) detail!: any
-  @Prop(Array) comments!: object[]
+  @Prop(Object) detail!: IComment
+  @Prop(Array) comments!: IComment[]
   showCommentInput: boolean = false
   comment: string = ''
-  toComment: any = {}
+  toComment: IComment = defaultComment
   mounted() {
-    this.$bus.$on('toComment', (comment: object) => {
+    this.$bus.$on('toComment', (comment: IComment) => {
       this.toComment = comment
       this.toggleCommentInput(false)
     })
   }
   toggleCommentInput(clearToComment: boolean) {
     if (clearToComment) {
-      this.toComment = {}
+      this.toComment = defaultComment
     }
     this.showCommentInput = true
     setTimeout(() => {
@@ -97,12 +111,12 @@ export default class setComment extends Vue {
       create_user: this.Cookies.get('user'),
       to_user: this.detail.create_user,
       page_id: this.detail._id,
-      page_title: this.detail.title,
+      page_title: this.detail.title || '',
       content: this.comment,
       reply_user: this.toComment.create_user || '',
       reply_content: this.toComment.content || ''
     }
-    sendComment(commentObject).then((res: object) => {
+    sendComment(commentObject).then(res => {
       this.$toast('评论发送成功')
       this.$emit('update')
       this.comment = ''

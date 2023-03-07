@@ -1,0 +1,2 @@
+export const CHANGE_MESSAGE_NUM: string = 'CHANGE_MESSAGE_TYPE'
+export const CHANGE_LOADING_ARR: string = 'CHANGE_LOADING_ARR'

@@ -1,49 +1,70 @@
 <template>
   <div>
-    <van-skeleton title :row="5" :loading="showSkeleton">
-      <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: calc(100vh - 140px); box-sizing: border-box;">
-        <van-list v-model="listLoading" :finished="listFinished" @load="onLoad" :immediate-check="false">
-          <div v-if="list.length">
-            <page-list-item v-for="(detail, index) in list" :key="index" :page="detail"/>
-          </div>
-          <div v-else class="empty-content">暂时没有内容=。=</div>
-        </van-list>
-      </van-pull-refresh>
-    </van-skeleton>
-    <van-skeleton style="margin-top: 12px;" title :row="5" :loading="showSkeleton" />
-    <van-skeleton style="margin-top: 12px;" title :row="5" :loading="showSkeleton" />
-    <van-skeleton style="margin-top: 12px;" title :row="5" :loading="showSkeleton" />
+    <van-pull-refresh
+      v-if="!showSkeleton"
+      v-model="pullLoading"
+      style="min-height: calc(100vh - 140px); box-sizing: border-box;"
+      @refresh="onLoad(1)"
+    >
+      <van-list
+        v-model="listLoading"
+        :finished="listFinished"
+        :immediate-check="false"
+        @load="onLoad(page + 1)"
+      >
+        <div v-if="list.length">
+          <PageListItem
+            v-for="detail in list"
+            :key="detail._id"
+            :page="detail"
+          />
+        </div>
+        <div v-else class="empty-content">暂时没有内容=。=</div>
+      </van-list>
+    </van-pull-refresh>
+    <template v-else>
+      <PageListItemSkeleton v-for="i in 3" :key="i" />
+    </template>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
 import { getPageList } from '@/api/page.ts'
 import mixin from '@/utils/mixin'
+import { IPage } from '@/types/index'
 import PageListItem from './PageListItem.vue' // 异步引入会出现一段白屏
-
+interface IQuery {
+  status: string,
+  type: string,
+  content: string,
+  secret: boolean,
+  sort?: string,
+  keywords?: string
+}
 @Component({
+  name: 'PageListComponent',
   mixins: [mixin],
   components: {
-    // Page: () => import('./Page.vue')
-    PageListItem
+    PageListItem,
+    PageListItemSkeleton: () => import('./PageListItemSkeleton.vue')
   }
 })
 export default class pageListComponent extends Vue {
-  @Prop(Object) query!: any
+  @Prop(Object) query!: IQuery
   @Prop({ default: '/api/page/pagelist' }) api!: string
   page: number = 1
   pageSize: number = 5
   total: number = 0
+  skeletonNum: number = 3
   pullLoading: boolean = false
   listLoading: boolean = false
   listFinished: boolean = true
   showSkeleton: boolean = true
-  list: object[] = []
+  list: IPage[] = []
   async mounted() {
     this.pullLoading = true
-    let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query)
-    let res = await getPageList(queryObject, this.api)
-    const { total, result } = res.data
+    const queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query)
+    const { data: { total, result } } = await getPageList(queryObject, this.api)
     this.list = result
     this.total = total
     this.change(total)
@@ -59,14 +80,17 @@ export default class pageListComponent extends Vue {
   change(total: number) {
     return total
   }
-  onRefresh() {
+  getPageList (page = 1) {
+    this.page = page
+  }
+  onRefresh () {
     this.page = 1
     let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query)
     getPageList(queryObject, this.api).then(res => {
       const { total, result } = res.data
       this.pullLoading = false
       this.list = result
-      this.total = total
+      this.total = total - 0
       if (this.total <= this.pageSize * this.page) {
         this.listFinished = true
       } else {
@@ -74,15 +98,22 @@ export default class pageListComponent extends Vue {
       }
     })
   }
-  onLoad() {
-    this.page = this.page + 1
+  async onLoad (page) {
+    this.page = page
     let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query)
-    getPageList(queryObject, this.api).then(res => {
-      const { result } = res.data
-      this.listLoading = false
-      this.list.push(...result)
-      if (this.page * this.pageSize >= this.total) this.listFinished = true
-    })
+    const { data: { total, result } } = await getPageList(queryObject, this.api)
+    this.total = total - 0
+    if (this.page === 1) {
+      this.pullLoading = false
+      this.list = result
+    } else {
+      this.list = this.list.concat(result)
+    }
+    if (this.total <= this.pageSize * this.page) {
+      this.listFinished = true
+    } else {
+      this.listFinished = false
+    }
   }
 }
 </script>

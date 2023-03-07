@@ -1,18 +1,28 @@
 <template>
   <div>
-    <van-skeleton title avatar :row="4" :loading="showSkeleton">
-      <van-pull-refresh v-model="pullLoading" @refresh="onRefresh" style="min-height: 50vh">
-        <van-list v-model="listLoading" :finished="listFinished" @load="onLoad">
-          <div v-if="list.length">
-            <Activity v-for="(item, i) in list" :activity="item" :key="i"></Activity>
-          </div>
-          <div v-else class="empty-content">暂时没有内容=。=</div>
-        </van-list>
-      </van-pull-refresh>
-    </van-skeleton>
-    <van-skeleton style="margin-top: 12px;" title avatar :row="4" :loading="showSkeleton" />
-    <van-skeleton style="margin-top: 12px;" title avatar :row="4" :loading="showSkeleton" />
-    <van-skeleton style="margin-top: 12px;" title avatar :row="4" :loading="showSkeleton" />
+    <van-pull-refresh
+      v-if="!showSkeleton"
+      v-model="pullLoading"
+      style="min-height: 50vh"
+      @refresh="onRefresh">
+      <van-list
+        v-model="listLoading"
+        :finished="listFinished"
+        @load="onLoad"
+      >
+        <div v-if="list.length">
+          <Activity
+            v-for="(item, i) in list"
+            :activity="item"
+            :key="i"
+          />
+        </div>
+        <div v-else class="empty-content">暂时没有内容=。=</div>
+      </van-list>
+    </van-pull-refresh>
+    <template v-else>
+      <ActivitySkeleton v-for="item in 3" :key="item"/>
+    </template>
   </div>
 </template>
 <script lang="ts">
@@ -20,13 +30,14 @@ import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
 import { getActivityList, getActivityNum } from '@/api/activity.ts'
 import mixin from '@/utils/mixin'
 import Activity from './ActivityListItem.vue' // 异步加载组件会出现白屏
-
+import ActivitySkeleton from './ActivityListItemSkeleton.vue'
 
 @Component({
   mixins: [mixin],
   components: {
-    // Activity: () => import('./Activity.vue')
-    Activity
+    // Activity: () => import('./ActivityListItem.vue')
+    Activity,
+    ActivitySkeleton
   }
 })
 export default class activityList extends Vue {

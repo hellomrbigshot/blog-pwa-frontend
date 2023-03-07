@@ -1,11 +1,12 @@
 <template>
   <div>
     <van-nav-bar 
+      v-if="$route.meta && !$route.meta.hideHeader"
       left-arrow
       :title="title"
       :fixed="true"
       @click-left="clickLeft"
-      v-if="$route.meta && !$route.meta.hideHeader">
+    >
       <div 
         v-if="title === '世说新语'"
         slot="title"
@@ -28,7 +29,7 @@
       </keep-alive>
       <router-view v-if="!$route.meta.keepAlive" :key="$route.fullPath"></router-view>
     </div>
-    <tab-bar v-if="$route.meta && typeof $route.meta.tabActive !== 'undefined'"></tab-bar>
+    <tab-bar v-if="$route.meta && typeof $route.meta.tabActive !== 'undefined'"/>
   </div>
 </template>
 <script lang="ts">
