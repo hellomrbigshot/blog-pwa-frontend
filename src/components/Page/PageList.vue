@@ -29,10 +29,11 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
-import { getPageList } from '@/api/page.ts'
+import { getPageList } from '@/api/page'
 import mixin from '@/utils/mixin'
 import { IPage } from '@/types/index'
-import PageListItem from './PageListItem.vue' // 异步引入会出现一段白屏
+import PageListItem from './PageListItem.vue'
+
 interface IQuery {
   status: string,
   type: string,
@@ -41,6 +42,7 @@ interface IQuery {
   sort?: string,
   keywords?: string
 }
+
 @Component({
   name: 'PageListComponent',
   mixins: [mixin],
@@ -49,9 +51,10 @@ interface IQuery {
     PageListItemSkeleton: () => import('./PageListItemSkeleton.vue')
   }
 })
-export default class pageListComponent extends Vue {
+export default class PageListComponent extends Vue {
   @Prop(Object) query!: IQuery
   @Prop({ default: '/api/page/pagelist' }) api!: string
+  
   page: number = 1
   pageSize: number = 5
   total: number = 0
@@ -61,58 +64,79 @@ export default class pageListComponent extends Vue {
   listFinished: boolean = true
   showSkeleton: boolean = true
   list: IPage[] = []
-  async mounted() {
-    this.pullLoading = true
-    const queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query)
-    const { data: { total, result } } = await getPageList(queryObject, this.api)
-    this.list = result
-    this.total = total
-    this.change(total)
-    this.pullLoading = false
-    if (this.total <= this.pageSize * this.page) {
-      this.listFinished = true
-    } else {
-      this.listFinished = false
-    }
-    this.showSkeleton = false
+  
+  // 使用计算属性优化查询对象生成
+  get queryObject() {
+    return { pageSize: this.pageSize, page: this.page, ...this.query }
   }
+  
+  async mounted() {
+    try {
+      this.pullLoading = true
+      const { data: { total, result } } = await getPageList(this.queryObject, this.api)
+      this.list = result || []
+      this.total = total || 0
+      this.change(total)
+      this.updateListStatus()
+    } catch (error) {
+      console.error('Failed to load page list:', error)
+      this.list = []
+      this.total = 0
+    } finally {
+      this.pullLoading = false
+      this.showSkeleton = false
+    }
+  }
+  
   @Emit()
   change(total: number) {
     return total
   }
-  getPageList (page = 1) {
-    this.page = page
+  
+  /**
+   * 更新列表加载状态
+   */
+  private updateListStatus() {
+    this.listFinished = this.total <= this.pageSize * this.page
   }
-  onRefresh () {
+  
+  onRefresh() {
     this.page = 1
-    let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query)
-    getPageList(queryObject, this.api).then(res => {
-      const { total, result } = res.data
-      this.pullLoading = false
-      this.list = result
-      this.total = total - 0
-      if (this.total <= this.pageSize * this.page) {
-        this.listFinished = true
-      } else {
-        this.listFinished = false
-      }
-    })
+    this.pullLoading = true
+    getPageList(this.queryObject, this.api)
+      .then(res => {
+        const { total, result } = res.data
+        this.list = result || []
+        this.total = total || 0
+        this.updateListStatus()
+      })
+      .catch(error => {
+        console.error('Failed to refresh:', error)
+        this.list = []
+        this.total = 0
+      })
+      .finally(() => {
+        this.pullLoading = false
+      })
   }
-  async onLoad (page) {
-    this.page = page
-    let queryObject = Object.assign({ pageSize: this.pageSize, page: this.page }, this.query)
-    const { data: { total, result } } = await getPageList(queryObject, this.api)
-    this.total = total - 0
-    if (this.page === 1) {
-      this.pullLoading = false
-      this.list = result
-    } else {
-      this.list = this.list.concat(result)
-    }
-    if (this.total <= this.pageSize * this.page) {
-      this.listFinished = true
-    } else {
-      this.listFinished = false
+  
+  async onLoad(page: number) {
+    try {
+      this.page = page
+      const { data: { total, result } } = await getPageList(this.queryObject, this.api)
+      this.total = total || 0
+      
+      if (this.page === 1) {
+        this.list = result || []
+        this.pullLoading = false
+      } else {
+        this.list = this.list.concat(result || [])
+      }
+      
+      this.updateListStatus()
+    } catch (error) {
+      console.error('Failed to load more:', error)
+      // 加载失败时保持原列表，允许重试
     }
   }
 }
