@@ -3,7 +3,7 @@
     <div class="tag-title">共有 <span style="font-weight: bold;">{{ total }}</span> 个标签</div>
     <div class="taglist-wrapper">
       <router-link v-for="(tag, i) in tagList" :key="i" :to="{ name: 'tagDetail', params: { name: tag.name }}" class="tag-item">
-        <van-tag size="large" plain :type="typeMapping(tag.page_num)">{{ `${tag.name}(${tag.page_num})` }}</van-tag>
+        <van-tag size="large" :type="typeMapping(tag.page_num)">{{ `${tag.name}(${tag.page_num})` }}</van-tag>
       </router-link>
     </div>
   </div>
@@ -11,36 +11,32 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { getTagList } from '@/api/tag.ts'
+import { ITag } from '@/types/tag'
 @Component
 export default class Tags extends Vue {
-  tagList: object[] = []
+  tagList: ITag[] = []
   page: number = 1
   pageSize: number = 999
-  pullLoading: boolean = false
   total: number = 0
-  mounted() {
+  mounted  () {
     this.getTagList()
   }
-  getTagList() {
+  getTagList () {
     getTagList({ page: this.page, pageSize: this.pageSize })
       .then(res => {
-        this.pullLoading = false
         const { result, total } = res.data
         this.tagList = result
         this.total = total
       })
   }
-  typeMapping(num: any) {
+  typeMapping (num: number) {
     if (num - 0 > 9) {
       return 'success'
     }
-    if (num - 0 > 4) {
+    if (num - 0 > 0) {
       return  'primary'
     }
-    if (num - 0 === 0) {
-      return 'danger'
-    }
-    return 'default'
+    return 'warning'
   }
 }
 </script>

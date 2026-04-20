@@ -29,13 +29,13 @@
     <div class="content">
       <van-tabs v-model="active" sticky>
         <van-tab :title="`动态(${activityNum})`">
-          <activity-list :query="{ create_user: username }"></activity-list>
+          <activity-list :query="{ create_user: username }"/>
         </van-tab>
         <van-tab :title="`文章(${pageNum})`">
-          <activity-list :query="{ create_user: username, type: 'page' }"></activity-list>
+          <activity-list :query="{ create_user: username, type: 'page' }"/>
         </van-tab>
         <van-tab :title="`评论(${commentNum})`">
-          <activity-list :query="{ create_user: username, type: 'comment' }"></activity-list>
+          <activity-list :query="{ create_user: username, type: 'comment' }"/>
         </van-tab>
       </van-tabs>
     </div>
@@ -55,7 +55,7 @@ import { getActivityList, getActivityNum } from '@/api/activity'
 })
 export default class userInfo extends Vue {
   api: string = '/api/page/pagelist'
-  throttleScroll: any
+  throttleScroll: (() => void) | undefined
   imgUrl: string = ''
   top: number = 0
   editLimit: boolean = false

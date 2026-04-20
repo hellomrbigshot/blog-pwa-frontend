@@ -63,7 +63,7 @@ export default class Login extends Vue {
       getUserInfo(this.username).then((res: any) => {
         const { data } = res
         localStorage.setItem('user', JSON.stringify(data))
-        const url = this.redirect && this.redirect || '/pages'
+        const url = this.redirect && this.redirect || '/page'
         this.$router.push(url)
       })
     })

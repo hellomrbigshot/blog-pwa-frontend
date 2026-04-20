@@ -1,7 +1,12 @@
 <template>
-  <div @scroll.native="detailScroll" ref="pageDetail">
-    <van-skeleton title :row="20" :loading="showSkeleton">
-      <main class="container main-container" style="margin: 10px 0 10px; background: #fff;" v-if="detail.content" ref="scrollBody">
+  <div ref="pageDetail" @scroll="detailScroll">
+    <van-skeleton title :row="15" class="skeleton" :loading="showSkeleton">
+      <main
+        v-if="detail.content"
+        ref="scrollBody"
+        class="container main-container"
+        style="margin: 10px 0 10px; background: #fff;"
+      >
         <div class="page-detail">
           <div>
             <h1>{{ detail.title }}</h1>
@@ -141,6 +146,12 @@ export default class pageDetail extends Vue {
     padding: 40px 100px;
     text-align: center;
   }
+}
+.skeleton {
+  margin-top: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: #fff;
 }
 </style>
 

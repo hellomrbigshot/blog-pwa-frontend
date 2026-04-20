@@ -31,7 +31,7 @@
       <van-cell size="large" title="写文章" @click="$router.push({ name: 'pageCreate' })">
         <i class="iconfont iconNew-article van-cell__left-icon" style="font-size: 20px; color: #2db7f5;" slot="icon" />
       </van-cell>
-      <van-cell size="large" title="消息中心" @click="$router.push({ name: 'comments' })">
+      <van-cell size="large" title="消息中心" @click="$router.push({ name: 'commentList' })">
         <van-icon slot="icon" name="chat" color="#2db7f5" size="20" class="van-cell__left-icon" />
       </van-cell>
       <van-cell size="large" title="文章列表" @click="$router.push({ name: 'myList' })">
